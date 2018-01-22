@@ -27,7 +27,7 @@ public class Device implements Serializable {
 							// 0x8004��ʪ�ȴ����� //
 							// 0x8005�����ٴ�����0x8007���״�������0x8006��ͨ��ң����0x000f
 	private boolean online;  // ���ߣ�true or false
-	private String amazonId= StringUtils.EMPTY;
+	private String amazonId;
 	private String progressBar="0";
 
 	public Device() {

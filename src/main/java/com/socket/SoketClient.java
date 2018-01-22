@@ -1,7 +1,8 @@
 package com.socket;
 
+import com.SpringUtil;
 import com.bean.UserHostRelation;
-import com.datasource.DbDAO;
+import com.bean.site.UserSite;
 import com.init.Constants;
 import com.intent.amazonintent.DeviceService;
 import com.utility.AesUtil;
@@ -21,7 +22,6 @@ import java.util.List;
 
 public class SoketClient {
 
-	private static DbDAO dbdao = new DbDAO();
 	private AesUtil mAesUtil = new AesUtil();
 	
 	private static final Logger logger = LogManager.getLogger(DeviceService.class);
@@ -76,7 +76,9 @@ public class SoketClient {
 				future.awaitUninterruptibly();
 				session = future.getSession();
 
-				List<UserHostRelation> listStr = dbdao.queryHostRelateThisUser(userId);
+				UserHostRelation userHostRelation = new UserHostRelation();
+				userHostRelation.setUserId(userId);
+				List<UserHostRelation> listStr   = SpringUtil.getUserMapper().getUserHostRelation(userHostRelation);
 
 				for (UserHostRelation host : listStr) {
 

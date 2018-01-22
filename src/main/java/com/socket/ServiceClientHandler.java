@@ -1,9 +1,10 @@
 package com.socket;
 
+import com.SpringUtil;
 import com.bean.Device;
-import com.datasource.DbDAO;
 import com.init.Constants;
 import com.init.ConstantsMethod;
+import com.mapper.UserMapper;
 import com.utility.AesUtil;
 import com.utility.CRC8;
 import com.utility.CmdUtil;
@@ -22,7 +23,8 @@ import java.util.Locale;
 public class ServiceClientHandler extends IoHandlerAdapter {
 	private String serviceEndRremain = "";// ���ݰ�β������
 	private String hostEndRremain = "";
-	
+
+
 	private static final Logger logger = LogManager.getLogger(ServiceClientHandler.class);
 
 	@Override
@@ -121,7 +123,9 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				currentdevice.setDevid(device.getDevid());
 				//System.out.println("device.getName():"+device.getName());
 				logger.debug("updateDeviceDetails:"+device.getName());
-				new DbDAO().updateHostByConditions(currentdevice);
+
+				SpringUtil.getUserMapper().updateHouseRelation(currentdevice);
+
 				logger.debug("update the redis...");
 				ConstantsMethod.updateDeviceLists(Constants.deviceList);
 				break;

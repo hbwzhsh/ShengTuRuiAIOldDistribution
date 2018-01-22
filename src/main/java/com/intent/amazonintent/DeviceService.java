@@ -1,17 +1,21 @@
 package com.intent.amazonintent;
 
+import com.SpringUtil;
 import com.bean.Device;
 import com.bean.IntendParams;
 import com.bean.IntendType;
 import com.bean.User;
-import com.datasource.DbDAO;
+import com.bean.site.UserSite;
 import com.init.Constants;
 import com.init.ConstantsMethod;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
+import com.mapper.UserMapper;
 import com.socket.SoketClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,13 +26,13 @@ import java.util.stream.Collectors;
  * provide service for DeviceSpeechlet
  *
  */
+@Component
 public class DeviceService {
 
 	private static final Logger logger = LogManager.getLogger(DeviceService.class);
 
 	SoketClient client = new SoketClient();
 
-	DbDAO dbDAO = new DbDAO();
 
 	public void createSocketSession(final String userId) {
 		client.connectService(userId);
@@ -101,11 +105,14 @@ public class DeviceService {
 
 		logger.debug("start to refresh data...amazonId:" + amazonId);
 
-		final User user = dbDAO.getUserByEmail(StringUtils.trimToEmpty(amazonId));
+		UserSite userTemp = new UserSite();
+		userTemp.setEmail(amazonId);
+
+		final UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
 		 logger.debug("find the user from the database:" +user.getUserId());
 		{
 			Runnable runnable = () -> {
-				List<Device> listDevice = dbDAO.queryDeviceDatail(user.getUserId());
+				List<Device> listDevice =SpringUtil.getUserMapper().getDeviceList(user.getUserId());
 				for (Device item : listDevice) {
 					item.setAmazonId(amazonId);
 					for (Device device : Constants.deviceList) {

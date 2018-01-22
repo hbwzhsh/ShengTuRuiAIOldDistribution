@@ -1,7 +1,7 @@
 package com.oauth2;
 
+import com.SpringUtil;
 import com.bean.site.UserOauth2;
-import com.datasource.DbDAO;
 import com.mapper.UserMapper;
 import com.oauth2.model.AccessToken;
 import com.oauth2.model.ErrorToken;
@@ -20,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class TokenProvidor {
 
-    @Autowired
-    private UserMapper userMapper;
+
 
     /**
      * https://XXXXX/token?grant_type=authorization_code&client_id=XXXXX&client_secret=XXXXXX&code=XXXXXXXX&redirect_uri=https%3A%2F%2Fopen.bot.tmall.com%2Foauth%2Fcallback
@@ -74,7 +73,7 @@ public class TokenProvidor {
     }
 
     private TokenInfo getTokenInfo(UserOauth2 oauth2) {
-        UserOauth2 result = userMapper.getOauth2ByCondition(oauth2);
+        UserOauth2 result = SpringUtil.getUserMapper().getOauth2ByCondition(oauth2);
         if (result != null) {
             AccessToken token = new AccessToken();
             token.setAccess_token(result.getAccessToken());

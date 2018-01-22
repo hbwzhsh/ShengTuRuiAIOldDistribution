@@ -2,9 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mapper.UserMapper">
 
-    <select id="getObjectByUserName" parameterType="UserSite" resultType="UserSite">
-        select * from user where userName = #{userName};
+    <select id="getObjectByCondition" parameterType="UserSite" resultType="UserSite">
+        select * from user
+            <where>
+                <if test="userName != null">
+                    AND userName=#{userName}
+                </if>
+
+                <if test="email != null">
+                   AND email=#{email}
+                </if>
+            </where>
     </select>
+
+
+    <update id="updateHouseRelation" parameterType="UserHouseEquipmentRelation" >
+        update user_house_equipment_relation
+             set name = #{name} , devid = #{devid}
+        where
+            equipmentMac = #{equipmentMac} and equipmentEp = #{equipmentEp}
+    </update>
+
+
+    <select id="getUserHostRelation" parameterType="UserHostRelation" >
+
+        SELECT * user_host_relation
+        <where>
+            <if test="mac != null">mac=#{mac},</if>
+            <if test="userId != null">userId=#{userId}</if>
+        </where>
+
+    </select>
+
+
+    <select id="getDeviceList" parameterType="String" resultType="Device">
+        select  user_house_equipment_relation.userId,house.houseName,floor.floorName,user_house_equipment_relation.hostMac,user_house_equipment_relation.equipmentEp,user_house_equipment_relation.equipmentMac,user_house_equipment_relation.`name`,user_house_equipment_relation.devid from user_house_equipment_relation  JOIN house  on house.houseId = user_house_equipment_relation.houseId JOIN floor on house.floorId=floor.floorId  WHERE user_house_equipment_relation.userId=?
+    </select>
+
 
 
     <insert id="addObjectToOauth2" parameterType="com.bean.site.UserOauth2" keyColumn="id" useGeneratedKeys="true" keyProperty="id">

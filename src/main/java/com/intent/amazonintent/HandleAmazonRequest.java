@@ -9,11 +9,12 @@
  */
 package com.intent.amazonintent;
 
+import com.SpringUtil;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.*;
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
 import com.bean.User;
-import com.datasource.DbDAO;
+import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.intent.amazonintent.refacting.IntentTypeFactory;
 import com.intent.amazonintent.refacting.intends.IntendRequestInterface;
@@ -21,6 +22,8 @@ import com.service.AmazonService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.LinkedHashMap;
@@ -38,10 +41,10 @@ public class HandleAmazonRequest extends SpeechletServlet {
 		this.setSpeechlet(new DeviceSpeechlet());
 	}
 }
-
+@Component
 class DeviceSpeechlet implements Speechlet {
 	private static final Logger logger = LogManager.getLogger(DeviceSpeechlet.class);
-	DbDAO dbDao = new DbDAO();
+
 	@Override
 	public void onSessionStarted(final SessionStartedRequest request, final Session session) throws SpeechletException {
 		logger.debug("HelloWorldSpeechlet--->");
@@ -59,8 +62,10 @@ class DeviceSpeechlet implements Speechlet {
 		if(StringUtils.isBlank(session.getUser().getAccessToken())){
 			return AmazonResponse.getNewAskResponseForReconnecting();
 		}
-		
-		User user = dbDao.getUserByEmail(accessToken);
+
+		UserSite userTemp = new UserSite();
+		userTemp.setEmail(accessToken);
+		UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
 		if(user == null){
 			speechText = "I can not find your email "+accessToken+" within Smart plus server , please make a contact with us.";
 			logger.debug("speechText:"+speechText);
@@ -85,8 +90,11 @@ class DeviceSpeechlet implements Speechlet {
 		if(StringUtils.isBlank(accessToken)){
 			return AmazonResponse.getNewAskResponseForReconnecting();
 		}
-		
-		User user = dbDao.getUserByEmail(accessToken);
+
+
+		UserSite userTemp = new UserSite();
+		userTemp.setEmail(accessToken);
+		UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
 		if(user == null){
 			speechText = "I can not find your email "+accessToken+" within Smart plus database ,please make a contact with us.";
 			logger.debug("speechText:"+speechText);

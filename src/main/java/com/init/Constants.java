@@ -2,6 +2,8 @@ package com.init;
 
 import com.bean.Device;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.Set;
 /**
  * Servlet implementation class InitializeData
  */
+@Component
 public class Constants {
 
 	// those keys and values for redis
@@ -52,14 +55,22 @@ public class Constants {
 	public static final String wholeHouse = "house";
 
 	// for redis and socket
-	public static String serverIpConnectSocket = StringUtils.EMPTY;
-	public static String socketPort = StringUtils.EMPTY;
-	public static String redisIpConnectSocket = StringUtils.EMPTY;
-	public static String redisPort = StringUtils.EMPTY;
-	public static String currentServerPath = StringUtils.EMPTY;
-	public static String helpContent = StringUtils.EMPTY;
-	
-	public static String clientId = StringUtils.EMPTY;
-	public static String clientSecret = StringUtils.EMPTY;
+
+	@Value("${serverIpConnectSocket}")
+	public static String serverIpConnectSocket ="115.28.190.86" ;
+	@Value("${socketPort}")
+	public static String socketPort ="8888";
+	@Value("${redisIpConnectSocket}")
+	public static String redisIpConnectSocket ="47.91.76.217" ;
+	@Value("${redisPort}")
+	public static String redisPort ="6380";
+	@Value("${currentServerPath}")
+	public static String currentServerPath ="https://deu-service.ctrcn.com/SmartHomeTwo12/";
+	@Value("${helpContent}")
+	public static String helpContent ="to control the your smart device just say open the house curtains, or open the living room curtain to 40%,or  turn on the living room lights,or dim the living room light to 40%";
+	@Value("${clientId}")
+	public static String clientId ="amzn1.application-oa2-client.abe56669bd8f4a918868fa009dd7b534";
+	@Value("${clientSecret}")
+	public static String clientSecret="392196037b74849995e0bacd41c7f9625f1da21364038ce1d7b9974769384094" ;
 
 }

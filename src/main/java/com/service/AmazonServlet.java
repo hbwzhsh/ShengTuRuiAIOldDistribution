@@ -1,10 +1,14 @@
 package com.service;
 
+import com.SpringUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bean.User;
-import com.datasource.DbDAO;
+import com.bean.site.UserSite;
 import com.intent.amazonintent.DeviceService;
+import com.mapper.UserMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,11 +21,12 @@ import java.io.IOException;
  * Servlet implementation class AmazonServlet
  */
 @WebServlet("/AmazonServlet")
+@Component
 public class AmazonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	DbDAO dbDAO = new DbDAO();
-	
+
+
 	DeviceService service = new DeviceService();
        
     /**
@@ -44,15 +49,15 @@ public class AmazonServlet extends HttpServlet {
 	   if( StringUtils.isNotBlank(code) ){
 		   String amazonUserEmail =  AmazonService.getAmazonUserId(code);
 		   System.out.println("amazonUserEmail:"+amazonUserEmail);
-		   User user = new User();
-		   user.setEmail(amazonUserEmail);
-		   User userObj = dbDAO.getUserByConditions(user);
+		   UserSite userTemp = new UserSite();
+		   userTemp.setEmail(amazonUserEmail);
+		   UserSite userObj = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
 		   
 		   json.put("value", amazonUserEmail);
 		   
 		   if(userObj != null ){
 			   System.out.println("userObj:"+userObj);
-			   dbDAO.updateUserByUserName( userObj.getUserName(), amazonUserEmail );
+			   //dbDAO.updateUserByUserName( userObj.getUserName(), amazonUserEmail );
 			   
 			   service.refreshCacheData(amazonUserEmail);
 			   json.put("flag", 1);

@@ -1,14 +1,13 @@
 package com.oauth2;
 
+import com.SpringUtil;
 import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
-import com.mapper.UserMapper;
-
+import com.intent.amazonintent.DeviceService;
 import com.oauth2.model.ResponseMsg;
 import com.utility.MD5Util;
 import com.utility.TokenFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AuthClient {
 
-    @Autowired
-    private UserMapper userMapper;
 
 
     @RequestMapping(value = "/login")
@@ -32,7 +29,7 @@ public class AuthClient {
         System.out.println(redirect_uri);
         map.put("redirect_uri", redirect_uri);
         map.put("state", state);
-        return "login";
+        return "/oauth/login";
     }
 
 
@@ -56,13 +53,14 @@ public class AuthClient {
         String state = request.getParameter("state");
 
         ResponseMsg responseMsg = new ResponseMsg();
-
         if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
             responseMsg.setData("userName or password is empty!");
             return responseMsg;
         }
 
-        UserSite user = userMapper.getObjectByUserName(userName);
+        UserSite userSite = new UserSite();
+        userSite.setUserName(userName);
+        UserSite user = SpringUtil.getUserMapper().getObjectByCondition( userSite );
         if (user == null) {
             responseMsg.setData("this user isn't exist!");
             return responseMsg;
@@ -76,9 +74,9 @@ public class AuthClient {
         userOauth2.setAccessToken( TokenFactory.createAccessToken() );
         userOauth2.setRefreshToken( TokenFactory.createRefreshToken() );
         userOauth2.setCode( TokenFactory.createCode() );
-        userOauth2.setUserId(user.getUserId());
+        userOauth2.setUserId(Integer.parseInt(user.getUserId()));
 
-        int count  = userMapper.addObjectToOauth2(userOauth2);
+        int count  = SpringUtil.getUserMapper().addObjectToOauth2(userOauth2);
         if(count == 0){
             responseMsg.setData("something wrong!");
             return responseMsg;
@@ -88,6 +86,9 @@ public class AuthClient {
             }else{
                 responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauth2.getCode());
             }
+
+            new DeviceService().createSocketSession( user.getUserId() );
+
             responseMsg.setSuccessStatus();
             return responseMsg;
         }
@@ -115,11 +116,4 @@ public class AuthClient {
 
 
 
-    public UserMapper getUserMapper() {
-        return userMapper;
-    }
-
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 }

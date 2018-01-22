@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="index::head"></head>
+<head th:replace="/oauth/index::head"></head>
 <body>
 <!--<nav th:replace="index::header"></nav>-->
 <div class="container login">
     <div>
-        <form action="/smartplusauth/loginSubmitGoogle" method="post">
+        <form action="/ShengTuRuiAIOld/loginSubmitGoogle" method="post">
             <div class="form-group" id="errorDiv" style="aligin:center;">
                 <div class="text-danger ">
                     用户名或密码错误
@@ -32,7 +32,7 @@
         </form>
     </div>
 </div>
-<script src="/smartplusauth/jquery-3.2.1.min.js"></script>
+<script src="/ShengTuRuiAIOld/jquery-3.2.1.min.js"></script>
 <script>
 
     $("#loginSubmit").click(function () {
@@ -48,7 +48,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/smartplusauth/loginSubmitGoogle",
+            url: "/ShengTuRuiAIOld/loginSubmitGoogle",
             dataType:"json",
             data: { userName: userNameValue, password: passwordValue ,redirect_uri:redirect_uri,state:state }
         }).done(function( obj ) {
