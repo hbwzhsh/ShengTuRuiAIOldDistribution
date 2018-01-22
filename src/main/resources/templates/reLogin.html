@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Boot Thymeleaf Hello World Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src='https://api-cdn.amazon.com/sdk/login1.js'></script>
+
+</head>
+<body>
+<div>
+    <script th:inline="javascript">
+        (function() {
+            /*<![CDATA[*/
+            var newUrl = [[${newUrl}]];
+            /*]]>*/
+            alert(newUrl);
+            window.location.href=newUrl;
+        })();
+    </script>
+	</div>
+</body>
+</html>
