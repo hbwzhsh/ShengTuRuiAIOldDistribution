@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class SerializationUtil {
     /**
-     * ï¿½ï¿½ï¿½Ð»ï¿½
+     * ÐòÁÐ»¯
      * 
      * @param object
      * @return
@@ -27,7 +27,7 @@ public class SerializationUtil {
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½
+     * ·´ÐòÁÐ»¯
      * 
      * @param bytes
      * @return

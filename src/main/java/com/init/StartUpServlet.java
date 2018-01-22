@@ -1,6 +1,5 @@
 package com.init;
 
-import com.netty.NettyClient;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,14 +20,21 @@ public class StartUpServlet extends HttpServlet {
 	
 	private static final Logger logger = LogManager.getLogger(StartUpServlet.class);
 	
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
     public StartUpServlet() {
         super();
-		new NettyClient();
-		System.out.println("StartUpServlet---->");
-	}
+        
+        logger.debug("Initialization.....");
+        logger.trace("Entering application.");
+        logger.error("Didn't do it.");
+        logger.trace("Exiting application.");
+        logger.debug("12312312231231223");
+        
+        ConstantsMethod.initData();
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,4 +53,7 @@ public class StartUpServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	
+
 }

@@ -201,14 +201,14 @@ public class CmdUtil {
 //			MLog.e("Email="+Email);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		} 
+		
 		String EmailLen = get1Len(Email);
 //		MLog.e("EmailLen="+EmailLen);
 		String msgContent = EmailLen+Email+System;
 //		MLog.e("msgContent="+msgContent);
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + msgContent));
-
+		
 //		MLog.e("crc8="+crc8);
 		String baoLen = get2Len(protocolNum + msgContent + crc8);
 //		MLog.e("baoLen="+baoLen);
@@ -216,18 +216,18 @@ public class CmdUtil {
 //		"��ʽ	��ʼλ	������	Э���	��Ϣ����	����У��	ֹͣλ"
 //		"	     2	      2	     1	     N	      1	      2 "
 		String bao = TITLE + baoLen +protocolNum+ msgContent+ crc8 + END;
-
+		
 		return bao;
 	}
-
-
+	
+	
 	/**
 	 * ����ָ������
-	 * @param mac
+	 * @param mac 
 	 */
 	public static String findOneComputerMsg(String email, String mac) {
 		String protocolNum = FindOneComputerAckProtocol;
-
+		
 		String Email = null;
 		String Mac = null;
 		try {
@@ -238,51 +238,51 @@ public class CmdUtil {
 //			MLog.e("Mac="+Mac);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		} 
+		
 		String EmailLen = get1Len(Email);
 //		MLog.e("EmailLen="+EmailLen);
 		String msgContent = EmailLen+Email+System+Mac;
 //		MLog.e("msgContent="+msgContent);
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + msgContent));
 //		MLog.e("crc8="+crc8);
-
+		
 		String baoLen = get2Len(protocolNum + msgContent + crc8);
 		String bao = TITLE + baoLen +protocolNum+ msgContent+ crc8 + END;
 //		MLog.e("email��" + email);
-
+		
 		return bao;
 	}
-
+	
 	/**
 	 * �������
 	 */
 	public static String addComputerMsg(String email,String urll) {
-
+		
 		String protocolNum = addComputerProtocol;
 		String userid = USERID;
-
+		
 		String Email = null;
-
+		
 		String URLL=null;
-
+		
 		try {
 			byte[] data = email.getBytes("UTF-8");
 			Email = ToHexUtil.byte2HexStr(data, data.length);//����
-
+			
 		    byte[] urlldata=urll.getBytes("UTF-8");
-
+		    
 		   URLL=  ToHexUtil.byte2HexStr(urlldata, urlldata.length);
-
-
+		    
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		} 
+		
 		String EmailLen = get1Len(Email);
 		String  URLLLen=get1Len(URLL);
 		String msgContent = EmailLen+Email+URLLLen+URLL;
-
+		
 //		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + userid + msgContent));
 //		String cip = protocolNum + userid + msgContent + crc8;
 //		MLog.e("����ǰ��" + cip);
@@ -291,75 +291,75 @@ public class CmdUtil {
 //		String miLen = get2Len(mi);
 //
 //		String bao = TITLE + miLen + mi + END;
-
+		
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + msgContent));
 		String baoLen = get2Len(protocolNum + msgContent + crc8);
 		String bao = TITLE + baoLen +protocolNum+ msgContent+ crc8 + END;
-
-
+		
+		
 		return bao;
 	}
+	
+	
 
 
-
-
-
-
-
+	
+	
+	
 	/**
 	 * ��ȡ�龰�б�
 	 */
 	public static String getScene() {
 		return "GET\\SCENE:";
 	}
-
+	
 	/**
 	 * ����������� ���ݱ��ݵ�����
 	 */
 	public static String getUpload() {
 		return "MEM\\READ:";
 	}
-
-
-
+	
+	
+	
 	/**
 	 * �޸��龰
 	 */
 	public static String modificationScene(String old_name, String old_ico,String new_name, String new_ico) {
 		return CHG_SCENE+old_name + "\\" + old_ico + "\\" + new_name + "\\"+ new_ico;
 	}
-
+	
 	/**
 	 * ɾ���龰
 	 */
 	public static String deleteScene(String name) {
 		return DELTTE_SCENE+ name;
 	}
-
+	
 	/**
 	 * ִ���龰
 	 */
 	public static String execScene(String name) {
 		return EXEC_SCENE+ name;
 	}
-
-
+	
+	
 	/**
 	 * ��������
 	 */
 	public static String execCmd(String name) {
 		return CMD+ name;
 	}
-
-
+	 
+	 
 	/**
 	 * ��ȡ��ȡ�߼��豸�б�
 	 */
 	public static String getEndPoint() {
 		return "GET\\ENDPOINT:";
 	}
-
-
+	
+	 
 	/**
 	 * ��ȡ�߼��豸����
 	 */
@@ -384,129 +384,129 @@ public class CmdUtil {
 	public static String getDevice() {
 		return "GET\\DEVICE:";
 	}
-
+	
 	/**
-	 * ��������豸
-	 * @param newName
-	 * @param newMac
+	 * ��������豸 
+	 * @param newName 
+	 * @param newMac 
 	 */
 	public static String addDevice(String newMac, String newName) {
 		return "DEV-INSERT:"+newName+"\\"+newMac;
 	}
-
+	
 	/**
-	 * ɾ�������豸
-	 * @param mac
+	 * ɾ�������豸 
+	 * @param mac 
 	 */
 	public static String delDevice(String mac) {
 		return "DEV-REMOVE:"+mac;
 	}
-
-
+	
+	
 	/**
-	 * ɾ���¼�
-	 * @param name
+	 * ɾ���¼� 
+	 * @param name 
 	 */
 	public static String delEvent(String name) {
 		return "EVT\\REMOVE:"+name;
 	}
-
+	
 	/** ��ȡ�¼��б� */
 	public static String getEvent() {
 		return "GET\\EVT:";
 	}
-
+	
 	/** ��ȡ�����¼��б� */
 	public static String getEasyEvent() {
 		return "GET\\EVT\\SIMPLE:";
 	}
-
+	
 	/** ɾ�������¼� */
 	public static String delEasyEvent(String name) {
 		return "DEL\\EVT\\SIMPLE:"+name;
 	}
-
+	
 	/** ִ���û��¼� */
 	public static String execUserEvent(String name,String status) {
 		return "EVT\\USER\\EXEC:"+name+"\\"+status;
 	}
-
+	
 	/** ����û��¼� */
 	public static String addUserEvent(String name) {
 		return "EVT\\USER\\INSERT:"+name;
 	}
-
+	
 	/** ��Ӽ����¼� */
 	public static String addEasyEvent(String cmd) {
 		return "ADD\\EVT\\SIMPLE:"+cmd;
 	}
-
+	
 	/** ����豸�¼� */
 	public static String addDeviceEvent(String name,String model,String path,String desc, String mac,String ep,String attrid,String value0,String value1) {
 		return "EVT\\DEVICE\\INSERT:"+name+"\\"+model+"\\"+path+"\\"+desc+"\\"+mac+"\\"+ep+"\\"+attrid+"\\"+value0+value1;
 	}
-
+	
 	/** ��ӳ�ʱ�¼� */
 	public static String addTimeOutEvent(String name,String name_a,String value) {
 		return "EVT\\TIMEOUT\\INSERT:"+name+"\\"+name_a+"\\"+value;
 	}
-
+	
 	/** ����߼��¼� */
 	public static String addLogicEvent(String name,String model,String name_a,String name_b) {
 		return "EVT\\LOGIC\\INSERT:"+name+"\\"+model+"\\"+name_a+"\\"+name_b;
 	}
-
+	
 	/** ����߼��¼� */
 	public static String delNews(String name) {
 		return "DEL\\MSG:"+name;
 	}
-
+	
 	/** ��Ӷ�ʱ�¼� */
 	public static String addTimeEvent(String name,String weeks,String mode,String time0,String time1) {
 		return "EVT\\TIMER\\INSERT:"+name+"\\"+weeks+"\\"+mode+"\\"+time0+"\\"+time1;
 	}
-
+	
 	/** ��ȡ�����б� */
 	public static String getLink() {
 		return "GET\\LNK:";
 	}
-
+	
 	/** ���LinkDEV_DEV */
 	public static String addLinkDEV_DEV(String in_path, String in_mac, String in_ep, String out_path, String out_mac, String out_ep) {
 		return "ADD\\LNK\\DEV>DEV:"+in_path+"\\"+in_mac+"\\"+in_ep+"\\"+out_path+"\\"+out_mac+"\\"+out_ep;
 	}
-
+	
 	/** ���LinkCMD>CMD */
-	public static String addLinkCMD_CMD(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid,
-			String in_op, String out_path, String out_desc, String out_mac, String out_ep, String out_cmdid,
+	public static String addLinkCMD_CMD(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid, 
+			String in_op, String out_path, String out_desc, String out_mac, String out_ep, String out_cmdid, 
 			String out_op) {
 		return "ADD\\LNK\\CMD>CMD:"+in_path+"\\"+in_desc+"\\"+in_mac+"\\"+in_ep+"\\"+in_cmdid+"\\"+in_op+"\\"+
 							       out_path+"\\"+out_desc+"\\"+out_mac+"\\"+out_ep+"\\"+out_cmdid+"\\"+out_op;
 	}
-
+	
 	/** ���LinkEVT>CMD */
 	public static String addLinkEVT_CMD(String in_name, String out_path, String out_desc, String out_mac,
 			String out_ep, String out_cmdid, String out_op) {
 		return "ADD\\LNK\\EVT>CMD:"+in_name+"\\"+out_path+"\\"+out_desc+"\\"+out_mac+"\\"+out_ep+"\\"+out_cmdid+"\\"+out_op;
 	}
-
-
+	
+	
 	/** ���LinkEVT>SCENE */
 	public static String addLinkEVT_SCENE(String in_name, String out_name) {
 		return "ADD\\LNK\\EVT>SCENE:"+in_name+"\\"+out_name;
 	}
-
+	
 	/** ���LinkEVT>MSG */
 	public static String addLinkEVT_MSG(String in_name, String out_name) {
 		return "ADD\\LNK\\EVT>MSG:"+in_name+"\\"+out_name;
 	}
-
+	
 	/** ���LinkCMD>SCENE */
-	public static String addLinkCMD_SCENE(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid,
+	public static String addLinkCMD_SCENE(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid, 
 			String in_op, String out_name) {
 		return "ADD\\LNK\\CMD>SCENE:"+in_path+"\\"+in_desc+"\\"+in_mac+"\\"+in_ep+"\\"+in_cmdid+"\\"+in_op+"\\"+out_name;
 	}
-
+	
 	public static String delLinkCMD_SCENE(String in_mac, String in_ep,  String in_cmdid, String in_op, String out_name) {
 		return "DEL\\LNK\\CMD>SCENE:"+in_mac+"\\"+in_ep+"\\"+in_cmdid+"\\"+in_op+"\\"+out_name;
 	}
@@ -538,14 +538,14 @@ public class CmdUtil {
 		return "DEL\\LNK\\DEV>DEV:"+in_mac+"\\"+in_ep+"\\"+out_mac+"\\"+out_ep;
 	}
 
-
-
-
+	
+	
+	
 	/**
 	 * ���ӷ�����
-	 * @param application
+	 * @param application 
 	 */
-	public static String connectService(AesUtil mAesUtil , String mac) {
+	public static String connectService(AesUtil mAesUtil ,String mac) {
 		String userid = USERID;
 		/*if (application.isChildren()) {
 			int children = application.getChildrenId();
@@ -554,14 +554,14 @@ public class CmdUtil {
 			}
 //			MLog.e("���ӷ����� userid��" + userid);
 		}*/
-
-
+		
+		
 		String msgContent = "";
-
+		
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte("FE" + userid));
 		String cip = "FE" + userid + msgContent + crc8;
 //		MLog.e("����ǰ��" + cip);
-
+		
 		String mi = encrypt(cip,mAesUtil);
 		String miLen = get2Len(mi);
 		String msg = mac + TITLE + miLen + mi + END;
@@ -569,33 +569,33 @@ public class CmdUtil {
 //		MLog.e("���ӷ����� msg "+mac);
 		return msg;
 	}
-
+	
 	/**
 	 * ����ת��������
-	 * @param application
+	 * @param application 
 	 */
-	public  static String getToService(AesUtil mAesUtil , String cmd, String mac) {
-
+	public  static String getToService(AesUtil mAesUtil ,String cmd, String mac) {
+		
 		String protocolNum = retainProtocol;
 		String userid = USERID;
-			/*int children = 21;
+			/*int children = 21; 
 			if (children<255) {
 				userid = ToHexUtil.pad(Integer.toHexString(children), 2, true);
 			}*/
-//			MLog.e("����ת�������� userid��" + userid);
+//			MLog.e("����ת�������� userid��" + userid);   
 		String msgContent=""/* = ToHexUtil.string2ASCII(cmd)*/;
-
+		
 		try {
 			byte[] msgdata = cmd.getBytes("UTF-8");
 			msgContent = ToHexUtil.byte2HexStr(msgdata, msgdata.length);
-
+			
 //			byte[] macData = mac.getBytes("UTF-8");
 //			Mac = ToHexUtil.byte2HexStr(macData, macData.length);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		}  
+		
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + userid + msgContent));
 		String cip = protocolNum + userid + msgContent + crc8;
 //		MLog.S("ת�� ����ǰ��" + cip);
@@ -604,10 +604,10 @@ public class CmdUtil {
 		String miLen = get2Len(mi);
 
 		String msg =mac+ TITLE + miLen + mi + END;
-
+		
 		return msg;
 	}
-
+	
 	/**
 	 * �������
 	 */
@@ -627,7 +627,7 @@ public class CmdUtil {
 //
 //		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + userid + msgContent));
 ////		MLog.e("crc8=" + crc8);
-//
+//		
 //		String cip = protocolNum + userid + msgContent + crc8;
 ////		MLog.e("����ǰ��" + cip);
 //
@@ -641,7 +641,7 @@ public class CmdUtil {
 //		MLog.e("���������" + msg);
 //		return msg;
 //	}
-
+	
 	/** 10����ת16����,return 1�ֽ�*/
 	public static String getLen(int len) {
 		if (len<16) {
@@ -652,7 +652,7 @@ public class CmdUtil {
 
 	/** ��ȡ16�����ַ����ĳ���,return 1�ֽ�*/
 	public static String get1Len(String string) {
-
+		
 		int milen = ToHexUtil.hexStringToByte(string).length;
 		String miLen = "";
 		if (milen <= 15) {
@@ -662,10 +662,10 @@ public class CmdUtil {
 		}
 		return miLen;
 	}
-
+	
 	/** ��ȡ16�����ַ����ĳ���,return 2�ֽ�*/
 	public static String get2Len(String string) {
-
+		
 		int milen = ToHexUtil.hexStringToByte(string).length;
 		String miLen = "";
 		if (milen <= 15) {
@@ -679,10 +679,10 @@ public class CmdUtil {
 		}
 		return miLen;
 	}
-
+	
 	/**
 	 * ����
-	 * @param mAesUtil
+	 * @param mAesUtil 
 	 * @string 16�����ַ���
 	 */
 	private synchronized static String encrypt(String string, AesUtil mAesUtil) {
@@ -697,14 +697,14 @@ public class CmdUtil {
 	 */
 	public static void jiami() {
 		AesUtil mAesUtil = new AesUtil();
-
+		
 		String t1 = "040100";//����ʥͼ����������
 		String t1_ = "40010107";//����������Ӧ
-
+		
 		String t = t1;
-
+		 
 		byte[] a = ToHexUtil.hexStringToByte(t);
-
+		
 		byte[] b = mAesUtil.encrypt(a, AesUtil.Key, AesUtil.IV);
 		String c= ToHexUtil.byte2HexStr(b,b.length);
 		

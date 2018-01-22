@@ -1,82 +1,99 @@
 package com.init;
 
-import com.model.IntendParams;
-import com.netty.NettySendService;
-import com.netty.model.Device;
-import com.redis.RedisDAO;
+import com.bean.Device;
+import com.datasource.DbPoolConnection;
+import com.datasource.RedisDAO;
+import com.utility.PropertiesUtil;
 import com.utility.ToHexUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
-
 
 /**
  * Servlet implementation class InitializeData
  */
-@Component
 public class ConstantsMethod {
 
+	
+	public static void addDefualRoom(String accessToken, String roomName) {
 
+		Constants.defualtRooms.remove(accessToken);
+		Constants.defualtRooms.put(accessToken, roomName);
 
-    private static Logger logger = LoggerFactory.getLogger(ConstantsMethod.class);
+		RedisDAO.deleteObject(Constants.dafualtRoomKey);
+		RedisDAO.saveObject(Constants.dafualtRoomKey, Constants.defualtRooms);
+	}
 
-    public static void addDefualRoom(String accessToken, String roomName) {
+	@SuppressWarnings("unchecked")
+	public static String getDefualRoom(String key) {
 
-        Constants.defualtRooms.remove(accessToken);
-        Constants.defualtRooms.put(accessToken, roomName);
+		if (Constants.defualtRooms.size() == 0) {
+			Constants.defualtRooms = RedisDAO.getHashMap(Constants.dafualtRoomKey);
+		}
 
-        RedisDAO.deleteObject(Constants.dafualtRoomKey);
-        RedisDAO.saveObject(Constants.dafualtRoomKey, Constants.defualtRooms);
-    }
+		String defualRoom = Constants.defualtRooms.get(key);
+		return defualRoom;
+	}
 
-    @SuppressWarnings("unchecked")
-    public static String getDefualRoom(String key) {
+	public static void updateDeviceLists(Set<Device> lists) {
+		RedisDAO.deleteObject(Constants.deviceKey);
+		RedisDAO.saveObject(Constants.deviceKey, lists);
+	}
+	
+	
+	public static String getProcessBarCmd(String persentage) {
+		if (StringUtils.isBlank(persentage)) {
+			return "0000";
+		}
+		return ToHexUtil.pad(ToHexUtil.toHex(Integer.parseInt(persentage)), 4, true);
+	}
+	
+	public static synchronized  void reSetDevicedata(Device old,Device newData){
+		Constants.deviceList.remove(old);
+		Constants.deviceList.add(newData);
+		updateDeviceLists(Constants.deviceList);
+	}
+	
+	public static   void reSetDevicedata(Device old,String moveToProcessBar){
+		
+		Runnable runnable = () -> {
+			Device newData = old;
+			newData.setProgressBar(moveToProcessBar+"");
+			ConstantsMethod.reSetDevicedata(old, newData);
+		};
+		Thread thread = new Thread(runnable);
+		thread.start();
+	}
 
-        if (Constants.defualtRooms.size() == 0) {
-            Constants.defualtRooms = RedisDAO.getHashMap(Constants.dafualtRoomKey);
-        }
+	public static void initData() {
+		// load the data from Properties file
+		Properties config = PropertiesUtil.loadPropertyFile("config.properties");
+		Constants.serverIpConnectSocket = (String) config.get("serverIpConnectSocket");
+		Constants.socketPort = (String) config.get("socketPort");
+		Constants.redisIpConnectSocket = (String) config.get("redisIpConnectSocket");
+		Constants.redisPort = (String) config.get("redisPort");
+		Constants.currentServerPath = (String) config.get("currentServerPath");
+		Constants.helpContent =  (String) config.get("helpContent");
+		
+		Constants.clientId =  (String) config.get("clientId");
+		Constants.clientSecret =  (String) config.get("clientSecret");
+		
+		// reload the data from redis
+		Set<Device> tempdeviceList = RedisDAO.getHashSet(Constants.deviceKey);
+		if (tempdeviceList != null)
+			Constants.deviceList = tempdeviceList;
 
-        String defualRoom = Constants.defualtRooms.get(key);
-        return defualRoom;
-    }
+		@SuppressWarnings("unchecked")
+		Map<String, String> tempdefualtRooms = RedisDAO.getHashMap(Constants.dafualtRoomKey);
+		if (tempdefualtRooms != null)
+			Constants.defualtRooms = tempdefualtRooms;
 
-    public static void updateDeviceLists(Set<Device> lists) {
-        RedisDAO.deleteObject(Constants.deviceKey);
-        RedisDAO.saveObject(Constants.deviceKey, lists);
-    }
+		DbPoolConnection.getInstance();
+	}
+	
+	
+	
 
-
-    public static String getProcessBarCmd(String persentage) {
-        if (StringUtils.isBlank(persentage)) {
-            return "0";
-        }
-        return ToHexUtil.pad(ToHexUtil.toHex(Integer.parseInt(persentage)), 4, true);
-    }
-
-
-    public static List<Device> getDevicelistByUserId(IntendParams params) {
-        logger.debug("getDevicelistByUserId-------->:" + params.getUserId());
-        Object obj = Constants.logicDeviceList.get(params.getUserId());
-        logger.debug("getDevicelistByUserId-------->obj:" + obj);
-        if (obj != null) {
-            List<Device> deviceList = (ArrayList) obj;
-            return deviceList;
-        } else {
-//			new HttpServiceClient().updateDataFromServer(params);
-            new NettySendService().newConnection(Integer.parseInt(params.getUserId()));
-            new NettySendService().clientgetallDescription(Integer.parseInt(params.getUserId()));
-            logger.debug("logicDeviceList-------->:" + Constants.logicDeviceList.size());
-            List<Device> tempList = (ArrayList) Constants.logicDeviceList.get(params.getUserId());
-            if(tempList == null){
-                tempList = new ArrayList<>();
-            }
-            return tempList;
-        }
-    }
 }

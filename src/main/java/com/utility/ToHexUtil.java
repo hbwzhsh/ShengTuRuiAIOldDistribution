@@ -5,8 +5,8 @@ import java.util.Locale;
 /**
  * 
  * @author weiTaZhuang
- * @date 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½10:02:28
- * @Description 16ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
+ * @date 2016Äê6ÔÂ7ÈÕ ÉÏÎç10:02:28
+ * @Description 16½øÖÆ×ª»»
  */
 
 public class ToHexUtil {
@@ -15,7 +15,7 @@ public class ToHexUtil {
 
 	
 	/**
-	 * ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * °Ñ16½øÖÆ×Ö·û´®×ª»»³É×Ö½ÚÊý×é
 	 * @param hexString
 	 * @return byte[]
 	 */
@@ -32,8 +32,8 @@ public class ToHexUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§
-	 * @param sHex String 16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 * ¼ì²é16½øÖÆ×Ö·û´®ÊÇ·ñÓÐÐ§
+	 * @param sHex String 16½øÖÆ×Ö·û´®
 	 * @return boolean
 	 */
 	public static boolean checkHexStr(String sHex) {
@@ -50,18 +50,18 @@ public class ToHexUtil {
 	}
 
 	/**
-	 * ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½int
+	 * ×Ö·û´®×ª»»³Éint
 	 */
 	public static int strHexInt(String str) {
 		return Integer.parseInt(str.replaceAll("^0[x|X]", ""), 16);
 	}
 
 	/**
-	 * ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 * ×Ö·û´®×ª»»³ÉÊ®Áù½øÖÆ×Ö·û´®
 	 * 
 	 * @param str
-	 *            String ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ASCIIï¿½Ö·ï¿½ï¿½ï¿½
-	 * @return String Ã¿ï¿½ï¿½ByteÖ®ï¿½ï¿½Õ¸ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½: [61 6C 6B]
+	 *            String ´ý×ª»»µÄASCII×Ö·û´®
+	 * @return String Ã¿¸öByteÖ®¼ä¿Õ¸ñ·Ö¸ô£¬Èç: [61 6C 6B]
 	 */
 	public static String str2HexStr(String str) {
 		StringBuilder sb = new StringBuilder();
@@ -76,11 +76,11 @@ public class ToHexUtil {
 	}
 
 	/**
-	 * Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ ASCIIï¿½Ö·ï¿½ï¿½ï¿½
+	 * Ê®Áù½øÖÆ×Ö·û´®×ª»»³É ASCII×Ö·û´®
 	 * 
 	 * @param str
-	 *            String Byteï¿½Ö·ï¿½ï¿½ï¿½
-	 * @return String ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 *            String Byte×Ö·û´®
+	 * @return String ¶ÔÓ¦µÄ×Ö·û´®
 	 */
 	public static String hexStr2Str(String hexStr) {
 		hexStr = hexStr.toString().trim().replace(" ", "").toUpperCase(Locale.US);
@@ -106,13 +106,13 @@ public class ToHexUtil {
 	}
 
 	/**
-	 * bytes×ªï¿½ï¿½ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 * bytes×ª»»³ÉÊ®Áù½øÖÆ×Ö·û´®
 	 * 
 	 * @param b
-	 *            byte[] byteï¿½ï¿½ï¿½ï¿½
+	 *            byte[] byteÊý×é
 	 * @param iLen
-	 *            int È¡Ç°NÎ»ï¿½ï¿½ï¿½ï¿½ N=iLen
-	 * @return String Ã¿ï¿½ï¿½ByteÖµÖ®ï¿½ï¿½Õ¸ï¿½Ö¸ï¿½
+	 *            int È¡Ç°NÎ»´¦Àí N=iLen
+	 * @return String Ã¿¸öByteÖµÖ®¼ä¿Õ¸ñ·Ö¸ô
 	 */
 	public static String byte2HexStr(byte[] b, int iLen) {
 		StringBuilder sb = new StringBuilder();
@@ -126,19 +126,19 @@ public class ToHexUtil {
 
 	
 	/**
-	 * bytesï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ÎªByteÖµ
+	 * bytes×Ö·û´®×ª»»ÎªByteÖµ
 	 * 
 	 * @param src
-	 *            String Byteï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ByteÖ®ï¿½ï¿½Ã»ï¿½Ð·Ö¸ï¿½ï¿½ï¿½(ï¿½Ö·ï¿½ï¿½ï¿½Î§:0-9 A-F)
+	 *            String Byte×Ö·û´®£¬Ã¿¸öByteÖ®¼äÃ»ÓÐ·Ö¸ô·û(×Ö·û·¶Î§:0-9 A-F)
 	 * @return byte[]
 	 */
 	public static byte[] hexStr2Bytes(String src) {
-		/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ð¹æ·¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+		/* ¶ÔÊäÈëÖµ½øÐÐ¹æ·¶»¯ÕûÀí */
 		src = src.trim().replace(" ", "").toUpperCase(Locale.US);
-		// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¼ï¿½ï¿½
+		// ´¦ÀíÖµ³õÊ¼»¯
 		int m = 0, n = 0;
-		int iLen = src.length() / 2; // ï¿½ï¿½ï¿½ã³¤ï¿½ï¿½
-		byte[] ret = new byte[iLen]; // ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½Õ¼ï¿½
+		int iLen = src.length() / 2; // ¼ÆËã³¤¶È
+		byte[] ret = new byte[iLen]; // ·ÖÅä´æ´¢¿Õ¼ä
 
 		for (int i = 0; i < iLen; i++) {
 			m = i * 2 + 1;
@@ -149,11 +149,11 @@ public class ToHexUtil {
 	}
 
 	/**
-	 * Stringï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½unicodeï¿½ï¿½String
+	 * StringµÄ×Ö·û´®×ª»»³ÉunicodeµÄString
 	 * 
 	 * @param strText
-	 *            String È«ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
-	 * @return String Ã¿ï¿½ï¿½unicodeÖ®ï¿½ï¿½ï¿½Þ·Ö¸ï¿½ï¿½ï¿½
+	 *            String È«½Ç×Ö·û´®
+	 * @return String Ã¿¸öunicodeÖ®¼äÎÞ·Ö¸ô·û
 	 * @throws Exception
 	 */
 	public static String strToUnicode(String strText) throws Exception {
@@ -167,7 +167,7 @@ public class ToHexUtil {
 			strHex = Integer.toHexString(intAsc).toUpperCase();
 			if (intAsc > 128)
 				str.append("\\u");
-			else // ï¿½ï¿½Î»ï¿½ï¿½Ç°ï¿½æ²¹00
+			else // µÍÎ»ÔÚÇ°Ãæ²¹00
 				str.append("\\u00");
 			str.append(strHex);
 		}
@@ -182,11 +182,11 @@ public class ToHexUtil {
 	}
 
 	/**
-	 * unicodeï¿½ï¿½String×ªï¿½ï¿½ï¿½ï¿½Stringï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 * unicodeµÄString×ª»»³ÉStringµÄ×Ö·û´®
 	 * 
 	 * @param hex
-	 *            String 16ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö·ï¿½ï¿½ï¿½ ï¿½ï¿½Ò»ï¿½ï¿½unicodeÎª2byteï¿½ï¿½
-	 * @return String È«ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 *            String 16½øÖÆÖµ×Ö·û´® £¨Ò»¸öunicodeÎª2byte£©
+	 * @return String È«½Ç×Ö·û´®
 	 * @see CHexConver.unicodeToString("\\u0068\\u0065\\u006c\\u006c\\u006f")
 	 */
 	public static String unicodeToString(String hex) {
@@ -195,15 +195,15 @@ public class ToHexUtil {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < t; i++) {
 			String s = hex.substring(i * 6, (i + 1) * 6);
-			// ï¿½ï¿½16ï¿½ï¿½ï¿½Æµï¿½string×ªÎªint
+			// ½«16½øÖÆµÄstring×ªÎªint
 			iTmp = (Integer.valueOf(s.substring(2, 4), 16) << 8) | Integer.valueOf(s.substring(4), 16);
-			// ï¿½ï¿½int×ªï¿½ï¿½Îªï¿½Ö·ï¿½
+			// ½«int×ª»»Îª×Ö·û
 			str.append(new String(Character.toChars(iTmp)));
 		}
 		return str.toString();
 	}
 
-	/**ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ ×ªï¿½ï¿½ï¿½ï¿½asciiï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½*/
+	/**°Ñ×Ö·û´® ×ª»¯³ÉasciiÂë×Ö·û´®*/
 	public static String parseAscii(String str) {
 		StringBuilder sb = new StringBuilder();
 		byte[] bs = str.getBytes();
@@ -214,10 +214,10 @@ public class ToHexUtil {
 
 	
 	/**
-	 *  16ï¿½ï¿½ï¿½ï¿½String Ç°ï¿½ï¿½0
-	 *  @param str   16ï¿½ï¿½ï¿½ï¿½String
-	 *  @param size   ï¿½Ì¶ï¿½Î»ï¿½ï¿½
-	 *  @param isprefixed   trueï¿½ï¿½Ç°ï¿½ï¿½0ï¿½ï¿½falseï¿½Èºï¿½0
+	 *  16½øÖÆString Ç°ºó²¹0
+	 *  @param str   16½øÖÆString
+	 *  @param size   ¹Ì¶¨Î»Êý
+	 *  @param isprefixed   trueÏòÇ°²¹0£¬falseÏÈºó²¹0
 	 * @return
 	 */
 	public static String pad (String str ,int size ,boolean isprefixed) {
@@ -236,8 +236,8 @@ public class ToHexUtil {
 	
 	
 	/**
-	 *  10 ï¿½ï¿½ï¿½ï¿½int ×ª16ï¿½ï¿½ï¿½ï¿½String
-	 * @param n  10 ï¿½ï¿½ï¿½ï¿½int
+	 *  10 ½øÖÆint ×ª16½øÖÆString
+	 * @param n  10 ½øÖÆint
 	 */
 	public static String toHex(int n) {
 		StringBuilder sb = new StringBuilder();
@@ -283,7 +283,7 @@ public class ToHexUtil {
         return (int) c;   
     }
 	
-	/** ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½Îª Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ASCIIï¿½ï¿½   */
+	/** ×Ö·û´®×ª»»Îª Ê®Áù½øÖÆ ASCIIÂë   */
 	public static String string2ASCII(String s) {
 	        if (s == null || "".equals(s)) {   
 	            return null;   
@@ -294,7 +294,7 @@ public class ToHexUtil {
 	        for (int i = 0; i < chars.length; i++) {   
 	            asciiArray[i] = char2ASCII(chars[i]);   
 	        } 
-	        //------------ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	        //------------½«Ê®½øÖÆ×ª»»³ÉÊ®Áù½øÖÆ
 	        String hexArray = "";
 	    	for(int i=0;i<asciiArray.length;i++){
 	    		hexArray = hexArray+Integer.toHexString(asciiArray[i]).toUpperCase();
@@ -303,7 +303,7 @@ public class ToHexUtil {
 	}
 	
 	
-    //ï¿½ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½Æ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Öµ  
+    //¼ÆËã16½øÖÆ¶ÔÓ¦µÄÊýÖµ  
     public static int GetHex(char ch) throws Exception{  
         if ( ch>='0' && ch<='9' )  
             return (int)(ch-'0');  
@@ -313,7 +313,7 @@ public class ToHexUtil {
             return (int)(ch-'A'+10);  
         throw new Exception("error param");  
     }  
-  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+  //¼ÆËãÃÝ  
     public static int GetPower(int nValue, int nCount) throws Exception{  
         if ( nCount <0 )  
             throw new Exception("nCount can't small than 1!");  
@@ -326,7 +326,7 @@ public class ToHexUtil {
         return nSum;  
     }  
     
-  //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+  //ÅÐ¶ÏÊÇ·ñÊÇ16½øÖÆÊý  
     public static boolean IsHex(String strHex){  
     int i = 0;  
     if ( strHex.length() > 2 ){  
@@ -344,7 +344,7 @@ public class ToHexUtil {
     } 
     
     
-  //Ê®ï¿½ï¿½ï¿½ï¿½  
+  //Ê®½øÖÆ  
     public static boolean isOctNumber(String str) {  
         boolean flag = false;  
         for(int i=0,n=str.length();i<n;i++){  
@@ -356,7 +356,7 @@ public class ToHexUtil {
         return flag;  
     }  
     
-  //16ï¿½ï¿½ï¿½ï¿½×ª10ï¿½ï¿½ï¿½ï¿½  
+  //16½øÖÆ×ª10½øÖÆ  
     public static int HexToInt(String strHex){  
         int nResult = 0;  
         if ( !IsHex(strHex) )  

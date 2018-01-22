@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.UserMapper">
+
+    <select id="getObjectByUserName" parameterType="UserSite" resultType="UserSite">
+        select * from user where userName = #{userName};
+    </select>
+
+
+    <insert id="addObjectToOauth2" parameterType="com.bean.site.UserOauth2" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users_oauth2
+             (code,refreshToken,accessToken,userId,scope)
+        VALUES
+            (#{code},#{refreshToken},#{accessToken},#{userId},#{scope});
+    </insert>
+
+
+    <select id="getOauth2ByCondition" parameterType="com.bean.site.UserOauth2" resultType="com.bean.site.UserOauth2">
+        select *
+        from users_oauth2
+        <where>
+            <if test="refreshToken != null and refreshToken != '' ">
+                AND refreshToken = #{refreshToken}
+            </if>
+
+            <if test="code != null and code != '' ">
+                 AND code = #{code}
+            </if>
+        </where>
+    </select>
+
+</mapper>

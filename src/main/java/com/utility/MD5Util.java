@@ -93,5 +93,20 @@ public class MD5Util {
 			"e", "f" };
 
 	// 测试主函数
-
+	public static void main(String args[]) {
+		String s = new String("martinpolar");
+//		System.out.println("原始：" + s);
+//		System.out.println(MD5后：" + MD5(s));
+		System.out.println("MD5后再加密：" + JM("MGCFCBA@BEGGCAFF@FCMLC"));
+//		System.out.println("解密为MD5后的：" + JM(KL(MD5(s))));"
+		//DEFEM@DFEAGAFM@@CLFLA
+		//MGCFCBA@BEGGCAFF@FCMLC
+		//@GEAGFCCF@ABMCDFLB
+		//@GEAGFCCF@ABMCDFLB
+		
+		//0a121940215bfca35aa2e9447ba8285c
+		System.out.println(MD5Util.MD5(s));
+		System.out.println(MD5Util.KL(s));
+		System.out.println(MD5Util.KL(MD5Util.MD5("123456")));
+	}
 }

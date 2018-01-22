@@ -127,7 +127,7 @@ public class AesUtil  implements Serializable {
 		String result = null;
 		try {
 //			MLog.e("data1="+ToHexUtil.byte2HexStr(data, data.length));
-
+			
 			result = new String(data, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -155,9 +155,9 @@ public class AesUtil  implements Serializable {
 		if (in.length <= 0 || in.length % 16 != 0)
 			return new byte[0];
 		byte padding = in[in.length - 1];
-		if (in.length - padding <1)
+		if (in.length - padding <1) 
 			return new byte[0];
-
+		 
 		byte[] out = new byte[in.length - padding];
 		for (int i = 0; i < in.length; i++) {
 			if (i < out.length)
