@@ -3,6 +3,7 @@ package com.intent.amazonintent.refacting.intends;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.bean.site.UserSite;
 import com.init.Constants;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +12,7 @@ public class AmazonItSelfCommandIntend implements IntendRequestInterface {
 
 
 	@Override
-	public SpeechletResponse doSomething(Intent intent,Session session) {
+	public SpeechletResponse doSomething(Intent intent, Session session, UserSite userSite) {
 
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
 		

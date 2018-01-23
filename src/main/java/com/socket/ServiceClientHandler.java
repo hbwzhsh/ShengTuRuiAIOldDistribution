@@ -29,6 +29,8 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
+
+		System.out.println("-----------> session.getId(2222222222):"+session.getId());
 		// TODO Auto-generated method stub
 		super.messageReceived(session, message);
 		char[] mChars = "0123456789ABCDEF".toCharArray();
@@ -60,7 +62,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			cmdData = cmdData.substring(0, endIndex + 4);
 		}
 
-		AesUtil mAesUtil = new AesUtil();
+		AesUtil mAesUtil = SocketFactory.getCurAesInstance(session.getId()+"");
 		List<String> cmdList = new ArrayList<String>();
 		List<String> macList = new ArrayList<String>();
 
@@ -69,13 +71,8 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 		for (int i = 0; i < cmdList.size(); i++) {
 			String loopcmd = cmdList.get(i);
 			String loopmac = macList.get(i);
-
 			String singleItem = parse(loopcmd, mAesUtil, true);
-			
 			System.out.println("singleItem:"+singleItem);
-			
-			
-
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 				// GET\ENDPOINT\ACK:2d021e07004b1200\00\0001\0001\00 <NULL>
 				// GET\ENDPOINT\ACK:[mac]\[ep]\[devid]\[cmdlist]\[attrlist]
@@ -116,7 +113,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 	}
 
 	private void updateDeviceDetails(Device device) {
-
 		for (Device currentdevice : Constants.deviceList) {
 			if (currentdevice.getDeviceMac().equalsIgnoreCase(device.getDeviceMac()) && currentdevice.getEquipmentEp().equalsIgnoreCase(device.getEquipmentEp()) && !currentdevice.getName().equalsIgnoreCase(device.getName()) ) {
 				currentdevice.setName(device.getName());
@@ -127,9 +123,9 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				SpringUtil.getUserMapper().updateHouseRelation(currentdevice);
 
 				logger.debug("update the redis...");
-				ConstantsMethod.updateDeviceLists(Constants.deviceList);
 				break;
 			}
+			ConstantsMethod.updateDeviceLists(Constants.deviceList);
 		}
 	}
 

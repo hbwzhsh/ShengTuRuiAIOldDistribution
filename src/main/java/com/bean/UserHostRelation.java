@@ -3,11 +3,11 @@ package com.bean;
 import java.util.Date;
 
 /*
- * ¼ÌµçÆ÷
+ * ï¿½Ìµï¿½ï¿½ï¿½
  */
 public class UserHostRelation {
 
-	private String hostMac;
+	private String mac;
 	private String ip;
 	private String hostName;
 	private String email;
@@ -63,12 +63,13 @@ public class UserHostRelation {
 		this.amazonId = amazonId;
 	}
 
-	public String getHostMac() {
-		return hostMac;
+
+	public String getMac() {
+		return mac;
 	}
 
-	public void setHostMac(String hostMac) {
-		this.hostMac = hostMac;
+	public void setMac(String mac) {
+		this.mac = mac;
 	}
 
 	public String getEmail() {

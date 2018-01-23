@@ -176,36 +176,7 @@ public class Device implements Serializable {
 	
 	
     public static void main(String[] args) {
-    	Set<Device> deviceList = new HashSet<Device> ();
-    	Device device1 = new Device();
-    	
-    	Device currentdevice = new Device("9C65F91E32F5", "test", "2d2ba80a004b1200", "00","0000");
-    	Constants.deviceList.add(currentdevice);
-    	currentdevice = new Device("9C65F91E32F5", "test", "2d2ba80a004b1200", "00","0000");
-    	Constants.deviceList.add(currentdevice);
-    	currentdevice = new Device("9C65F91E32F51", "test", "2d2ba80a004b1200", "00","0000");
-    	Constants.deviceList.add(currentdevice);
-    	Constants.deviceList.add(currentdevice);
-    	device1.setHostMac("123");
-    	device1.setDeviceMac("9C65F91E32F5");
-//    	device1.setDeviceMac("2d2ba80a004b1200");
-    	device1.setEquipmentEp("00");
-    	device1.setName("test");
-    	// computer_mac=9C65F91E32F5, name=Shangrila#2, mac=d532a80a004b1200, ep=00, devid=0000
-    	Device device2 = new Device();
-    	device2.setHostMac("123");
-    	device2.setDeviceMac("9C65F91E32F5");
-//    	device2.setDeviceMac("9C65F91E32F5");
-    	device2.setEquipmentEp("00");
-    	device2.setName("test");
-    	
-    
-    	
-    	
-    	System.out.println(device1.hashCode());
-    	System.out.println(device2.hashCode());
-    	
-    	System.out.println( Constants.deviceList.size() );
+
     	
 	}
 	

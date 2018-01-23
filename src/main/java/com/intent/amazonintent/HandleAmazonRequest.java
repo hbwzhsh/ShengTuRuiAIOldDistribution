@@ -113,7 +113,7 @@ class DeviceSpeechlet implements Speechlet {
 		}
 		
 		IntendRequestInterface intentObj = IntentTypeFactory.getIntentTypeByName(intentName);
-		return intentObj.doSomething(intent,session);
+		return intentObj.doSomething(intent,session,user);
 
 	}
 

@@ -20,23 +20,31 @@
         update user_house_equipment_relation
              set name = #{name} , devid = #{devid}
         where
-            equipmentMac = #{equipmentMac} and equipmentEp = #{equipmentEp}
+            equipmentMac = #{deviceMac} and equipmentEp = #{equipmentEp}
     </update>
 
 
-    <select id="getUserHostRelation" parameterType="UserHostRelation" >
+    <select id="getUserHostRelation" parameterType="UserHostRelation"  resultType="UserHostRelation">
 
-        SELECT * user_host_relation
+        SELECT * from user_host_relation
         <where>
-            <if test="mac != null">mac=#{mac},</if>
-            <if test="userId != null">userId=#{userId}</if>
+            <if test="mac != null">
+                AND  mac = #{hostMac}
+            </if>
+            <if test="userId != null">
+               AND userId = #{userId}
+            </if>
         </where>
 
     </select>
 
 
     <select id="getDeviceList" parameterType="String" resultType="Device">
-        select  user_house_equipment_relation.userId,house.houseName,floor.floorName,user_house_equipment_relation.hostMac,user_house_equipment_relation.equipmentEp,user_house_equipment_relation.equipmentMac,user_house_equipment_relation.`name`,user_house_equipment_relation.devid from user_house_equipment_relation  JOIN house  on house.houseId = user_house_equipment_relation.houseId JOIN floor on house.floorId=floor.floorId  WHERE user_house_equipment_relation.userId=?
+        select  user_house_equipment_relation.userId,house.houseName,floor.floorName,user_house_equipment_relation.hostMac,user_house_equipment_relation.equipmentEp,user_house_equipment_relation.equipmentMac,user_house_equipment_relation.`name`,user_house_equipment_relation.devid from user_house_equipment_relation  JOIN house  on house.houseId = user_house_equipment_relation.houseId JOIN floor on house.floorId=floor.floorId  WHERE user_house_equipment_relation.userId=#{userId}
+    </select>
+
+    <select id="getDeviceWithNoNameList" parameterType="String" resultType="int">
+        select count(*) from user_house_equipment_relation where (name is null or name = '') and userId = #{userId}
     </select>
 
 
@@ -47,6 +55,19 @@
         VALUES
             (#{code},#{refreshToken},#{accessToken},#{userId},#{scope});
     </insert>
+
+    <insert id="addUserTemp" parameterType="com.bean.UsersTemp" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users_temp
+        (userId,createTime)
+        VALUES
+        (#{userId},#{createTime});
+    </insert>
+
+
+    <select id="getUsersTemp" parameterType="String" resultType="com.bean.UsersTemp">
+        select * from users_temp;
+    </select>
+
 
 
     <select id="getOauth2ByCondition" parameterType="com.bean.site.UserOauth2" resultType="com.bean.site.UserOauth2">

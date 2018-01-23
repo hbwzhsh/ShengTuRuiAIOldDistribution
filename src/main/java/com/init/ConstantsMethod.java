@@ -76,7 +76,7 @@ public class ConstantsMethod {
 		Constants.clientId =  (String) config.get("clientId");
 		Constants.clientSecret =  (String) config.get("clientSecret");*/
 
-        // reload the data from redis
+    try{
         Set<Device> tempdeviceList = RedisDAO.getHashSet(Constants.deviceKey);
         if (tempdeviceList != null)
             Constants.deviceList = tempdeviceList;
@@ -85,6 +85,11 @@ public class ConstantsMethod {
         Map<String, String> tempdefualtRooms = RedisDAO.getHashMap(Constants.dafualtRoomKey);
         if (tempdefualtRooms != null)
             Constants.defualtRooms = tempdefualtRooms;
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+        // reload the data from redis
+
 
         //DbPoolConnection.getInstance();
     }

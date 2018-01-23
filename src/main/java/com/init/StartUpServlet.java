@@ -1,5 +1,10 @@
 package com.init;
 
+import com.SpringUtil;
+import com.bean.Device;
+import com.bean.UsersTemp;
+import com.socket.SocketFactory;
+import com.socket.SoketClient;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -9,6 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Servlet implementation class StartUpServlet
@@ -34,7 +42,50 @@ public class StartUpServlet extends HttpServlet {
         logger.debug("12312312231231223");
         
         ConstantsMethod.initData();
+
+        //new SoketClient().connectService("10132" );
+		fullfillData();
+
     }
+
+
+    private void fullfillData(){
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				try{
+					List<UsersTemp> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
+					for(UsersTemp users : usersTempList){
+						int countNumber = 	SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId()+"");
+						if(countNumber > 0){
+
+							SoketClient tempClient  = SocketFactory.socketConnections.get(users.getUserId()+"");
+							if(tempClient != null){
+								boolean isConnected = tempClient.getSendsession().isConnected();
+								if(!isConnected){
+									SocketFactory.socketConnections.remove(users.getUserId());
+									tempClient =null;
+								}
+							}
+
+							if(tempClient == null){
+								SoketClient client = 	new SoketClient();
+								SocketFactory.socketConnections.put( users.getUserId()+"",client);
+								client.connectService(users.getUserId()+"");
+
+							}else{
+								tempClient.getDevicesFromService(users.getUserId() + "");
+							}
+						}
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+
+			}
+		}, 5000, 20000);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

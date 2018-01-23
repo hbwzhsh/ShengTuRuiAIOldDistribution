@@ -15,6 +15,9 @@ public class IntendParams {
 	private String intentName;
 	private String deviceState;
 	private String deviceCMD;
+	private String userId;
+
+
 	
 
 
@@ -55,7 +58,6 @@ public class IntendParams {
 	private String getCmdByIntentName(String intendName, String percent) {
 		IntendType deviceType = DeviceTypeFactory.getDeviceByIntendName(intendName);
 		return deviceType.getCmd();
-
 	}
 	
 	
@@ -69,8 +71,15 @@ public class IntendParams {
 		return StringUtils.EMPTY;
 
 	}
-	
 
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public String getWhere() {
 		return where;

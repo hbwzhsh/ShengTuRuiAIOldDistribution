@@ -5,6 +5,8 @@ import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.bean.Device;
 import com.bean.IntendParams;
+import com.bean.User;
+import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.service.AmazonService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +26,7 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 
 	private Intent intentSession;
 	
-	public boolean createIntendParasObject(Intent intent, Session session) {
+	public boolean createIntendParasObject(Intent intent, Session session, UserSite user) {
 		
 		// TODO Auto-generated method stub
 		this.item = IntendParams.createIntendParamsObj(intent, AmazonService.getProfileData(session.getUser().getAccessToken()));
@@ -61,6 +63,7 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 			}
 
 			tempItem.setWhere(this.item.getWhere());
+			this.item.setUserId(user.getUserId());
 			setIntentSession(intent);
 			
 			this.item = tempItem;
@@ -105,9 +108,9 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 	}
 
 	@Override
-	public SpeechletResponse doSomething(Intent intend, Session session) {
+	public SpeechletResponse doSomething(Intent intend, Session session, UserSite user) {
 		// TODO Auto-generated method stub
-		boolean flag = createIntendParasObject(intend, session);
+		boolean flag = createIntendParasObject(intend, session,user);
 		if (!flag) {
 			return AmazonResponse.getNewAskResponse(voiceMessge);
 		}

@@ -3,6 +3,8 @@ package com.intent.amazonintent.refacting.intends;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.bean.User;
+import com.bean.site.UserSite;
 import com.datasource.RedisDAO;
 import com.init.Constants;
 import com.intent.amazonintent.DeviceService;
@@ -15,7 +17,7 @@ public class CommandToolsIntend implements IntendRequestInterface {
 	private DeviceService deviceService = new DeviceService();
 
 	@Override
-	public SpeechletResponse doSomething(Intent intent ,Session session) {
+	public SpeechletResponse doSomething(Intent intent , Session session, UserSite user) {
 		
 		String accessToken = AmazonService.getProfileData(session.getUser().getAccessToken());
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
