@@ -1,8 +1,10 @@
 package com.bean.google;
 
+import java.util.List;
+
 public class GoogleRequest {
     private String requestId;
-    private Object inputs;
+    private List<GoogleInputs> inputs;
 
     public String getRequestId() {
         return requestId;
@@ -12,11 +14,12 @@ public class GoogleRequest {
         this.requestId = requestId;
     }
 
-    public Object getInputs() {
+
+    public List<GoogleInputs> getInputs() {
         return inputs;
     }
 
-    public void setInputs(Object inputs) {
+    public void setInputs(List<GoogleInputs> inputs) {
         this.inputs = inputs;
     }
 }

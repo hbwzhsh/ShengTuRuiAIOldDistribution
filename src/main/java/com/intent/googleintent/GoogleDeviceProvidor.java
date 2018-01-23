@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bean.Device;
+import com.bean.google.*;
 import com.bean.site.UserOauth2;
+import com.socket.SocketFactory;
+import com.socket.SoketClient;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,10 @@ import java.util.List;
 @RestController
 public class GoogleDeviceProvidor {
 
+    private static String devicesSYNC = "action.devices.SYNC";
+    private static String devicesQUERY = "action.devices.QUERY";
+    private static String devicesEXECUTE = "action.devices.EXECUTE";
+
     @RequestMapping(value = "/googledevices")
     public String token(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -28,15 +35,27 @@ public class GoogleDeviceProvidor {
             userOauth2.setAccessToken(accessToken);
             UserOauth2 userOauth2Reust = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
             if (userOauth2Reust != null) {
-                List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(userOauth2Reust.getUserId() + "");
+
                 String result = IOUtils.toString(request.getInputStream(), "UTF-8");
-                JSONObject googleRequst = JSON.parseObject(result);
-                if (googleRequst != null) {
-                    String requestId = (String) googleRequst.get("requestId");
-                    String responseStr = googleDevicesDiscovery(requestId,deviceList).toJSONString();
-                    System.out.println("|responseStr:" + responseStr);
-                    return responseStr;
+                GoogleRequest request1 =  JSONObject.toJavaObject(JSONObject.parseObject(result), GoogleRequest.class);
+
+                if (request1 != null) {
+                   for(GoogleInputs inputs:request1.getInputs()){
+                       if(devicesSYNC.equalsIgnoreCase(inputs.getIntent())){
+                           List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(userOauth2Reust.getUserId() + "");
+                           return requestSync(request1.getRequestId(),deviceList,userOauth2);
+
+                       }else if(devicesQUERY.equalsIgnoreCase(inputs.getIntent())){
+                           return devicesQuery(inputs.getPayload(),userOauth2);
+                       }else if(devicesEXECUTE.equalsIgnoreCase(inputs.getIntent())){
+                           return deviceExecute(inputs.getPayload(),userOauth2);
+                       }
+
+                   }
+
                 }
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,8 +63,34 @@ public class GoogleDeviceProvidor {
         return "";
     }
 
-    public static void main(String[] args) {
+    private String  deviceExecute(String json,UserOauth2 userOauth2){
+        String responseStr = "";
+        System.out.println("|responseStr:" + responseStr);
+        JSONArray list = JSONObject.parseObject(json).getJSONArray("commands");
+        GoogleCommands googleCommands = JSONObject.toJavaObject(JSONObject.parseObject(list.get(0).toString()), GoogleCommands.class);
+        List<GoogleCMDDevices> googleCMDDevices = googleCommands.getDevices();
+        List<GoogleExecutions> googleExecutions = googleCommands.getExecution();
 
+//        SoketClient tempClient  = SocketFactory.socketConnections.get(users.getUserId()+"");
+//        tempClient.connectServiceAndExeCommand();
+        return responseStr;
+    }
+
+
+    private String  devicesQuery(String json,UserOauth2 userOauth2){
+        String responseStr = "";
+        System.out.println("|responseStr:" + responseStr);
+        return responseStr;
+    }
+
+
+    private String  requestSync(String requestId,List<Device> deviceList,UserOauth2 userOauth2){
+        String responseStr = googleDevicesDiscovery(requestId, deviceList).toJSONString();
+        System.out.println("|responseStr:" + responseStr);
+        return responseStr;
+    }
+
+    public static void main(String[] args) {
 //        System.out.println(googleDevicesDiscovery("123").toJSONString());
     }
 
