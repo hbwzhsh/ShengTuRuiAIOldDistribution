@@ -28,7 +28,6 @@ public class CommandToolsIntend implements IntendRequestInterface {
 				return refreshData(accessToken);
 			case Constants.GETDEFAULTROOM:
 				String cacheldefaultRoom = Constants.defualtRooms.get(accessToken);
-	
 				if (StringUtils.isBlank(cacheldefaultRoom)) {
 					return AmazonResponse.getNewAskResponse("you haven't set your default room.");
 				} else {

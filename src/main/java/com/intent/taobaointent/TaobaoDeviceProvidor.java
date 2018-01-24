@@ -21,7 +21,7 @@ public class TaobaoDeviceProvidor {
         AliResponse token = new AliResponse();
         if (AliGenieNamespace.discovery.equalsIgnoreCase(request.getHeader().getNamespace())) {
             AliDevicesResponse aliDevicesResponse = new AliDevicesResponse();
-            Header header = new Header();
+            TaobaoHeader header = new TaobaoHeader();
             header = request.getHeader();
             header.setName("DiscoveryDevicesResponse");
             String accessToken = request.getPayload().getAccessToken();

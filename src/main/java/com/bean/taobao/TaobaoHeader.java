@@ -1,6 +1,6 @@
 package com.bean.taobao;
 
-public class Header {
+public class TaobaoHeader {
     private int payLoadVersion;
     private String messageId;
     private String name;

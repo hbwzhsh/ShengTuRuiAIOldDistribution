@@ -37,6 +37,29 @@ public class DeviceService {
         client.connectService(userId);
     }
 
+
+    public void sendCmdToServer(final List<Device> tempDevicelist, final String cmd, final String userId) {
+
+        SoketClient client = SocketFactory.socketConnections.get(userId);
+        Runnable runnable = () -> {
+            List<String> tempDeviceMacList = new ArrayList<String>();
+            List<String> tempDeviceHostList = new ArrayList<String>();
+
+            for (Device tempDevice : tempDevicelist) {
+                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + "00");
+
+                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + "00");
+                tempDeviceHostList.add(tempDevice.getHostMac());
+
+                //ConstantsMethod.reSetDevicedata(tempDevice, item.getPersentage() + "");
+            }
+
+            client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
     public void sendCmdToServer(final Collection<Device> tempDevicelist, final String cmd, final IntendParams item) {
 
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());

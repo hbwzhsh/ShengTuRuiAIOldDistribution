@@ -1,6 +1,6 @@
 package com.bean.taobao;
 
-public class Payload {
+public class TaobaoPayload {
 
     private String accessToken;
     private String deviceId;

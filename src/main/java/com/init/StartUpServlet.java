@@ -44,7 +44,7 @@ public class StartUpServlet extends HttpServlet {
         ConstantsMethod.initData();
 
         //new SoketClient().connectService("10132" );
-		fullfillData();
+		//fullfillData();
 
     }
 
@@ -84,7 +84,7 @@ public class StartUpServlet extends HttpServlet {
 				}
 
 			}
-		}, 5000, 20000);
+		}, 5000, 20000000);
 	}
 
 	/**

@@ -2,14 +2,14 @@ package com.bean.taobao;
 
 public class AliDevicesResponse extends AliResponse {
 
-    private Header header;
+    private TaobaoHeader header;
     private Object payload;
 
-    public Header getHeader() {
+    public TaobaoHeader getHeader() {
         return header;
     }
 
-    public void setHeader(Header header) {
+    public void setHeader(TaobaoHeader header) {
         this.header = header;
     }
 

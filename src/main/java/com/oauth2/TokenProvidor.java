@@ -1,8 +1,10 @@
 package com.oauth2;
 
 import com.SpringUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.bean.site.UserOauth2;
 import com.mapper.UserMapper;
+import com.oauth2.model.AccessData;
 import com.oauth2.model.AccessToken;
 import com.oauth2.model.ErrorToken;
 import com.oauth2.model.TokenInfo;
@@ -58,7 +60,16 @@ public class TokenProvidor {
             UserOauth2 oauth2 = new UserOauth2();
             oauth2.setCode(code);
             TokenInfo token = getTokenInfo(oauth2);
-            if (token != null) return token;
+            if (token != null){
+               /* AccessData tokenOld = AccessDataFactory.list.get(0);
+                AccessToken accessToken = new AccessToken();
+                accessToken.setExpires_in(tokenOld.getExpires_in());
+                accessToken.setAccess_token(tokenOld.getAccess_token());
+                accessToken.setRefresh_token(tokenOld.getRefresh_token());
+                accessToken.setToken_type("bearer");*/
+                System.out.println("tokenJSON:"+ JSONObject.toJSONString(token));
+                return token;
+            }
         } else if ("refresh_token".equalsIgnoreCase(grant_type)) {
             String refresh_token = request.getParameter("refresh_token");
             UserOauth2 oauth2 = new UserOauth2();
@@ -69,6 +80,7 @@ public class TokenProvidor {
         ErrorToken token = new ErrorToken();
         token.setError("errorCode");
         token.setError_description("errorCode description");
+        System.out.println("tokenJSON:"+ JSONObject.toJSONString(token));
         return token;
     }
 
@@ -79,6 +91,7 @@ public class TokenProvidor {
             token.setAccess_token(result.getAccessToken());
             token.setRefresh_token(result.getRefreshToken());
             token.setExpires_in(TokenFactory.expires_in);
+            token.setToken_type("bearer");
             return token;
         }
         return null;

@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthClient {
 
 
-
     @RequestMapping(value = "/login")
     public String login(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         String redirect_uri = request.getParameter("redirect_uri");
@@ -31,17 +30,6 @@ public class AuthClient {
         map.put("redirect_uri", redirect_uri);
         map.put("state", state);
         return "/oauth/login";
-    }
-
-
-    @RequestMapping(value = "/loginGoogle")
-    public String loginGoogle(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
-        String redirect_uri = request.getParameter("redirect_uri");
-        String state = request.getParameter("state");
-        System.out.println(redirect_uri);
-        map.put("redirect_uri", redirect_uri);
-        map.put("state", state);
-        return "loginGoogle";
     }
 
 
@@ -61,7 +49,7 @@ public class AuthClient {
 
         UserSite userSite = new UserSite();
         userSite.setUserName(userName);
-        UserSite user = SpringUtil.getUserMapper().getObjectByCondition( userSite );
+        UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userSite);
         if (user == null) {
             responseMsg.setData("this user isn't exist!");
             return responseMsg;
@@ -71,54 +59,42 @@ public class AuthClient {
             responseMsg.setData("the password is wrong!");
             return responseMsg;
         }
+
+
         UserOauth2 userOauth2 = new UserOauth2();
-        userOauth2.setAccessToken( TokenFactory.createAccessToken() );
-        userOauth2.setRefreshToken( TokenFactory.createRefreshToken() );
-        userOauth2.setCode( TokenFactory.createCode() );
         userOauth2.setUserId(Integer.parseInt(user.getUserId()));
+        UserOauth2 userOauthResult = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
+        if (userOauthResult == null) {
 
-        int count  = SpringUtil.getUserMapper().addObjectToOauth2(userOauth2);
-        if(count == 0){
-            responseMsg.setData("something wrong!");
-            return responseMsg;
-        }else{
-            if(redirect_uri.indexOf("google")!=-1){
-                responseMsg.setData(redirect_uri + "?state="+state+"&code=" + userOauth2.getCode());
-            }else{
-                responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauth2.getCode());
-            }
+            userOauth2.setAccessToken(TokenFactory.createAccessToken());
+            userOauth2.setRefreshToken(TokenFactory.createRefreshToken());
+            userOauth2.setCode(TokenFactory.createCode());
 
-            //new DeviceService().createSocketSession( user.getUserId() );
+            int count = SpringUtil.getUserMapper().addObjectToOauth2(userOauth2);
+            if (count == 0) {
+                responseMsg.setData("something wrong!");
+                return responseMsg;
+            } else {
+                if (redirect_uri.indexOf("google") != -1) {
+                    responseMsg.setData(redirect_uri + "?state=" + state + "&code=" + userOauth2.getCode());
+                } else {
+                    responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauth2.getCode());
+                }
 
-            UsersTemp temp = new UsersTemp();
-            temp.setUserId(Integer.parseInt(user.getUserId()));
-            SpringUtil.getUserMapper().addUserTemp(temp);
-
-            responseMsg.setSuccessStatus();
-            return responseMsg;
-        }
-    }
-
-
-    @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
-    public void loginSubmit(HttpServletRequest request, HttpServletResponse response) {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-        String redirect_uri = request.getParameter("redirect_uri");
-        String state = request.getParameter("state");
-        System.out.println("loginSubmit:" + redirect_uri);
-        if ("admin".equalsIgnoreCase(userName) && "admin".equalsIgnoreCase(password)) {
-            try {
-                String code = "123456code";
-                response.sendRedirect(redirect_uri + "&state=" + state + "&code=" + code);
-            } catch (Exception e) {
-                e.printStackTrace();
+                UsersTemp temp = new UsersTemp();
+                temp.setUserId(Integer.parseInt(user.getUserId()));
+                SpringUtil.getUserMapper().addUserTemp(temp);
+                responseMsg.setSuccessStatus();
             }
         } else {
-            System.out.println("test....");
+            if (redirect_uri.indexOf("google") != -1) {
+                responseMsg.setData(redirect_uri + "?state=" + state + "&code=" + userOauthResult.getCode());
+            } else {
+                responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauthResult.getCode());
+            }
         }
+        return responseMsg;
     }
-
 
 
 }

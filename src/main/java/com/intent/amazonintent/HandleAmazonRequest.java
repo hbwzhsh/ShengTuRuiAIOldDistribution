@@ -72,7 +72,7 @@ class DeviceSpeechlet implements Speechlet {
 			return AmazonResponse.getNewAskResponse( speechText );
 		}
 			
-		speechText = "welcome back to Smart plus Devices,what can I do for you ?";
+		speechText = "welcome back to Smart plus DevicesSync,what can I do for you ?";
 		return AmazonResponse.getNewAskResponse( speechText );
 	}
 

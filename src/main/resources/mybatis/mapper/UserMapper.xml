@@ -71,11 +71,18 @@
 
 
     <select id="getOauth2ByCondition" parameterType="com.bean.site.UserOauth2" resultType="com.bean.site.UserOauth2">
-        select *
-        from users_oauth2
+        select * from users_oauth2
         <where>
             <if test="refreshToken != null and refreshToken != '' ">
                 AND refreshToken = #{refreshToken}
+            </if>
+
+            <if test="accessToken != null and accessToken != '' ">
+                AND accessToken = #{accessToken}
+            </if>
+
+            <if test="userId != 0 ">
+                AND userId = #{userId}
             </if>
 
             <if test="code != null and code != '' ">
