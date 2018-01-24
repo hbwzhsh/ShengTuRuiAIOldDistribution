@@ -6,6 +6,7 @@ import com.bean.Device;
 import com.bean.site.UserOauth2;
 import com.bean.taobao.*;
 import com.data.RedisDAO;
+import com.service.DeviceService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,9 @@ import java.util.Random;
 
 @RestController
 public class TaobaoDeviceProvidor {
+
+
+    private DeviceService deviceService = new DeviceService();
 
     @RequestMapping(value = "/devices", method = RequestMethod.POST)
     public AliResponse token(@RequestBody AliGenieRequest request) {
@@ -68,6 +72,8 @@ public class TaobaoDeviceProvidor {
             return aliDevicesResponse;
         } else if (AliGenieNamespace.control.equalsIgnoreCase(request.getHeader().getNamespace())) {
 
+            List<Device> deviceList = RedisDAO.getObject(userResult.getUserId());
+            deviceService.sendCmdToServer(deviceListData,cmdStr,userOauth2.getUserId()+"");
         }
 
         /*try {
