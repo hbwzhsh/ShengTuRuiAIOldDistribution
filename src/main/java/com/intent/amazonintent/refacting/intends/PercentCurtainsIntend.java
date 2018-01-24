@@ -1,9 +1,9 @@
 package com.intent.amazonintent.refacting.intends;
 
 import com.bean.Device;
-import com.init.Constants;
-import com.init.ConstantsMethod;
-import com.intent.amazonintent.DeviceService;
+import com.utility.Constants;
+import com.utility.ConstantsMethod;
+import com.service.DeviceService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;

@@ -2,12 +2,8 @@ package com.service;
 
 import com.SpringUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.bean.User;
 import com.bean.site.UserSite;
-import com.intent.amazonintent.DeviceService;
-import com.mapper.UserMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;

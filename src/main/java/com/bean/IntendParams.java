@@ -1,8 +1,8 @@
 package com.bean;
 
 import com.amazon.speech.slu.Intent;
-import com.init.Constants;
-import com.init.ConstantsMethod;
+import com.utility.Constants;
+import com.utility.ConstantsMethod;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,9 +41,7 @@ public class IntendParams {
 		String where = (intent.getSlot("where") == null) ? StringUtils.EMPTY : intent.getSlot("where").getValue();
 		String deviceName = (intent.getSlot("devicename") == null) ? StringUtils.EMPTY : intent.getSlot("devicename").getValue();
 		String persentage = (intent.getSlot("persentage") == null) ? StringUtils.EMPTY : intent.getSlot("persentage").getValue();
-		
-		
-       
+
 		if (StringUtils.isBlank(where)) {
 			where = Constants.defualtRooms.get(accessToken);
 		}
@@ -64,9 +62,9 @@ public class IntendParams {
 	private static String getPercentByIntentName(String intendName) {
 		
 		if(intendName.equalsIgnoreCase(Constants.TURNONLIGHT)|| intendName.equalsIgnoreCase(Constants.OPENCURTAINS)) {
-			return "100";
+			return Constants.maxPercent;
 		}else if(intendName.equalsIgnoreCase(Constants.TURNOFFLIGHT)|| intendName.equalsIgnoreCase(Constants.CLOSECURTAINS)) {
-			return "0";
+			return Constants.minPercent;
 		}
 		return StringUtils.EMPTY;
 

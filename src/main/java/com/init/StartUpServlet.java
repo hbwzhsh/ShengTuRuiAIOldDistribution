@@ -1,10 +1,11 @@
 package com.init;
 
 import com.SpringUtil;
-import com.bean.Device;
-import com.bean.UsersTemp;
+import com.bean.SpeakerUsers;
+import com.data.DeviceDataManager;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
+import com.utility.ConstantsMethod;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -43,49 +44,12 @@ public class StartUpServlet extends HttpServlet {
         
         ConstantsMethod.initData();
 
-        //new SoketClient().connectService("10132" );
-		//fullfillData();
+		DeviceDataManager.updateDataSchedule();
 
     }
 
 
-    private void fullfillData(){
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				try{
-					List<UsersTemp> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
-					for(UsersTemp users : usersTempList){
-						int countNumber = 	SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId()+"");
-						if(countNumber > 0){
 
-							SoketClient tempClient  = SocketFactory.socketConnections.get(users.getUserId()+"");
-							if(tempClient != null){
-								boolean isConnected = tempClient.getSendsession().isConnected();
-								if(!isConnected){
-									SocketFactory.socketConnections.remove(users.getUserId());
-									tempClient =null;
-								}
-							}
-
-							if(tempClient == null){
-								SoketClient client = 	new SoketClient();
-								SocketFactory.socketConnections.put( users.getUserId()+"",client);
-								client.connectService(users.getUserId()+"");
-
-							}else{
-								tempClient.getDevicesFromService(users.getUserId() + "");
-							}
-						}
-					}
-				}catch (Exception e){
-					e.printStackTrace();
-				}
-
-			}
-		}, 5000, 20000000);
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

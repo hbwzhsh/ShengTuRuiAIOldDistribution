@@ -1,21 +1,18 @@
-package com.intent.amazonintent;
+package com.service;
 
 import com.SpringUtil;
 import com.bean.Device;
 import com.bean.IntendParams;
 import com.bean.IntendType;
-import com.bean.User;
 import com.bean.site.UserSite;
-import com.init.Constants;
-import com.init.ConstantsMethod;
+import com.utility.Constants;
+import com.utility.ConstantsMethod;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
-import com.mapper.UserMapper;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -44,14 +41,11 @@ public class DeviceService {
         Runnable runnable = () -> {
             List<String> tempDeviceMacList = new ArrayList<String>();
             List<String> tempDeviceHostList = new ArrayList<String>();
-
             for (Device tempDevice : tempDevicelist) {
-                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + "00");
+                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
 
-                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + "00");
+                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
                 tempDeviceHostList.add(tempDevice.getHostMac());
-
-                //ConstantsMethod.reSetDevicedata(tempDevice, item.getPersentage() + "");
             }
 
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);

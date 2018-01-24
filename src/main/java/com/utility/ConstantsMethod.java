@@ -1,8 +1,7 @@
-package com.init;
+package com.utility;
 
 import com.bean.Device;
-import com.datasource.RedisDAO;
-import com.utility.ToHexUtil;
+import com.data.RedisDAO;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.Set;

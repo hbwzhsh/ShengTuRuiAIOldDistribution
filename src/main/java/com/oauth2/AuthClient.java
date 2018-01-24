@@ -1,10 +1,9 @@
 package com.oauth2;
 
 import com.SpringUtil;
-import com.bean.UsersTemp;
+import com.bean.SpeakerUsers;
 import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
-import com.intent.amazonintent.DeviceService;
 import com.oauth2.model.ResponseMsg;
 import com.utility.MD5Util;
 import com.utility.TokenFactory;
@@ -81,7 +80,7 @@ public class AuthClient {
                     responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauth2.getCode());
                 }
 
-                UsersTemp temp = new UsersTemp();
+                SpeakerUsers temp = new SpeakerUsers();
                 temp.setUserId(Integer.parseInt(user.getUserId()));
                 SpringUtil.getUserMapper().addUserTemp(temp);
                 responseMsg.setSuccessStatus();

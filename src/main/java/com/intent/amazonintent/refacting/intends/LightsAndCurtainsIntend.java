@@ -1,7 +1,7 @@
 package com.intent.amazonintent.refacting.intends;
 
 import com.bean.Device;
-import com.intent.amazonintent.DeviceService;
+import com.service.DeviceService;
 
 import java.util.List;
 

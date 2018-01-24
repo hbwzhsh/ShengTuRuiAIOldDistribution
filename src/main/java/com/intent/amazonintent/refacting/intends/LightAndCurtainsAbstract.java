@@ -5,7 +5,6 @@ import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.bean.Device;
 import com.bean.IntendParams;
-import com.bean.User;
 import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.service.AmazonService;

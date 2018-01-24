@@ -1,7 +1,7 @@
 package com.intent.amazonintent.refacting;
 
 import com.bean.IntendType;
-import com.init.Constants;
+import com.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;

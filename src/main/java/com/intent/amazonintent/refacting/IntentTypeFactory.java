@@ -1,6 +1,6 @@
 package com.intent.amazonintent.refacting;
 
-import com.init.Constants;
+import com.utility.Constants;
 import com.intent.amazonintent.refacting.intends.*;
 
 import java.util.Arrays;

@@ -2,9 +2,8 @@ package com.socket;
 
 import com.SpringUtil;
 import com.bean.Device;
-import com.init.Constants;
-import com.init.ConstantsMethod;
-import com.mapper.UserMapper;
+import com.utility.Constants;
+import com.utility.ConstantsMethod;
 import com.utility.AesUtil;
 import com.utility.CRC8;
 import com.utility.CmdUtil;
@@ -41,10 +40,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			cmdstr.append(mChars[bytes[n] & 0x0F]);// 0x0f����ʮ���Ƶ�15
 		}
 		cmdstr.toString().trim().toUpperCase(Locale.US);
-		// logger.debug("sb:"+sb.toString());
-//		System.out.println("cmdstr.toString():"+cmdstr.toString());
 
-		// ���ݹ������ֲ����������ݰ�
 		String cmdData = cmdstr.toString();
 		if (!StringUtils.isEmpty(serviceEndRremain)) {
 			cmdData = serviceEndRremain + cmdData;

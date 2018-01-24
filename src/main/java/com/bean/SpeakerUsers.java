@@ -1,15 +1,16 @@
 package com.bean;
 
-public class UsersTemp {
-    private int userId;
+public class SpeakerUsers {
+    private String userId;
     private String createTime;
     private int id;
 
-    public int getUserId() {
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

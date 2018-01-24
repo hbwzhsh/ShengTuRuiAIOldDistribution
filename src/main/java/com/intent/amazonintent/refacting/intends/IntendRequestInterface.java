@@ -3,7 +3,6 @@ package com.intent.amazonintent.refacting.intends;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
-import com.bean.User;
 import com.bean.site.UserSite;
 
 public interface IntendRequestInterface {

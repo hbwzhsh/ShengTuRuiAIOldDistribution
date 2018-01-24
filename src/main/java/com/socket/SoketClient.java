@@ -2,9 +2,8 @@ package com.socket;
 
 import com.SpringUtil;
 import com.bean.UserHostRelation;
-import com.bean.site.UserSite;
-import com.init.Constants;
-import com.intent.amazonintent.DeviceService;
+import com.utility.Constants;
+import com.service.DeviceService;
 import com.utility.AesUtil;
 import com.utility.CmdUtil;
 import com.utility.ToHexUtil;

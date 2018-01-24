@@ -4,7 +4,7 @@ import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.bean.site.UserSite;
-import com.init.Constants;
+import com.utility.Constants;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import org.apache.commons.lang3.StringUtils;
 

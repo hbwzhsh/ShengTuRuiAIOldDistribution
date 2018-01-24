@@ -1,7 +1,7 @@
 package com.mapper;
 import com.bean.Device;
 import com.bean.UserHostRelation;
-import com.bean.UsersTemp;
+import com.bean.SpeakerUsers;
 import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
 
@@ -18,9 +18,9 @@ public interface UserMapper {
     public List<UserHostRelation> getUserHostRelation(UserHostRelation userHostRelation);
     public List<Device> getDeviceList(String userId);
 
-    public List<UsersTemp> getUsersTemp();
+    public List<SpeakerUsers> getUsersTemp();
 
-    public int addUserTemp(UsersTemp usersTemp);
+    public int addUserTemp(SpeakerUsers usersTemp);
 
 
     public int getDeviceWithNoNameList(String userId);

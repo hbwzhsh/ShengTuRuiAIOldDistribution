@@ -13,7 +13,6 @@ import com.SpringUtil;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.*;
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
-import com.bean.User;
 import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.intent.amazonintent.refacting.IntentTypeFactory;

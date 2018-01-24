@@ -4,19 +4,19 @@ import com.SpringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bean.Device;
-import com.bean.IntendParams;
 import com.bean.google.*;
 import com.bean.google.newpojo.command.request.DeviceExeRequest;
 import com.bean.google.newpojo.command.request.Devices;
 import com.bean.google.newpojo.command.request.Execution;
-import com.bean.google.newpojo.command.request.Payload;
 import com.bean.google.newpojo.command.response.CommandsResponse;
 import com.bean.google.newpojo.command.response.DeviceExeResponse;
 import com.bean.google.newpojo.command.response.PayloadResponse;
 import com.bean.google.newpojo.command.response.StatesResponse;
 import com.bean.google.newpojo.sync.*;
 import com.bean.site.UserOauth2;
-import com.intent.amazonintent.DeviceService;
+import com.data.RedisDAO;
+import com.utility.Constants;
+import com.service.DeviceService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class GoogleDeviceProvidor {
@@ -58,7 +59,7 @@ public class GoogleDeviceProvidor {
                 if (request1 != null) {
                     for (GoogleInputs inputs : request1.getInputs()) {
                         if (devicesSYNC.equalsIgnoreCase(inputs.getIntent())) {
-                            List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(userOauth2Reust.getUserId() + "");
+                            List<Device> deviceList =(ArrayList) RedisDAO.getObject(userOauth2.getUserId()+"");
                             return requestSync( request1.getRequestId(), deviceList, userOauth2 );
                         } else if (devicesQUERY.equalsIgnoreCase(inputs.getIntent())) {
                             return devicesQuery(result, userOauth2);
@@ -87,6 +88,7 @@ public class GoogleDeviceProvidor {
             Device device1 = new Device();
             device1.setDeviceMac(device.getCustomData().getDeviceMac());
             device1.setEquipmentEp(device.getCustomData().getDeviceEq());
+            device1.setId(device.getId());
             deviceListData.add(device1);
         }
 
@@ -94,8 +96,15 @@ public class GoogleDeviceProvidor {
         for(Execution execution:executions){
             operateCmd =   execution.getParams().getOn();
         }
+        String cmdStr = "";
+        if(operateCmd){
+            cmdStr = Constants.openCmd;
+        }else{
+            cmdStr = Constants.closeCmd;
+        }
 
-        deviceService.sendCmdToServer(deviceListData,"0000",userOauth2.getUserId()+"");
+        deviceService.sendCmdToServer(deviceListData,cmdStr,userOauth2.getUserId()+"");
+
 
         DeviceExeResponse deviceExeResponse = new DeviceExeResponse();
         CommandsResponse commands = new CommandsResponse();
@@ -103,7 +112,9 @@ public class GoogleDeviceProvidor {
         states.setOn(true);
         states.setOnline(true);
 
-        commands.setIds(Arrays.asList("123"));
+
+        List<String> ids = deviceListData.stream().map(x -> x.getId()).collect(Collectors.toList());
+        commands.setIds(ids);
         commands.setStates(states);
         commands.setStatus("SUCCESS");
         List<CommandsResponse> commandsList = new ArrayList<>();
@@ -112,8 +123,6 @@ public class GoogleDeviceProvidor {
 
         PayloadResponse payload = new PayloadResponse();
         payload.setCommands(commandsList);
-
-
         deviceExeResponse.setPayload(payload);
         deviceExeResponse.setRequestId(deviceExeRequest.getRequestId());
         return JSONObject.toJSONString(deviceExeResponse);
@@ -128,20 +137,13 @@ public class GoogleDeviceProvidor {
 
 
     private String requestSync(String requestId, List<Device> deviceList, UserOauth2 userOauth2) {
-        String responseStr = googleDevicesDiscovery(requestId, deviceList).toJSONString();
-        System.out.println("responseStr:" + responseStr);
-        return responseStr;
+        return googleDevicesDiscovery(requestId, deviceList).toJSONString();
     }
 
-    public static void main(String[] args) {
-//        System.out.println(googleDevicesDiscovery("123").toJSONString());
-    }
+
 
     private static JSONObject googleDevicesDiscovery(String requestId, List<Device> deviceObjList) {
         JSONObject response = new JSONObject();
-        response.put("requestId", requestId);
-        JSONArray deviceList = new JSONArray();
-
         DeviceSyncResponse response1 = new DeviceSyncResponse();
         PayloadSync payload  = new PayloadSync();
         List<DevicesSync> devices = new ArrayList<>();
@@ -149,21 +151,21 @@ public class GoogleDeviceProvidor {
         for (Device deviceObj : deviceObjList) {
             DevicesSync devicesSync = new DevicesSync();
             CustomDataSync customDataSync = new CustomDataSync();
-            customDataSync.setDeviceEq("");
-            customDataSync.setDeviceMac("");
+            customDataSync.setDeviceEq(deviceObj.getEquipmentEp());
+            customDataSync.setDeviceMac(deviceObj.getDeviceMac());
 
             DeviceInfoSync deviceInfoSync = new DeviceInfoSync();
-            deviceInfoSync.setHwVersion("");
-            deviceInfoSync.setManufacturer("");
-            deviceInfoSync.setModel("");
-            deviceInfoSync.setSwVersion("");
+            deviceInfoSync.setHwVersion("1.0");
+            deviceInfoSync.setManufacturer("smartplus");
+            deviceInfoSync.setModel("hs1234");
+            deviceInfoSync.setSwVersion("1.0");
 
             NameSync nameSync = new NameSync();
-            nameSync.setDefaultNames(Arrays.asList("123"));
-            nameSync.setName("");
-            nameSync.setNicknames(Arrays.asList("123"));
+            nameSync.setDefaultNames(Arrays.asList(deviceObj.getName()));
+            nameSync.setName(deviceObj.getName());
+            nameSync.setNicknames(Arrays.asList(deviceObj.getName()));
 
-            devicesSync.setId("123");
+            devicesSync.setId(deviceObj.getId());
             devicesSync.setWillReportState(false);
             devicesSync.setType("action.devices.types.LIGHT");
             devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff", "action.devices.traits.Brightness"));

@@ -56,7 +56,7 @@
             (#{code},#{refreshToken},#{accessToken},#{userId},#{scope});
     </insert>
 
-    <insert id="addUserTemp" parameterType="com.bean.UsersTemp" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addUserTemp" parameterType="com.bean.SpeakerUsers" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO users_temp
         (userId,createTime)
         VALUES
@@ -64,7 +64,7 @@
     </insert>
 
 
-    <select id="getUsersTemp" parameterType="String" resultType="com.bean.UsersTemp">
+    <select id="getUsersTemp" parameterType="String" resultType="com.bean.SpeakerUsers">
         select * from users_temp;
     </select>
 

@@ -1,4 +1,4 @@
-package com.init;
+package com.utility;
 
 import com.bean.Device;
 import org.apache.commons.lang3.StringUtils;
@@ -50,6 +50,11 @@ public class Constants {
 	public static final String closeCmd = "01";
 	public static final String dimlightCmd = "02";
 	public static final String percentcurtain = "03";
+
+	public static final String defaultDeviceState="0000";
+
+	public static final String maxPercent="100";
+	public static final String minPercent="0";
 
 	public static final String commonDefualtRoom = "living room";
 	public static final String wholeHouse = "house";
