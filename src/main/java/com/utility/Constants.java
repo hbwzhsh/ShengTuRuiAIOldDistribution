@@ -62,7 +62,7 @@ public class Constants {
 	// for redis and socket
 
 	@Value("${serverIpConnectSocket}")
-	public static String serverIpConnectSocket ="115.28.190.86" ;
+	public static String serverIpConnectSocket ="115.28.190.86";
 	@Value("${socketPort}")
 	public static String socketPort ="8888";
 	@Value("${redisIpConnectSocket}")

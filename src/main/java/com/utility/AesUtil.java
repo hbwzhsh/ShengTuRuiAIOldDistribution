@@ -1,21 +1,22 @@
 package com.utility;
 
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
  * 
  * @author weiTaZhuang
- * @date 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½10:00:32
- * @Description AESï¿½ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ã·¨
+ * @date 2016Äê6ÔÂ7ÈÕ ÉÏÎç10:00:32
+ * @Description AES¼ÓÃÜ½âÃÜËã·¨
  */
 
 public class AesUtil  implements Serializable {
@@ -25,10 +26,10 @@ public class AesUtil  implements Serializable {
 	 */
 	private static final long serialVersionUID = 6752558110445292179L;
 	
-	public static final String Key = "0123456789abcdef";// ï¿½ï¿½Ô¿
-	public static final String IV = "0123456789abcdef";// ï¿½ï¿½Ô¿Æ«ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ê¼iv
+	public static final String Key = "0123456789abcdef";// ÃÜÔ¿
+	public static final String IV = "0123456789abcdef";// ÃÜÔ¿Æ«ÒÆÁ¿,³õÊ¼iv
 
-	/** ï¿½ã·¨/Ä£Ê½/ï¿½ï¿½ï¿½ **/
+	/** Ëã·¨/Ä£Ê½/Ìî³ä **/
 	private static final String CipherMode = "AES/CBC/NoPadding";
 
 	
@@ -76,7 +77,7 @@ public class AesUtil  implements Serializable {
 		}
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½byte ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ **/
+	/** ¼ÓÃÜ16½øÖÆbyte ²»º¬ÖÐÎÄ ÐÂ **/
 	public byte[] encrypt(byte[] content) {
 		try {
 			byte[] input = PKCS5padding(content);
@@ -89,7 +90,7 @@ public class AesUtil  implements Serializable {
 		return null;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Îª16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ **/
+	/** ¼ÓÃÜ(½á¹ûÎª16½øÖÆ×Ö·û´®) º¬ÖÐÎÄ ÐÂ **/
 	public String encrypt(String content) {
 		byte[] data = null;
 		try {
@@ -102,7 +103,7 @@ public class AesUtil  implements Serializable {
 		return result;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½Îª16ï¿½ï¿½ï¿½ï¿½byte ï¿½ï¿½ **/
+	/** ½âÃÜ×Ö½ÚÊý×é È«²¿Îª16½øÖÆbyte ÐÂ **/
 	public byte[] decrypt(byte[] content) {
 		try {
 			byte[] result = de.update(content);
@@ -113,7 +114,7 @@ public class AesUtil  implements Serializable {
 		return null;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ ï¿½ï¿½ **/
+	/** ½âÃÜ ÓÐÖÐÎÄµÄ ÐÂ **/
 	public String decrypt(String content) {
 		byte[] data = null;
 		try {
@@ -168,7 +169,7 @@ public class AesUtil  implements Serializable {
 		return out;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ **/
+	/** ´´½¨ÃÜÔ¿ **/
 	private SecretKeySpec createKey(String key) {
 		byte[] data = null;
 		if (key == null) {
@@ -191,7 +192,7 @@ public class AesUtil  implements Serializable {
 		return new SecretKeySpec(data, "AES");
 	}
 
-// -------------------ï¿½Ö¸ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½æ²»Òª--------------------------------------------------------------------------------------------------------------------------------------------
+// -------------------·Ö¸îÏß£¬ÏÂÃæ²»Òª--------------------------------------------------------------------------------------------------------------------------------------------
 
 	private IvParameterSpec createIV(String password) {
 		byte[] data = null;
@@ -215,7 +216,7 @@ public class AesUtil  implements Serializable {
 		return new IvParameterSpec(data);
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ **/
+	/** ¼ÓÃÜ×Ö½ÚÊý¾Ý ²»º¬ÖÐÎÄ **/
 	public byte[] encrypt(byte[] content, String password, String ivString) {
 		try {
 			SecretKeySpec key = createKey(password);
@@ -232,7 +233,7 @@ public class AesUtil  implements Serializable {
 		return null;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Îª16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ **/
+	/** ¼ÓÃÜ(½á¹ûÎª16½øÖÆ×Ö·û´®) º¬ÖÐÎÄ **/
 	public String encrypt(String content, String password, String ivString) {
 		byte[] data = null;
 		try {
@@ -248,7 +249,7 @@ public class AesUtil  implements Serializable {
 
 	IvParameterSpec iv = null;
 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½Îª16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ **/
+	/** ½âÃÜ×Ö½ÚÊý×é È«²¿Îª16½øÖÆ×Ö·û´® **/
 	public byte[] decrypt(byte[] content, String password, String ivString) {
 		try {
 			SecretKeySpec key = createKey(password);
@@ -262,7 +263,7 @@ public class AesUtil  implements Serializable {
 		return null;
 	}
 
-	/** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ **/
+	/** ½âÃÜ ÓÐÖÐÎÄµÄ **/
 	public String decrypt(String content, String password, String ivString) {
 		byte[] data = null;
 		try {

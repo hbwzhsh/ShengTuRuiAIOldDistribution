@@ -1,8 +1,9 @@
-package com.socket;
+package com.socket.newTest;
 
 import com.SpringUtil;
 import com.bean.UserHostRelation;
 import com.service.DeviceService;
+import com.socket.ServiceClientHandler;
 import com.utility.AesUtil;
 import com.utility.CmdUtil;
 import com.utility.Constants;
@@ -17,24 +18,12 @@ import org.apache.mina.filter.codec.*;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.List;
 
 public class SoketClient {
 
 	//private static DbDAO dbdao = new DbDAO();
 	private AesUtil mAesUtil = new AesUtil();
-
-	public static void main(String[] args) {
-		//List<String> commandList  = Arrays.asList("CMD:7bff6314004b1200-00-00-0000");
-		List<String> commandList  = Arrays.asList("CMD:e8f36314004b1200-00-00-0000");
-
-
-
-		List<String> hostMacs = Arrays.asList("9C65F9209CE8");
-		SoketClient client = new SoketClient();
-		client.connectServiceAndExeCommand(commandList,hostMacs);
-	}
 	
 	private static final Logger logger = LogManager.getLogger(DeviceService.class);
 
@@ -60,9 +49,7 @@ public class SoketClient {
 
 				for (int i = 0; i < commandList.size(); i++) {
 					logger.error("commandList.get(i):"+commandList.get(i));
-					System.out.println("commandList.get(i):"+commandList.get(i));
 					String str = CmdUtil.getToService(mAesUtil, commandList.get(i), hostMacs.get(i));
-
 					byte[] msg4 = ToHexUtil.hexStringToByte(str);
 					sendsession.write(IoBuffer.wrap(msg4));
 

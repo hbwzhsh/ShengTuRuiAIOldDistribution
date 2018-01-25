@@ -3,9 +3,12 @@ package com.data;
 import com.SpringUtil;
 import com.bean.Device;
 import com.bean.SpeakerUsers;
+import com.bean.site.UserOauth2;
+import com.service.DeviceService;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,20 +30,20 @@ public class DeviceDataManager {
                         if (countNumber > 0) {
 
                             SoketClient tempClient = SocketFactory.socketConnections.get(users.getUserId());
-                            if (tempClient != null) {
+                            /*if (tempClient != null) {
                                 boolean isConnected = tempClient.getSendsession().isConnected();
                                 if (!isConnected) {
                                     SocketFactory.socketConnections.remove(users.getUserId());
                                     tempClient = null;
                                 }
-                            }
+                            }*/
 
                             if (tempClient == null) {
                                 SoketClient client = new SoketClient();
                                 SocketFactory.socketConnections.put(users.getUserId(), client);
                                 client.connectService(users.getUserId());
                             } else {
-                                tempClient.getDevicesFromService(users.getUserId());
+                                //tempClient.getDevicesFromService(users.getUserId());
                             }
 
                             //get data from database then put data to redis cache
@@ -60,5 +63,11 @@ public class DeviceDataManager {
 
             }
         }, delayTime, period);
+    }
+
+    public static void main(String[] args) {
+
+
+
     }
 }

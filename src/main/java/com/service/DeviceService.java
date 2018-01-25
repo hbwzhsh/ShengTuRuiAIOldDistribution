@@ -34,6 +34,23 @@ public class DeviceService {
         client.connectService(userId);
     }
 
+    public void sendCmdToServer(final List<Device> tempDevicelist, final String cmd, final String userId,SoketClient client) {
+
+        Runnable runnable = () -> {
+            List<String> tempDeviceMacList = new ArrayList<String>();
+            List<String> tempDeviceHostList = new ArrayList<String>();
+            for (Device tempDevice : tempDevicelist) {
+                System.out.println("--->Cmd:" + "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getHostMac() + "-" + cmd + "-" + Constants.defaultDeviceState);
+
+                tempDeviceMacList.add("CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
+                tempDeviceHostList.add(tempDevice.getHostMac());
+            }
+
+            client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
 
     public void sendCmdToServer(final List<Device> tempDevicelist, final String cmd, final String userId) {
 
@@ -42,13 +59,13 @@ public class DeviceService {
             List<String> tempDeviceMacList = new ArrayList<String>();
             List<String> tempDeviceHostList = new ArrayList<String>();
             for (Device tempDevice : tempDevicelist) {
-                System.out.println("--->Cmd:" + "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
+                System.out.println("--->Cmd:" + "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getHostMac() + "-" + cmd + "-" + Constants.defaultDeviceState);
 
                 tempDeviceMacList.add("CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
                 tempDeviceHostList.add(tempDevice.getHostMac());
             }
 
-            client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
+            new SoketClient().connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
         thread.start();

@@ -4,8 +4,8 @@ package com.utility;
 /**
  * 
  * @author weiTaZhuang
- * @date 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½7:10:21
- * @Description ï¿½ï¿½ï¿½ï¿½Util
+ * @date 2016Äê6ÔÂ7ÈÕ ÏÂÎç7:10:21
+ * @Description ÃüÁîUtil
  */
 
 public class CmdUtil {
@@ -13,171 +13,171 @@ public class CmdUtil {
 	public static final String END = "0D0A";
 	
 	
-	/** ï¿½Ö»ï¿½ÏµÍ³*/
+	/** ÊÖ»úÏµÍ³*/
 	public static final String System = "01"; //Android
 	
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½*/
+	/** ·¢ÏÖÖ÷»úÐ­ÒéºÅ*/
 	public static final String FindComputerProtocol = "01";
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦*/
+	/** ·¢ÏÖÖ÷»úÏìÓ¦*/
 	public static final String FindComputerAckProtocol = "10";
 	
 	
 	
-	/** ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+	/** ²éÕÒÖ¸¶¨Ö÷»ú*/
 	public static final String FindOneComputerAckProtocol = "02";
 	
 	
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½*/
+	/** Á¬½ÓÖ÷»úÐ­ÒéºÅ*/
 	public static final String ConnectComputerProtocol = "04";
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½É¹ï¿½*/
+	/** Á¬½ÓÖ÷»úÏàÓ¦³É¹¦*/
 	public static final String ConnectComputerOk = "01";//400101
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Ê§ï¿½ï¿½*/
+	/** Á¬½ÓÖ÷»úÏàÓ¦Ê§°Ü*/
 	public static final String ConnectComputerNo = "00";//400100
 	
 	
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½*/
+	/** Ìí¼ÓÖ÷»úÐ­ÒéºÅ*/
 	public static final String addComputerProtocol = "03";
-	/** addï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½É¹ï¿½*/
+	/** addÖ÷»úÏàÓ¦³É¹¦*/
 	public static final String addComputerOk = "01";//300101
 	
-	/** Î´Ô¼ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½*/
+	/** Î´Ô¼¶¨µÄÐ­ÒéºÅ*/
 	public static final String retainProtocol = "FF";
 	
 	public static final String USERID = "01";
 	public static final String SUB_USERID = "02";
 	
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½è±¸*/
+	/** »ñÈ¡ÎïÀíÉè±¸*/
 	public static final String GET_DEVICE = "GET\\DEVICE\\";
 	public static final String GET_DEVICE_ACK = "GET\\DEVICE\\ACK:";
 	public static final String GET_DEVICE_FINISHED = "GET\\DEVICE\\FINISHED:";
 	
-	/** ï¿½ï¿½È¡ï¿½ß¼ï¿½ï¿½è±¸*/
+	/** »ñÈ¡Âß¼­Éè±¸*/
 	public static final String GET_ENDPOINT = "GET\\ENDPOINT\\";
 	public static final String GET_ENDPOINT_ACK = "GET\\ENDPOINT\\ACK:";
 	public static final String GET_ENDPOINT_FINISHED = "GET\\ENDPOINT\\FINISHED:";
 	
-	/** ï¿½Þ¸ï¿½ï¿½ß¼ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½*/
+	/** ÐÞ¸ÄÂß¼­Éè±¸Ãû³Æ*/
 	public static final String SET_ENDPOINT_NAME = "SET\\ENDPOINT\\NAME:";
 	public static final String SET_ENDPOINT_NAME_ACK = "SET\\ENDPOINT\\NAME\\ACK:";
 	
-	/** ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½*/
+	/** ÐÞ¸ÄÎïÀíÉè±¸Ãû³Æ*/
 	public static final String SET_DEVICE_NAME = "SET\\DEVICE\\NAME:";
 	public static final String SET_DEVICE_NAME_ACK = "SET\\DEVICE\\NAME\\ACK:";
 	 
 
-	/** ï¿½ï¿½È¡ï¿½é¾°ï¿½Ð±ï¿½*/
+	/** »ñÈ¡Çé¾°ÁÐ±í*/
 	public static final String GET_SCENE = "GET\\SCENE";
 	public static final String GET_SCENE_ACK = "GET\\SCENE\\ACK:";
 	public static final String GET_SCENE_FINISHED = "GET\\SCENE\\FINISHED:";
  
 
-	/** Ö´ï¿½ï¿½ï¿½é¾°*/
+	/** Ö´ÐÐÇé¾°*/
 	public static final String EXEC_SCENE = "SCENE\\EXEC:";
 	public static final String ASCENE = "ASCENE:";
 	public static final String EXEC_SCENE_DETAIL = "ASCENE\\DETAIL:"; 
 	public static final String EXEC_SCENE_DETAIL_FINISHED = "ASCENE\\DETAIL\\FINISHED:"; 
 	
-	/** É¾ï¿½ï¿½ï¿½é¾°*/
+	/** É¾³ýÇé¾°*/
 	public static final String DELTTE_SCENE = "DEL\\SCENE:";
 	public static final String DELTTE_SCENE_ACK = "DEL\\SCENE\\ACK:"; 
 	
-	/** ï¿½ï¿½ï¿½ï¿½é¾°*/
+	/** Ìí¼ÓÇé¾°*/
 	public static final String ADD_SCENE = "ADD\\SCENE:";
 	public static final String ADD_SCENE_ACK = "ADD\\SCENE\\ACK:"; 
 	
-	/** ï¿½Þ¸ï¿½ï¿½é¾°*/
+	/** ÐÞ¸ÄÇé¾°*/
 	public static final String CHG_SCENE = "CHG\\SCENE:";
 	public static final String CHG_SCENE_ACK = "CHG\\SCENE\\ACK:"; 
  
 	
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+	/** ·¢ËÍÃüÁî*/
 	public static final String CMD = "CMD:";
-	public static final String ACMD = "ACMD:";//Ó¦ï¿½ï¿½
+	public static final String ACMD = "ACMD:";//Ó¦´ð
 	
-	/** ï¿½è±¸ï¿½ï¿½ï¿½ï¿½*/
+	/** Éè±¸ÔÚÏß*/
 	public static final String DEV_ONLINE = "ONLINE:"; 
-	/** ï¿½è±¸×´Ì¬*/
+	/** Éè±¸×´Ì¬*/
 	public static final String DEV_DAT = "DAT:"; 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·×´Ì¬*/
+	/** ´«¸ÐÆ÷ÀúÊ·×´Ì¬*/
 	public static final String DEV_HSENSOR = "HSENSOR:"; 
 	
 	
 	
-	/** ï¿½ï¿½ï¿½ï¿½è±¸Ó¦ï¿½ï¿½*/
+	/** Ìí¼ÓÉè±¸Ó¦´ð*/
 	public static final String DEVACK = "DEV-ACK:"; 
-	/** É¾ï¿½ï¿½ï¿½è±¸Ó¦ï¿½ï¿½*/
+	/** É¾³ýÉè±¸Ó¦´ð*/
 	public static final String DEV_REMOVE_ACK = "DEV-REMOVE-ACK:"; 
 	 
 	
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½*/
+	/** »ñÈ¡¼òÒ×ÊÂ¼þ*/
 	public static final String GET_EVT_SIMPLE = "GET\\EVT\\SIMPLE"; 
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡¼òÒ×ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_SIMPLE_ACK = "GET\\EVT\\SIMPLE\\ACK:"; 
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½*/
+	/** »ñÈ¡¼òÒ×ÊÂ¼þÓ¦´ð½áÊø*/
 	public static final String GET_EVT_SIMPLE_ACK_FINISHED = "GET\\EVT\\SIMPLE\\FINISHED:"; 
 	
-	/** ï¿½ï¿½È¡ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK = "GET\\EVT"; 
-	/** ï¿½ï¿½È¡ï¿½Â¼ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½*/
+	/** »ñÈ¡ÊÂ¼þÓ¦´ð½áÊø*/
 	public static final String GET_EVT_ACK_FINISHED = "GET\\EVT\\FINISHED:"; 
 	
-	/** ï¿½ï¿½È¡ï¿½è±¸ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡Éè±¸ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK_DEVICE = "GET\\EVT\\ACK\\DEVICE:"; 
-	/** ï¿½ï¿½È¡ï¿½ï¿½Ê±ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡¶¨Ê±ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK_TIMER = "GET\\EVT\\ACK\\TIMER:"; 
-	/** ï¿½ï¿½È¡ï¿½ß¼ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡Âß¼­ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK_LOGIC = "GET\\EVT\\ACK\\LOGIC:"; 
-	/** ï¿½ï¿½È¡ï¿½ï¿½Ê±ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡¶¨Ê±ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK_TIMEOUT = "GET\\EVT\\ACK\\TIMEOUT:"; 
-	/** ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡ÓÃ»§ÊÂ¼þÓ¦´ð*/
 	public static final String GET_EVT_ACK_USER = "GET\\EVT\\ACK\\USER:"; 
 	
-	/** ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** Ìí¼ÓÊÂ¼þÓ¦´ð*/
 	public static final String EVT_ACK = "EVT\\ACK:"; 
 	
-	/** ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** Ìí¼ÓÉ¾³ýÊÂ¼þÓ¦´ð*/
 	public static final String ADD_EVENT_SIMPLE_ACK = "ADD\\EVT\\SIMPLE\\ACK:"; 
 	
-	/** É¾ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** É¾³ýÊÂ¼þÓ¦´ð*/
 	public static final String DEV_EVENT_ACK = "EVT\\REMOVE\\ACK:"; 
-	/** É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ó¦ï¿½ï¿½*/
+	/** É¾³ý¼òÒ×ÊÂ¼þÓ¦´ð*/
 	public static final String DEV_EVENT_SIMPLE_ACK = "DEL\\EVT\\SIMPLE\\ACK:"; 
 	
-	/** ï¿½Â¼ï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½*/
+	/** ÊÂ¼þÍ¨Öª¸üÐÂ*/
 	public static final String EVT_STATUS_UPDATE = "EVT\\STATUS\\UPDATE:"; 
-	/** ï¿½ï¿½ï¿½Ý±ï¿½ï¿½Ý»ï¿½Ó¦*/
+	/** Êý¾Ý±¸·Ý»ØÓ¦*/
 	public static final String DATA_UPLOAD = "MEM\\READ\\ACK:"; 
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½Ó¦*/
+	/** Êý¾ÝÏÂÔØ»ØÓ¦*/
 //	public static final String DATA_DOWNLOAD = "MEM\\ERASE\\ACK:"; 
 	public static final String DATA_DOWNLOAD = "MEM\\WRITE\\FINISHED\\ACK:"; 
 	
-	/** É¾ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦*/
+	/** É¾³ýÏûÏ¢ÓëÏà¹ØÁª¶¯»ØÓ¦*/
 	public static final String DEL_MSG_ACK = "DEL\\MSG\\ACK:"; 
 	
-	/** ï¿½ï¿½ï¿½ï¿½Ï¢Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½*/
+	/** ÐÂÏûÏ¢Í¨Öª£¬·þÎñÆ÷·¢ËÍµÄ*/
 	public static final String SEND_MSG_ACK = "SEND\\MSG\\ACK:success"; 
 	
 	
 	
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½*/
+	/** »ñÈ¡Áª¶¯Ó¦´ð*/
 	public static final String GET_LNK_ACK = "GET\\LNK"; 
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½*/
+	/** »ñÈ¡Áª¶¯Ó¦´ð½áÊø*/
 	public static final String GET_LNK_ACK_FINISHED = "GET\\LNK\\FINISHED:"; 
-	/** ï¿½ï¿½È¡DEV>DEVÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡DEV>DEVÓ¦´ð*/
 	public static final String GET_LNK_ACK_DEV_DEV = "GET\\LNK\\ACK\\DEV>DEV:"; 
-	/** ï¿½ï¿½È¡CMD>CMDÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡CMD>CMDÓ¦´ð*/
 	public static final String GET_LNK_ACK_CMD_CMD = "GET\\LNK\\ACK\\CMD>CMD:"; 
-	/** ï¿½ï¿½È¡EVT>CMDEÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡EVT>CMDEÓ¦´ð*/
 	public static final String GET_LNK_ACK_EVT_CMD = "GET\\LNK\\ACK\\EVT>CMD:"; 
-	/** ï¿½ï¿½È¡EVT>SCENEÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡EVT>SCENEÓ¦´ð*/
 	public static final String GET_LNK_ACK_EVT_SCENE = "GET\\LNK\\ACK\\EVT>SCENE:"; 
-	/** ï¿½ï¿½È¡EVT>MSGÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡EVT>MSGÓ¦´ð*/
 	public static final String GET_LNK_ACK_EVT_MSG = "GET\\LNK\\ACK\\EVT>MSG:"; 
-	/** ï¿½ï¿½È¡CMD>SCENEÓ¦ï¿½ï¿½*/
+	/** »ñÈ¡CMD>SCENEÓ¦´ð*/
 	public static final String GET_LNK_ACK_CMD_SCENE = "GET\\LNK\\ACK\\CMD>SCENE:"; 
 	
 	
-	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½*/
+	/** Ìí¼ÓÁª¶¯Ó¦´ð*/
 	public static final String ADD_LNK_ACK = "ADD\\LNK\\ACK:"; 
 	public static final String DEL_LNK_ACK = "DEL\\LNK\\ACK:"; 
 	
@@ -189,7 +189,7 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ·¢ÏÖÖ÷»ú
 	 */
 	public static String findComputerMsg(String email) {
 		String protocolNum = FindComputerProtocol;
@@ -212,8 +212,8 @@ public class CmdUtil {
 //		MLog.e("crc8="+crc8);
 		String baoLen = get2Len(protocolNum + msgContent + crc8);
 //		MLog.e("baoLen="+baoLen);
-//      "Appï¿½ï¿½Â½ï¿½ï¿½ï¿½ä³¤ï¿½ï¿½	Appï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½	Appï¿½Ö»ï¿½ÏµÍ³"
-//		"ï¿½ï¿½Ê½	ï¿½ï¿½Ê¼Î»	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	Ð­ï¿½ï¿½ï¿½	ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½	ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½	Í£Ö¹Î»"
+//      "AppµÇÂ½ÓÊÏä³¤¶È	AppµÇÂ½ÓÊÏä	AppÊÖ»úÏµÍ³"
+//		"¸ñÊ½	ÆðÊ¼Î»	°ü³¤¶È	Ð­ÒéºÅ	ÐÅÏ¢ÄÚÈÝ	´íÎóÐ£Ñé	Í£Ö¹Î»"
 //		"	     2	      2	     1	     N	      1	      2 "
 		String bao = TITLE + baoLen +protocolNum+ msgContent+ crc8 + END;
 		
@@ -222,7 +222,7 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ²éÕÒÖ¸¶¨Ö÷»ú
 	 * @param mac 
 	 */
 	public static String findOneComputerMsg(String email, String mac) {
@@ -249,13 +249,13 @@ public class CmdUtil {
 		
 		String baoLen = get2Len(protocolNum + msgContent + crc8);
 		String bao = TITLE + baoLen +protocolNum+ msgContent+ crc8 + END;
-//		MLog.e("emailï¿½ï¿½" + email);
+//		MLog.e("email£º" + email);
 		
 		return bao;
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * Ìí¼ÓÖ÷»ú
 	 */
 	public static String addComputerMsg(String email,String urll) {
 		
@@ -268,7 +268,7 @@ public class CmdUtil {
 		
 		try {
 			byte[] data = email.getBytes("UTF-8");
-			Email = ToHexUtil.byte2HexStr(data, data.length);//ï¿½ï¿½ï¿½ï¿½
+			Email = ToHexUtil.byte2HexStr(data, data.length);//ÓÊÏä
 			
 		    byte[] urlldata=urll.getBytes("UTF-8");
 		    
@@ -285,9 +285,9 @@ public class CmdUtil {
 		
 //		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + userid + msgContent));
 //		String cip = protocolNum + userid + msgContent + crc8;
-//		MLog.e("ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½" + cip);
+//		MLog.e("¼ÓÃÜÇ°£º" + cip);
 //		String mi = encrypt(cip,mAesUtil);
-//		MLog.e("ï¿½ï¿½ï¿½Ä£ï¿½" + mi);
+//		MLog.e("ÃÜÎÄ£º" + mi);
 //		String miLen = get2Len(mi);
 //
 //		String bao = TITLE + miLen + mi + END;
@@ -307,14 +307,14 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½È¡ï¿½é¾°ï¿½Ð±ï¿½
+	 * »ñÈ¡Çé¾°ÁÐ±í
 	 */
 	public static String getScene() {
 		return "GET\\SCENE:";
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý±ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½
+	 * Ïò·þÎñÆ÷·¢ËÍ Êý¾Ý±¸·ÝµÄÃüÁî
 	 */
 	public static String getUpload() {
 		return "MEM\\READ:";
@@ -323,21 +323,21 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½Þ¸ï¿½ï¿½é¾°
+	 * ÐÞ¸ÄÇé¾°
 	 */
 	public static String modificationScene(String old_name, String old_ico,String new_name, String new_ico) {
 		return CHG_SCENE+old_name + "\\" + old_ico + "\\" + new_name + "\\"+ new_ico;
 	}
 	
 	/**
-	 * É¾ï¿½ï¿½ï¿½é¾°
+	 * É¾³ýÇé¾°
 	 */
 	public static String deleteScene(String name) {
 		return DELTTE_SCENE+ name;
 	}
 	
 	/**
-	 * Ö´ï¿½ï¿½ï¿½é¾°
+	 * Ö´ÐÐÇé¾°
 	 */
 	public static String execScene(String name) {
 		return EXEC_SCENE+ name;
@@ -345,7 +345,7 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ·¢ËÍÃüÁî
 	 */
 	public static String execCmd(String name) {
 		return CMD+ name;
@@ -353,7 +353,7 @@ public class CmdUtil {
 	 
 	 
 	/**
-	 * ï¿½ï¿½È¡ï¿½ï¿½È¡ï¿½ß¼ï¿½ï¿½è±¸ï¿½Ð±ï¿½
+	 * »ñÈ¡»ñÈ¡Âß¼­Éè±¸ÁÐ±í
 	 */
 	public static String getEndPoint() {
 		return "GET\\ENDPOINT:";
@@ -361,32 +361,32 @@ public class CmdUtil {
 	
 	 
 	/**
-	 * ï¿½ï¿½È¡ï¿½ß¼ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
+	 * »ñÈ¡Âß¼­Éè±¸ÃèÊö
 	 */
 	public static String getDeviceDesc() {
 		return "GET\\DEVID\\DESC:";
 	}
 	/**
-	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	 * »ñÈ¡×îÐÂ×´Ì¬
 	 */
 	public static String getStatus() {
 		return "GET\\STATUS:";
 	}
 	/**
-	 * ï¿½ï¿½È¡ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Ð±ï¿½
+	 * »ñÈ¡»ñÈ¡ÎïÀíÉè±¸ÁÐ±í
 	 */
 	public static String getDifferenceTime(String time) {
 		return "SET\\TIME\\OFFSET:"+time;
 	}
 	/**
-	 * ï¿½ï¿½È¡ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Ð±ï¿½
+	 * »ñÈ¡»ñÈ¡ÎïÀíÉè±¸ÁÐ±í
 	 */
 	public static String getDevice() {
 		return "GET\\DEVICE:";
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ 
+	 * Ìí¼ÓÎïÀíÉè±¸ 
 	 * @param newName 
 	 * @param newMac 
 	 */
@@ -395,7 +395,7 @@ public class CmdUtil {
 	}
 	
 	/**
-	 * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ 
+	 * É¾³ýÎïÀíÉè±¸ 
 	 * @param mac 
 	 */
 	public static String delDevice(String mac) {
@@ -404,79 +404,79 @@ public class CmdUtil {
 	
 	
 	/**
-	 * É¾ï¿½ï¿½ï¿½Â¼ï¿½ 
+	 * É¾³ýÊÂ¼þ 
 	 * @param name 
 	 */
 	public static String delEvent(String name) {
 		return "EVT\\REMOVE:"+name;
 	}
 	
-	/** ï¿½ï¿½È¡ï¿½Â¼ï¿½ï¿½Ð±ï¿½ */
+	/** »ñÈ¡ÊÂ¼þÁÐ±í */
 	public static String getEvent() {
 		return "GET\\EVT:";
 	}
 	
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ð±ï¿½ */
+	/** »ñÈ¡¼òÒ×ÊÂ¼þÁÐ±í */
 	public static String getEasyEvent() {
 		return "GET\\EVT\\SIMPLE:";
 	}
 	
-	/** É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ */
+	/** É¾³ý¼òÒ×ÊÂ¼þ */
 	public static String delEasyEvent(String name) {
 		return "DEL\\EVT\\SIMPLE:"+name;
 	}
 	
-	/** Ö´ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Â¼ï¿½ */
+	/** Ö´ÐÐÓÃ»§ÊÂ¼þ */
 	public static String execUserEvent(String name,String status) {
 		return "EVT\\USER\\EXEC:"+name+"\\"+status;
 	}
 	
-	/** ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Â¼ï¿½ */
+	/** Ìí¼ÓÓÃ»§ÊÂ¼þ */
 	public static String addUserEvent(String name) {
 		return "EVT\\USER\\INSERT:"+name;
 	}
 	
-	/** ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ */
+	/** Ìí¼Ó¼òÒ×ÊÂ¼þ */
 	public static String addEasyEvent(String cmd) {
 		return "ADD\\EVT\\SIMPLE:"+cmd;
 	}
 	
-	/** ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Â¼ï¿½ */
+	/** Ìí¼ÓÉè±¸ÊÂ¼þ */
 	public static String addDeviceEvent(String name,String model,String path,String desc, String mac,String ep,String attrid,String value0,String value1) {
 		return "EVT\\DEVICE\\INSERT:"+name+"\\"+model+"\\"+path+"\\"+desc+"\\"+mac+"\\"+ep+"\\"+attrid+"\\"+value0+value1;
 	}
 	
-	/** ï¿½ï¿½Ó³ï¿½Ê±ï¿½Â¼ï¿½ */
+	/** Ìí¼Ó³¬Ê±ÊÂ¼þ */
 	public static String addTimeOutEvent(String name,String name_a,String value) {
 		return "EVT\\TIMEOUT\\INSERT:"+name+"\\"+name_a+"\\"+value;
 	}
 	
-	/** ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Â¼ï¿½ */
+	/** Ìí¼ÓÂß¼­ÊÂ¼þ */
 	public static String addLogicEvent(String name,String model,String name_a,String name_b) {
 		return "EVT\\LOGIC\\INSERT:"+name+"\\"+model+"\\"+name_a+"\\"+name_b;
 	}
 	
-	/** ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Â¼ï¿½ */
+	/** Ìí¼ÓÂß¼­ÊÂ¼þ */
 	public static String delNews(String name) {
 		return "DEL\\MSG:"+name;
 	}
 	
-	/** ï¿½ï¿½Ó¶ï¿½Ê±ï¿½Â¼ï¿½ */
+	/** Ìí¼Ó¶¨Ê±ÊÂ¼þ */
 	public static String addTimeEvent(String name,String weeks,String mode,String time0,String time1) {
 		return "EVT\\TIMER\\INSERT:"+name+"\\"+weeks+"\\"+mode+"\\"+time0+"\\"+time1;
 	}
 	
-	/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ */
+	/** »ñÈ¡Áª¶¯ÁÐ±í */
 	public static String getLink() {
 		return "GET\\LNK:";
 	}
 	
-	/** ï¿½ï¿½ï¿½LinkDEV_DEV */
+	/** Ìí¼ÓLinkDEV_DEV */
 	public static String addLinkDEV_DEV(String in_path, String in_mac, String in_ep, String out_path, String out_mac, String out_ep) {
 		return "ADD\\LNK\\DEV>DEV:"+in_path+"\\"+in_mac+"\\"+in_ep+"\\"+out_path+"\\"+out_mac+"\\"+out_ep;
 	}
 	
-	/** ï¿½ï¿½ï¿½LinkCMD>CMD */
+	/** Ìí¼ÓLinkCMD>CMD */
 	public static String addLinkCMD_CMD(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid, 
 			String in_op, String out_path, String out_desc, String out_mac, String out_ep, String out_cmdid, 
 			String out_op) {
@@ -484,24 +484,24 @@ public class CmdUtil {
 							       out_path+"\\"+out_desc+"\\"+out_mac+"\\"+out_ep+"\\"+out_cmdid+"\\"+out_op;
 	}
 	
-	/** ï¿½ï¿½ï¿½LinkEVT>CMD */
+	/** Ìí¼ÓLinkEVT>CMD */
 	public static String addLinkEVT_CMD(String in_name, String out_path, String out_desc, String out_mac,
 			String out_ep, String out_cmdid, String out_op) {
 		return "ADD\\LNK\\EVT>CMD:"+in_name+"\\"+out_path+"\\"+out_desc+"\\"+out_mac+"\\"+out_ep+"\\"+out_cmdid+"\\"+out_op;
 	}
 	
 	
-	/** ï¿½ï¿½ï¿½LinkEVT>SCENE */
+	/** Ìí¼ÓLinkEVT>SCENE */
 	public static String addLinkEVT_SCENE(String in_name, String out_name) {
 		return "ADD\\LNK\\EVT>SCENE:"+in_name+"\\"+out_name;
 	}
 	
-	/** ï¿½ï¿½ï¿½LinkEVT>MSG */
+	/** Ìí¼ÓLinkEVT>MSG */
 	public static String addLinkEVT_MSG(String in_name, String out_name) {
 		return "ADD\\LNK\\EVT>MSG:"+in_name+"\\"+out_name;
 	}
 	
-	/** ï¿½ï¿½ï¿½LinkCMD>SCENE */
+	/** Ìí¼ÓLinkCMD>SCENE */
 	public static String addLinkCMD_SCENE(String in_path, String in_desc, String in_mac, String in_ep, String in_cmdid, 
 			String in_op, String out_name) {
 		return "ADD\\LNK\\CMD>SCENE:"+in_path+"\\"+in_desc+"\\"+in_mac+"\\"+in_ep+"\\"+in_cmdid+"\\"+in_op+"\\"+out_name;
@@ -542,8 +542,7 @@ public class CmdUtil {
 	
 	
 	/**
-	 * ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @param application 
+	 * Á¬½Ó·þÎñÆ÷
 	 */
 	public static String connectService(AesUtil mAesUtil ,String mac) {
 		String userid = USERID;
@@ -552,7 +551,7 @@ public class CmdUtil {
 			if (children<255) {
 				userid = ToHexUtil.pad(Integer.toHexString(children), 2, true);
 			}
-//			MLog.e("ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ useridï¿½ï¿½" + userid);
+//			MLog.e("Á¬½Ó·þÎñÆ÷ userid£º" + userid);
 		}*/
 		
 		
@@ -560,19 +559,18 @@ public class CmdUtil {
 		
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte("FE" + userid));
 		String cip = "FE" + userid + msgContent + crc8;
-//		MLog.e("ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½" + cip);
+//		MLog.e("¼ÓÃÜÇ°£º" + cip);
 		
 		String mi = encrypt(cip,mAesUtil);
 		String miLen = get2Len(mi);
 		String msg = mac + TITLE + miLen + mi + END;
 //		MLog.e("mi="+mi);
-//		MLog.e("ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ msg "+mac);
+//		MLog.e("Á¬½Ó·þÎñÆ÷ msg "+mac);
 		return msg;
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @param application 
+	 * ÃüÁî×ª·¢·þÎñÆ÷
 	 */
 	public  static String getToService(AesUtil mAesUtil ,String cmd, String mac) {
 		
@@ -582,7 +580,7 @@ public class CmdUtil {
 			if (children<255) {
 				userid = ToHexUtil.pad(Integer.toHexString(children), 2, true);
 			}*/
-//			MLog.e("ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ useridï¿½ï¿½" + userid);   
+//			MLog.e("ÃüÁî×ª·¢·þÎñÆ÷ userid£º" + userid);   
 		String msgContent=""/* = ToHexUtil.string2ASCII(cmd)*/;
 		
 		try {
@@ -598,9 +596,9 @@ public class CmdUtil {
 		
 		String crc8 = CRC8.calcCrc8(ToHexUtil.hexStringToByte(protocolNum + userid + msgContent));
 		String cip = protocolNum + userid + msgContent + crc8;
-//		MLog.S("×ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½" + cip);
+//		MLog.S("×ª·¢ ¼ÓÃÜÇ°£º" + cip);
 		String mi = encrypt(cip,mAesUtil);
-//		MLog.e("ï¿½ï¿½ï¿½Ä£ï¿½" + mi);
+//		MLog.e("ÃÜÎÄ£º" + mi);
 		String miLen = get2Len(mi);
 
 		String msg =mac+ TITLE + miLen + mi + END;
@@ -609,7 +607,7 @@ public class CmdUtil {
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * Ìí¼ÓÖ÷»ú
 	 */
 //	public static String getAddComputerMsg(String email,AesUtil mAesUtil) {
 //		String protocolNum = "03";
@@ -619,7 +617,7 @@ public class CmdUtil {
 //		String emailLen = getLen(email.length());
 ////		MLog.e("emailLen=" + emailLen);
 //
-//		email = ToHexUtil.str2HexStr(email);//ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+//		email = ToHexUtil.str2HexStr(email);//×Ö·û´®×ª»»³ÉÊ®Áù½øÖÆ×Ö·û´®
 ////		MLog.e("email=" + email);
 //
 //		String msgContent = emailLen + email;
@@ -629,20 +627,20 @@ public class CmdUtil {
 ////		MLog.e("crc8=" + crc8);
 //		
 //		String cip = protocolNum + userid + msgContent + crc8;
-////		MLog.e("ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½" + cip);
+////		MLog.e("¼ÓÃÜÇ°£º" + cip);
 //
 //		String mi = encrypt(cip,mAesUtil);
-////		MLog.e("ï¿½ï¿½ï¿½ï¿½=" + mi);
+////		MLog.e("ÃÜÎÄ=" + mi);
 //
 //		String miLen = get2Len(mi);
 ////		MLog.e("miLen=" + miLen);
 //
 //		String msg = TITLE + miLen + mi + END;
-//		MLog.e("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + msg);
+//		MLog.e("Ìí¼ÓÖ÷»ú£º" + msg);
 //		return msg;
 //	}
 	
-	/** 10ï¿½ï¿½ï¿½ï¿½×ª16ï¿½ï¿½ï¿½ï¿½,return 1ï¿½Ö½ï¿½*/
+	/** 10½øÖÆ×ª16½øÖÆ,return 1×Ö½Ú*/
 	public static String getLen(int len) {
 		if (len<16) {
 			return "0"+Integer.toHexString(len).toUpperCase();
@@ -650,7 +648,7 @@ public class CmdUtil {
 		return Integer.toHexString(len).toUpperCase();
 	}
 
-	/** ï¿½ï¿½È¡16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½,return 1ï¿½Ö½ï¿½*/
+	/** »ñÈ¡16½øÖÆ×Ö·û´®µÄ³¤¶È,return 1×Ö½Ú*/
 	public static String get1Len(String string) {
 		
 		int milen = ToHexUtil.hexStringToByte(string).length;
@@ -663,7 +661,7 @@ public class CmdUtil {
 		return miLen;
 	}
 	
-	/** ï¿½ï¿½È¡16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½,return 2ï¿½Ö½ï¿½*/
+	/** »ñÈ¡16½øÖÆ×Ö·û´®µÄ³¤¶È,return 2×Ö½Ú*/
 	public static String get2Len(String string) {
 		
 		int milen = ToHexUtil.hexStringToByte(string).length;
@@ -681,25 +679,25 @@ public class CmdUtil {
 	}
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½
+	 * ¼ÓÃÜ
 	 * @param mAesUtil 
-	 * @string 16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	 * @string 16½øÖÆ×Ö·û´®
 	 */
 	private synchronized static String encrypt(String string, AesUtil mAesUtil) {
 		byte [] content = ToHexUtil.hexStringToByte(string);
 		byte [] decode = mAesUtil.encrypt(content);
-		String c = ToHexUtil.byte2HexStr(decode, decode.length);
+		String c =ToHexUtil.byte2HexStr(decode, decode.length);
 		return c;
 	}
 
 	/**
-	 * ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½
+	 * ¼ÓÃÜ²âÊÔ
 	 */
 	public static void jiami() {
 		AesUtil mAesUtil = new AesUtil();
 		
-		String t1 = "040100";//ï¿½ï¿½ï¿½ï¿½Ê¥Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		String t1_ = "40010107";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
+		String t1 = "040100";//Á¬½ÓÊ¥Í¼ÈðÖ÷»úÇëÇó
+		String t1_ = "40010107";//ÖÇÄÜÖ÷»úÏìÓ¦
 		
 		String t = t1;
 		 
@@ -712,7 +710,7 @@ public class CmdUtil {
 		String dec= ToHexUtil.byte2HexStr(de,de.length);
 
 		
-		//---------------ï¿½ï¿½ï¿½ï¿½-----------------
+		//---------------ÖÐÎÄ-----------------
 		String c11= mAesUtil.encrypt("40010107", AesUtil.Key, AesUtil.IV);
 		String  de11  =mAesUtil.decrypt(c11,  AesUtil.Key, AesUtil.IV);
 	}

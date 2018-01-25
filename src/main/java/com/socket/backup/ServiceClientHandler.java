@@ -1,10 +1,9 @@
-package com.socket;
+package com.socket.backup;
 
+import com.SpringUtil;
 import com.bean.Device;
-import com.utility.AesUtil;
-import com.utility.CRC8;
-import com.utility.CmdUtil;
-import com.utility.ToHexUtil;
+import com.socket.SocketFactory;
+import com.utility.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,11 +18,14 @@ import java.util.Locale;
 public class ServiceClientHandler extends IoHandlerAdapter {
 	private String serviceEndRremain = "";// ���ݰ�β������
 	private String hostEndRremain = "";
-	
-	private static final Logger logger = LogManager.getLogger(com.socket.ServiceClientHandler.class);
+
+
+	private static final Logger logger = LogManager.getLogger(ServiceClientHandler.class);
 
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
+
+		System.out.println("-----------> session.getId(2222222222):"+session.getId());
 		// TODO Auto-generated method stub
 		super.messageReceived(session, message);
 		char[] mChars = "0123456789ABCDEF".toCharArray();
@@ -34,10 +36,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			cmdstr.append(mChars[bytes[n] & 0x0F]);// 0x0f����ʮ���Ƶ�15
 		}
 		cmdstr.toString().trim().toUpperCase(Locale.US);
-		// logger.debug("sb:"+sb.toString());
-//		System.out.println("cmdstr.toString():"+cmdstr.toString());
 
-		// ���ݹ������ֲ����������ݰ�
 		String cmdData = cmdstr.toString();
 		if (!StringUtils.isEmpty(serviceEndRremain)) {
 			cmdData = serviceEndRremain + cmdData;
@@ -55,7 +54,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			cmdData = cmdData.substring(0, endIndex + 4);
 		}
 
-		AesUtil mAesUtil = new AesUtil();
+		AesUtil mAesUtil = SocketFactory.getCurAesInstance(session.getId()+"");
 		List<String> cmdList = new ArrayList<String>();
 		List<String> macList = new ArrayList<String>();
 
@@ -64,13 +63,8 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 		for (int i = 0; i < cmdList.size(); i++) {
 			String loopcmd = cmdList.get(i);
 			String loopmac = macList.get(i);
-
 			String singleItem = parse(loopcmd, mAesUtil, true);
-			
 			System.out.println("singleItem:"+singleItem);
-			
-			
-
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 				// GET\ENDPOINT\ACK:2d021e07004b1200\00\0001\0001\00 <NULL>
 				// GET\ENDPOINT\ACK:[mac]\[ep]\[devid]\[cmdlist]\[attrlist]
@@ -83,7 +77,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 						currentdevice = new Device(loopmac, StringUtils.trimToEmpty(name), deviceCmd[1], deviceCmd[2], deviceCmd[3]);
 						logger.debug("currentdevice from socket:"+ currentdevice);
 						System.out.println("currentdevice from socket:"+ currentdevice);
-						//updateDeviceDetails( currentdevice );
+						updateDeviceDetails( currentdevice );
 				}
 			} else if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.DEV_ONLINE) == 0) {
 				//updateDeviceDetailsByDeviceMac(singleItem);
@@ -91,7 +85,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				// ����redise ����
 				
 			}else if(StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT") == 0)){
-				/*String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
+				String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
 				
 				logger.debug( "device.deviceCmd():" + deviceCmd );
 				
@@ -101,18 +95,47 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				logger.debug(  "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
 				//System.out.println( "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
 			    for(Device device : Constants.deviceList){
-			    	if(device.getDeviceMac().equals(devMac) && device.getEquipmentEp().equals(eq) &&  "04".equals(attrId)){
+			    	if(device.getEquipmentMac().equals(devMac) && device.getEquipmentEp().equals(eq) &&  "04".equals(attrId)){
 			    		logger.debug("device.getName():"+ device.getName());
 			    		device.setProgressBar(Integer.parseInt(deviceCmd[3],16)+"");
 			    	}
-			    }*/
+			    }
 			}
 		}
 	}
 
+	private void updateDeviceDetails(Device device) {
+		for (Device currentdevice : Constants.deviceList) {
+			if (currentdevice.getEquipmentMac().equalsIgnoreCase(device.getEquipmentMac()) && currentdevice.getEquipmentEp().equalsIgnoreCase(device.getEquipmentEp()) && !currentdevice.getName().equalsIgnoreCase(device.getName()) ) {
+				currentdevice.setName(device.getName());
+				currentdevice.setDevid(device.getDevid());
+				//System.out.println("device.getName():"+device.getName());
+				logger.debug("updateDeviceDetails:"+device.getName());
 
+				SpringUtil.getUserMapper().updateHouseRelation(currentdevice);
 
+				logger.debug("update the redis...");
+				break;
+			}
+			ConstantsMethod.updateDeviceLists(Constants.deviceList);
+		}
+	}
 
+	private void updateDeviceDetailsByDeviceMac(String onlineDevice) {
+		if (StringUtils.isBlank(onlineDevice) | onlineDevice.indexOf("ONLINE:") == -1 | onlineDevice.indexOf("-") == -1) {
+			return;
+		}
+
+		String deviceMac = onlineDevice.split(":")[1].split("-")[0];
+		String online = onlineDevice.split(":")[1].split("-")[1];
+		for (Device currentdevice : Constants.deviceList) {
+			/*if (currentdevice.getId().indexOf(deviceMac) != -1) {
+				currentdevice.setOnline(Boolean.parseBoolean(online.trim()));
+				break;
+			}*/
+		}
+
+	}
 
 	private String serviceRremain = "";// ���ݰ�����
 
@@ -210,16 +233,21 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		// TODO Auto-generated method stub
-		super.messageSent(session, message);
-		char[] mChars = "0123456789ABCDEF".toCharArray();
-		byte[] bytes = (byte[]) message;
-		StringBuilder sb = new StringBuilder();
-		for (int n = 0; n < bytes.length; n++) {
-			sb.append(mChars[(bytes[n] & 0xFF) >> 4]);
-			sb.append(mChars[bytes[n] & 0x0F]);// 0x0f����ʮ���Ƶ�15
+		try {
+			super.messageSent(session, message);
+			char[] mChars = "0123456789ABCDEF".toCharArray();
+			byte[] bytes = (byte[]) message;
+			StringBuilder sb = new StringBuilder();
+			for (int n = 0; n < bytes.length; n++) {
+				sb.append(mChars[(bytes[n] & 0xFF) >> 4]);
+				sb.append(mChars[bytes[n] & 0x0F]);// 0x0f����ʮ���Ƶ�15
+			}
+			sb.toString().trim().toUpperCase(Locale.US);
+			logger.debug("sb:" + sb.toString());
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		sb.toString().trim().toUpperCase(Locale.US);
-		logger.debug("sb:" + sb.toString());
+
 
 	}
 
