@@ -10,35 +10,40 @@ public class Device implements Serializable {
 	private static final long serialVersionUID = 5692837227581812121L;
 
 	@SuppressWarnings("unused")
-	private String id;
+	private int id;
 	private String hostMac;
 	private String userId; // �û�id
 	private String roomName;// ����id
 	private String floorName;
 	private String name; // ����
-	private String deviceMac; // �豸��mac��ַ key
+	private String equipmentMac;
 	private String equipmentEp; // �߼��豸���
 	private String devid; // �豸id ��� 0x0000, ���� 0x0001,����� 0x0002�����ſ��� 0x0003�� // // ����ιʳ 0x0015��PM2.5������ 0x8011�� // �¶ȴ�����
-							// 0x8004��ʪ�ȴ����� //
-							// 0x8005�����ٴ�����0x8007���״�������0x8006��ͨ��ң����0x000f
 	private boolean online;  // ���ߣ�true or false
 	private String amazonId;
 	private String progressBar="0";
+	private String userRelationId;
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+
 
 	public Device() {
 	}
 
-	public Device(String hostMac, String name, String mac, String ep, String devid ) {
+	public Device(String hostMac, String name, String equipmentMac, String ep, String devid ) {
 		this.hostMac = hostMac;
 		this.name = name;
-		this.deviceMac = mac;
+		this.equipmentMac = equipmentMac;
 		this.equipmentEp = ep;
 		this.devid = devid;
 	}
 
 	@Override
 	public String toString() {
-		return ("Device [computer_mac=" + hostMac + ", name=" + name + ", mac=" + deviceMac + ", ep=" + equipmentEp + ", devid="
+		return ("Device [computer_mac=" + hostMac + ", name=" + name + ", mac=" + equipmentMac + ", ep=" + equipmentEp + ", devid="
 				+ devid+ ", roomName="+ roomName+ ", floorName="+ floorName + ", online="+ online + ", +hashcode="+  hashCode()+ ", +amazonId="+  amazonId+"progressBar="+progressBar );
 
 	}
@@ -46,7 +51,7 @@ public class Device implements Serializable {
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return this.hostMac.hashCode()+this.deviceMac.hashCode()+this.equipmentEp.hashCode()+100;
+		return this.hostMac.hashCode()+this.equipmentMac.hashCode()+this.equipmentEp.hashCode()+100;
 	}
 
 	@Override
@@ -57,56 +62,40 @@ public class Device implements Serializable {
 			throw new ClassCastException("���Ͳ�ƥ��");
 
 		Device device = (Device) obj;
-		if( device.getHostMac()==null  || device.getDeviceMac()== null  || device.getEquipmentEp()==null){
+		if( device.getHostMac()==null  || device.getEquipmentMac()== null  || device.getEquipmentEp()==null){
 			return false;
 		}
 		
-		return  device.getHostMac().equals( this.getHostMac() )&& device.getDeviceMac().equals(this.getDeviceMac() ) && device.getEquipmentEp().equals( this.getEquipmentEp() );
-	}
-	
-
-	public String getProgressBar() {
-		return progressBar;
+		return  device.getHostMac().equals( this.getHostMac() )&& device.getEquipmentMac().equals(this.getEquipmentMac() ) && device.getEquipmentEp().equals( this.getEquipmentEp() );
 	}
 
-	public void setProgressBar(String progressBar) {
-		this.progressBar = progressBar;
-	}
 
-	public boolean getOnline() {
-		return online;
-	}
-
-	public void setOnline(boolean online) {
-		this.online = online;
-	}
-
-	
-	public String getId() {
-		return this.amazonId+"_"+this.hostMac+"_"+this.deviceMac+this.equipmentEp;
-	}
-	
-	
-
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getEquipmentMac() {
+		return equipmentMac;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEquipmentMac(String equipmentMac) {
+		this.equipmentMac = equipmentMac;
 	}
 
-
-	public String getDevid() {
-		return devid;
+	public boolean isOnline() {
+		return online;
 	}
 
-	public void setDevid(String devid) {
-		this.devid = devid;
+	public String getUserRelationId() {
+		return userRelationId;
+	}
+
+	public void setUserRelationId(String userRelationId) {
+		this.userRelationId = userRelationId;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getHostMac() {
@@ -141,16 +130,12 @@ public class Device implements Serializable {
 		this.floorName = floorName;
 	}
 
-	public String getDeviceMac() {
-		return deviceMac;
+	public String getName() {
+		return name;
 	}
 
-	public void setDeviceMac(String deviceMac) {
-		this.deviceMac = deviceMac;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEquipmentEp() {
@@ -161,6 +146,18 @@ public class Device implements Serializable {
 		this.equipmentEp = equipmentEp;
 	}
 
+	public String getDevid() {
+		return devid;
+	}
+
+	public void setDevid(String devid) {
+		this.devid = devid;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
+
 	public String getAmazonId() {
 		return amazonId;
 	}
@@ -168,14 +165,12 @@ public class Device implements Serializable {
 	public void setAmazonId(String amazonId) {
 		this.amazonId = amazonId;
 	}
-	
-	
-    public static void main(String[] args) {
 
-    	
+	public String getProgressBar() {
+		return progressBar;
 	}
-	
 
-	
-
+	public void setProgressBar(String progressBar) {
+		this.progressBar = progressBar;
+	}
 }

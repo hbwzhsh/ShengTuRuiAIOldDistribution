@@ -7,7 +7,15 @@ public class TaobaoPayload {
     private String deviceType;
     private String attribute;
     private String value;
+    private TaobaoExtensions extensions;
 
+    public TaobaoExtensions getExtensions() {
+        return extensions;
+    }
+
+    public void setExtensions(TaobaoExtensions extensions) {
+        this.extensions = extensions;
+    }
 
     public String getAccessToken() {
         return accessToken;

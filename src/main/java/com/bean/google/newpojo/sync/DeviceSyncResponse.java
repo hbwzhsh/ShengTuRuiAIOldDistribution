@@ -2,13 +2,15 @@ package com.bean.google.newpojo.sync; /**
   * Copyright 2018 bejson.com 
   */
 
+import com.bean.google.GoogleRequestParent;
+
 /**
  * Auto-generated: 2018-01-24 10:27:10
  *
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class DeviceSyncResponse {
+public class DeviceSyncResponse extends GoogleRequestParent{
 
     private String requestId;
     private PayloadSync payload;

@@ -26,8 +26,8 @@ public class SoketClient {
     private IoSession sendsession;
 
     public void connectServiceAndExeCommand(List<String> commandList, List<String> hostMacs) {
-        logger.error("commandList.size():" + commandList.size());
-        logger.error("hostMacs.size():" + hostMacs.size());
+        System.out.println("commandList.size():" + commandList.size());
+        System.out.println("hostMacs.size():" + hostMacs.size());
         NioSocketConnector connector = new NioSocketConnector();
         connector.setConnectTimeoutMillis(50000);
         connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ByteArrayCodecFactory()));// �������������ַ������б��
@@ -37,11 +37,11 @@ public class SoketClient {
 				future.awaitUninterruptibly();
 				sendsession = future.getSession();*/
 
-            for (String hostMac : hostMacs) {
+           /* for (String hostMac : hostMacs) {
                 Thread.sleep(2);
                 byte[] msg = ToHexUtil.hexStringToByte(CmdUtil.connectService(mAesUtil, hostMac));
                 sendsession.write(IoBuffer.wrap(msg));
-            }
+            }*/
 
             for (int i = 0; i < commandList.size(); i++) {
                 logger.error("commandList.get(i):" + commandList.get(i));

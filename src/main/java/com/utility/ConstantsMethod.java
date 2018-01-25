@@ -76,9 +76,9 @@ public class ConstantsMethod {
 		Constants.clientSecret =  (String) config.get("clientSecret");*/
 
     try{
-        Set<Device> tempdeviceList = RedisDAO.getHashSet(Constants.deviceKey);
+        /*Set<Device> tempdeviceList = RedisDAO.getObject(Constants.deviceKey);
         if (tempdeviceList != null)
-            Constants.deviceList = tempdeviceList;
+            Constants.deviceList = tempdeviceList;*/
 
         @SuppressWarnings("unchecked")
         Map<String, String> tempdefualtRooms = RedisDAO.getHashMap(Constants.dafualtRoomKey);

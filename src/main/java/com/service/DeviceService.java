@@ -42,9 +42,9 @@ public class DeviceService {
             List<String> tempDeviceMacList = new ArrayList<String>();
             List<String> tempDeviceHostList = new ArrayList<String>();
             for (Device tempDevice : tempDevicelist) {
-                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
+                System.out.println("--->Cmd:" + "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
 
-                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
+                tempDeviceMacList.add("CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState);
                 tempDeviceHostList.add(tempDevice.getHostMac());
             }
 
@@ -62,9 +62,9 @@ public class DeviceService {
             List<String> tempDeviceHostList = new ArrayList<String>();
 
             for (Device tempDevice : tempDevicelist) {
-                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceState());
+                logger.debug("--->Cmd:" + "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceState());
 
-                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceState());
+                tempDeviceMacList.add("CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceState());
                 tempDeviceHostList.add(tempDevice.getHostMac());
 
                 ConstantsMethod.reSetDevicedata(tempDevice, item.getPersentage() + "");
@@ -104,7 +104,7 @@ public class DeviceService {
                 ConstantsMethod.reSetDevicedata(tempDevice, moveToProcessBar + "");
 
                 logger.debug("moveToProcessBar:" + moveToProcessBar);
-                tempDeviceMacList.add("CMD:" + tempDevice.getDeviceMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(moveToProcessBar + ""));
+                tempDeviceMacList.add("CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(moveToProcessBar + ""));
                 tempDeviceHostList.add(tempDevice.getHostMac());
             }
 
@@ -134,7 +134,7 @@ public class DeviceService {
                 for (Device item : listDevice) {
                     item.setAmazonId(amazonId);
                     for (Device device : Constants.deviceList) {
-                        if (device.getDeviceMac().equals(item.getDeviceMac()) && device.getEquipmentEp().equals(item.getEquipmentEp())) {
+                        if (device.getEquipmentMac().equals(item.getEquipmentMac()) && device.getEquipmentEp().equals(item.getEquipmentEp())) {
                             device.setAmazonId(amazonId);
                             device.setRoomName(item.getRoomName());
                             device.setDevid(item.getDevid());

@@ -99,7 +99,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				logger.debug(  "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
 				//System.out.println( "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
 			    for(Device device : Constants.deviceList){
-			    	if(device.getDeviceMac().equals(devMac) && device.getEquipmentEp().equals(eq) &&  "04".equals(attrId)){
+			    	if(device.getEquipmentMac().equals(devMac) && device.getEquipmentEp().equals(eq) &&  "04".equals(attrId)){
 			    		logger.debug("device.getName():"+ device.getName());
 			    		device.setProgressBar(Integer.parseInt(deviceCmd[3],16)+"");
 			    	}
@@ -110,7 +110,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
 	private void updateDeviceDetails(Device device) {
 		for (Device currentdevice : Constants.deviceList) {
-			if (currentdevice.getDeviceMac().equalsIgnoreCase(device.getDeviceMac()) && currentdevice.getEquipmentEp().equalsIgnoreCase(device.getEquipmentEp()) && !currentdevice.getName().equalsIgnoreCase(device.getName()) ) {
+			if (currentdevice.getEquipmentMac().equalsIgnoreCase(device.getEquipmentMac()) && currentdevice.getEquipmentEp().equalsIgnoreCase(device.getEquipmentEp()) && !currentdevice.getName().equalsIgnoreCase(device.getName()) ) {
 				currentdevice.setName(device.getName());
 				currentdevice.setDevid(device.getDevid());
 				//System.out.println("device.getName():"+device.getName());
@@ -133,10 +133,10 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 		String deviceMac = onlineDevice.split(":")[1].split("-")[0];
 		String online = onlineDevice.split(":")[1].split("-")[1];
 		for (Device currentdevice : Constants.deviceList) {
-			if (currentdevice.getId().indexOf(deviceMac) != -1) {
+			/*if (currentdevice.getId().indexOf(deviceMac) != -1) {
 				currentdevice.setOnline(Boolean.parseBoolean(online.trim()));
 				break;
-			}
+			}*/
 		}
 
 	}

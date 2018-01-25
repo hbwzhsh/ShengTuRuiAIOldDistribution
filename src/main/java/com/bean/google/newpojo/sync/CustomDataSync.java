@@ -10,8 +10,17 @@ package com.bean.google.newpojo.sync; /**
  */
 public class CustomDataSync {
 
-    private String deviceMac;
+    private String equipmentMac;
     private String deviceEq;
+    private String hostMac;
+
+    public String getHostMac() {
+        return hostMac;
+    }
+
+    public void setHostMac(String hostMac) {
+        this.hostMac = hostMac;
+    }
 
     public String getDeviceEq() {
         return deviceEq;
@@ -21,12 +30,11 @@ public class CustomDataSync {
         this.deviceEq = deviceEq;
     }
 
-    public String getDeviceMac() {
-        return deviceMac;
+    public String getEquipmentMac() {
+        return equipmentMac;
     }
 
-    public void setDeviceMac(String deviceMac) {
-        this.deviceMac = deviceMac;
+    public void setEquipmentMac(String equipmentMac) {
+        this.equipmentMac = equipmentMac;
     }
-
 }

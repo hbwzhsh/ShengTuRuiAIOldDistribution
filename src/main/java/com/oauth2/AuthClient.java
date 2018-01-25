@@ -61,7 +61,7 @@ public class AuthClient {
 
 
         UserOauth2 userOauth2 = new UserOauth2();
-        userOauth2.setUserId(Integer.parseInt(user.getUserId()));
+        userOauth2.setUserId(user.getUserId());
         UserOauth2 userOauthResult = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
         if (userOauthResult == null) {
 
@@ -81,9 +81,9 @@ public class AuthClient {
                 }
 
                 SpeakerUsers temp = new SpeakerUsers();
-                temp.setUserId(Integer.parseInt(user.getUserId()));
+                temp.setUserId(user.getUserId());
                 SpringUtil.getUserMapper().addUserTemp(temp);
-                responseMsg.setSuccessStatus();
+
             }
         } else {
             if (redirect_uri.indexOf("google") != -1) {
@@ -92,6 +92,7 @@ public class AuthClient {
                 responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauthResult.getCode());
             }
         }
+        responseMsg.setSuccessStatus();
         return responseMsg;
     }
 

@@ -1,6 +1,6 @@
 package com.bean.google;
 
-public class GoogleDevicesResponse {
+public class GoogleDevicesResponse extends GoogleRequestParent {
     private String requestId;
     private Object payload;
 
