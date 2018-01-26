@@ -65,7 +65,7 @@ public class DeviceService {
                 tempDeviceHostList.add(tempDevice.getHostMac());
             }
 
-            new SoketClient().connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
+            client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -86,7 +86,6 @@ public class DeviceService {
 
                 ConstantsMethod.reSetDevicedata(tempDevice, item.getPersentage() + "");
             }
-
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
