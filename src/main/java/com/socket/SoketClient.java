@@ -109,11 +109,11 @@ public class SoketClient {
         connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ByteArrayCodecFactory()));// �������������ַ������б��
         connector.setHandler(new ServiceClientHandler());
 
-        for (; ; ) {
             try {
                 ConnectFuture future = connector.connect(new InetSocketAddress(Constants.serverIpConnectSocket, Integer.parseInt(Constants.socketPort)));
                 future.awaitUninterruptibly();
                 sendsession = future.getSession();
+                SocketFactory.socketConnections.put(userId, this);
                 SocketFactory.AesConnections.put( sendsession.getId()+"",this.mAesUtil );
                 System.out.println("-----------> session.getId():" + sendsession.getId());
 
@@ -138,7 +138,6 @@ public class SoketClient {
 
                 }
                 System.out.println("refresh data...");
-                break;
             } catch (RuntimeIoException e) {
                 System.out.println("123123");
                 e.printStackTrace();
@@ -147,9 +146,7 @@ public class SoketClient {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                break;
             }
-        }
 
         // wait until the summation is done
 /*        if (sendsession != null)

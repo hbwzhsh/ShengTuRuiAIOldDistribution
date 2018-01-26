@@ -63,7 +63,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			String loopcmd = cmdList.get(i);
 			String loopmac = macList.get(i);
 			String singleItem = parse(loopcmd, mAesUtil, true);
-			System.out.println("singleItem:"+singleItem);
+			System.out.println("response:" + singleItem);
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 				// GET\ENDPOINT\ACK:2d021e07004b1200\00\0001\0001\00 <NULL>
 				// GET\ENDPOINT\ACK:[mac]\[ep]\[devid]\[cmdlist]\[attrlist]
@@ -75,7 +75,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 						String name = deviceCmd[0];
 						currentdevice = new Device(loopmac, StringUtils.trimToEmpty(name), deviceCmd[1], deviceCmd[2], deviceCmd[3]);
 						logger.debug("currentdevice from socket:"+ currentdevice);
-						System.out.println("currentdevice from socket:"+ currentdevice);
+						//System.out.println("currentdevice from socket:"+ currentdevice);
 						updateDeviceDetails( currentdevice );
 				}
 			} else if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.DEV_ONLINE) == 0) {
