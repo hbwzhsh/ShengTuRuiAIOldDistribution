@@ -48,6 +48,6 @@ public class WebsiteTest {
 
         client.connectService(userOauth2.getUserId());
 
-        deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId(),client);
+        deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
     }
 }

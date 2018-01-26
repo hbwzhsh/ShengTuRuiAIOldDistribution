@@ -13,6 +13,7 @@ import com.SpringUtil;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.*;
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
+import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.intent.amazonintent.refacting.IntentTypeFactory;
@@ -80,7 +81,7 @@ class DeviceSpeechlet implements Speechlet {
 	public SpeechletResponse onIntent(final IntentRequest request, final Session session) throws SpeechletException {
 
 		Intent intent = request.getIntent();
-		String accessToken = AmazonService.getProfileData(session.getUser().getAccessToken());
+		String accessToken = session.getUser().getAccessToken();
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
 		
 		logger.debug("accessToken:"+accessToken);
@@ -91,20 +92,17 @@ class DeviceSpeechlet implements Speechlet {
 			return AmazonResponse.getNewAskResponseForReconnecting();
 		}
 
+		UserOauth2 userOauth2 = new UserOauth2();
+		userOauth2.setAccessToken(accessToken);
+		UserOauth2 result = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
 
-		UserSite userTemp = new UserSite();
-		userTemp.setEmail(accessToken);
-		UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
-		if(user == null){
+		if(result == null){
 			speechText = "I can not find your email "+accessToken+" within Smart plus database ,please make a contact with us.";
 			logger.debug("speechText:"+speechText);
 			return AmazonResponse.getNewAskResponse( speechText );
 		}
-		
-		//�ж��Ƿ���dialogģʽ
 		Object obj = session.getAttribute("where");
 		if(obj != null){
-			@SuppressWarnings("rawtypes")
 			LinkedHashMap objitem = (LinkedHashMap) session.getAttribute("currentList");
 			if(objitem.containsKey("intentName")){
 				intentName = objitem.get("intentName").toString();
@@ -113,7 +111,7 @@ class DeviceSpeechlet implements Speechlet {
 		}
 		
 		IntendRequestInterface intentObj = IntentTypeFactory.getIntentTypeByName(intentName);
-		return intentObj.doSomething(intent,session,user);
+		return intentObj.doSomething(intent,session,result);
 
 	}
 

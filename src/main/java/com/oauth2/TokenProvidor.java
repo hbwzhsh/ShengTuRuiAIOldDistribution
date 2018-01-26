@@ -44,7 +44,7 @@ public class TokenProvidor {
         System.out.println("client_secret:" + client_secret);
         System.out.println("redirect_uri:" + redirect_uri);
 
-        boolean params = StringUtils.isEmpty(grant_type) || !(TokenFactory.client.equalsIgnoreCase(client_id) && TokenFactory.secret.equalsIgnoreCase(client_secret));
+        boolean params = StringUtils.isEmpty(grant_type) || !(TokenFactory.client.equalsIgnoreCase(client_id));
 
         System.out.println("params:" + params);
         if (params) {

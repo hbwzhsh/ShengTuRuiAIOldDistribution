@@ -50,6 +50,7 @@ public class RedisDAO {
             getRedisConnection().del(key + redisStr);
         } catch (Exception e) {
             e.printStackTrace();
+
         }
 
     }
@@ -72,9 +73,10 @@ public class RedisDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
-        return new ArrayList<Device>();
+        return null;
     }
 
 }

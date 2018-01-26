@@ -63,9 +63,15 @@ public class DeviceDataManager {
         }, delayTime, period);
     }
 
-
-    public static void main(String[] args) {
-
-
+    public static List<Device>  getDeviceData(String userId){
+        List<Device> deviceList = RedisDAO.getObject(userId);
+        if(deviceList == null){
+            List<Device> dataList =   SpringUtil.getUserMapper().getDeviceList(userId);
+            RedisDAO.saveObject(userId,dataList);
+        }
+        return  deviceList;
     }
+
+
+
 }

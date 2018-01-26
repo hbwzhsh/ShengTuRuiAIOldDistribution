@@ -63,37 +63,39 @@ public class AuthClient {
         UserOauth2 userOauth2 = new UserOauth2();
         userOauth2.setUserId(user.getUserId());
         UserOauth2 userOauthResult = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
+
+        if (userOauthResult != null) {
+            getRightLink(redirect_uri, state, responseMsg, userOauthResult);
+        }
+
         if (userOauthResult == null) {
 
             userOauth2.setAccessToken(TokenFactory.createAccessToken());
             userOauth2.setRefreshToken(TokenFactory.createRefreshToken());
             userOauth2.setCode(TokenFactory.createCode());
-
             int count = SpringUtil.getUserMapper().addObjectToOauth2(userOauth2);
+
             if (count == 0) {
                 responseMsg.setData("something wrong!");
                 return responseMsg;
             } else {
-                if (redirect_uri.indexOf("google") != -1) {
-                    responseMsg.setData(redirect_uri + "?state=" + state + "&code=" + userOauth2.getCode());
-                } else {
-                    responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauth2.getCode());
-                }
-
+                getRightLink(redirect_uri, state, responseMsg, userOauth2);
                 SpeakerUsers temp = new SpeakerUsers();
                 temp.setUserId(user.getUserId());
                 SpringUtil.getUserMapper().addUserTemp(temp);
 
             }
-        } else {
-            if (redirect_uri.indexOf("google") != -1) {
-                responseMsg.setData(redirect_uri + "?state=" + state + "&code=" + userOauthResult.getCode());
-            } else {
-                responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauthResult.getCode());
-            }
         }
         responseMsg.setSuccessStatus();
         return responseMsg;
+    }
+
+    private void getRightLink(String redirect_uri, String state, ResponseMsg responseMsg, UserOauth2 userOauthResult) {
+        if (redirect_uri.indexOf("tmall") == -1) {
+            responseMsg.setData(redirect_uri + "?state=" + state + "&code=" + userOauthResult.getCode());
+        } else {
+            responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauthResult.getCode());
+        }
     }
 
 
