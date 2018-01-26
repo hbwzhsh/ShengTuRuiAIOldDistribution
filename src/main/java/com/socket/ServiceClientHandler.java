@@ -23,7 +23,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
-
 		System.out.println("-----------> session.getId(2222222222):"+session.getId());
 		// TODO Auto-generated method stub
 		super.messageReceived(session, message);

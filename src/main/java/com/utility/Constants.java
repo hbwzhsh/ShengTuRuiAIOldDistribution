@@ -62,12 +62,12 @@ public class Constants {
 	// for redis and socket
 
 	@Value("${serverIpConnectSocket}")
-//	public static String serverIpConnectSocket ="115.28.190.86";
-	public static String serverIpConnectSocket = "127.0.0.1";
+    public static String serverIpConnectSocket ="115.28.190.86";
+	//public static String serverIpConnectSocket = "127.0.0.1";
 	@Value("${socketPort}")
 	public static String socketPort ="8888";
 	@Value("${redisIpConnectSocket}")
-	public static String redisIpConnectSocket ="47.91.76.217" ;
+	public static String redisIpConnectSocket ="127.0.0.1" ;
 	@Value("${redisPort}")
 	public static String redisPort ="6380";
 	@Value("${currentServerPath}")

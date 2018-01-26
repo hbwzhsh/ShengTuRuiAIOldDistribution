@@ -37,7 +37,6 @@ public class DeviceDataManager {
 
                             if (tempClient == null) {
                                 SoketClient client = new SoketClient();
-
                                 client.connectService(users.getUserId());
                             } else {
                                 tempClient.getDevicesFromService(users.getUserId());
