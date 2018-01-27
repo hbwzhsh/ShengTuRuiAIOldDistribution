@@ -5,12 +5,9 @@ import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.bean.site.UserOauth2;
-import com.bean.site.UserSite;
-import com.data.RedisDAO;
 import com.utility.Constants;
 import com.service.DeviceService;
 import com.intent.amazonintent.refacting.AmazonResponse;
-import com.service.AmazonService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 

@@ -5,7 +5,6 @@ import com.bean.Device;
 import com.bean.IntendParams;
 import com.bean.IntendType;
 import com.data.DeviceDataManager;
-import com.data.RedisDAO;
 import com.utility.Constants;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
 import com.socket.SocketFactory;

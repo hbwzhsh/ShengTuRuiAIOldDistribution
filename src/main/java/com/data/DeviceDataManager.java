@@ -72,6 +72,11 @@ public class DeviceDataManager {
 
     public static List<Device> getDeviceList(String userId){
         List<Device> deviceList = (ArrayList<Device>)redisTemplate.opsForValue().get("userId");
+
+        if(deviceList == null){
+            return SpringUtil.getUserMapper().getDeviceList(userId);
+        }
+
         for(Device device : deviceList){
             String proccessBar =stringRedisTemplate.opsForValue().get( device.getEquipmentMac()+":"+device.getEquipmentEp());
             device.setProgressBar(proccessBar);

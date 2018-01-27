@@ -3,12 +3,9 @@ package com.intent.taobaointent;
 import com.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.bean.Device;
-import com.bean.google.newpojo.command.request.Devices;
-import com.bean.google.newpojo.command.request.Execution;
 import com.bean.site.UserOauth2;
 import com.bean.taobao.*;
 import com.data.DeviceDataManager;
-import com.data.RedisDAO;
 import com.service.DeviceService;
 import com.utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 public class TaobaoDeviceProvidor {

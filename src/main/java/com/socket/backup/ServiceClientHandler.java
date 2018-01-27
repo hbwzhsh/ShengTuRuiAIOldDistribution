@@ -66,9 +66,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			String singleItem = parse(loopcmd, mAesUtil, true);
 			System.out.println("singleItem:"+singleItem);
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
-				// GET\ENDPOINT\ACK:2d021e07004b1200\00\0001\0001\00 <NULL>
-				// GET\ENDPOINT\ACK:[mac]\[ep]\[devid]\[cmdlist]\[attrlist]
-//				System.out.println("singleItem:"+singleItem);
 				String[] deviceCmd = singleItem.substring(CmdUtil.GET_ENDPOINT_ACK.length()).trim().split("\\\\");// '\'�ָ�
 				Device currentdevice = null;
 				
@@ -117,7 +114,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				logger.debug("update the redis...");
 				break;
 			}
-			ConstantsMethod.updateDeviceLists(Constants.deviceList);
 		}
 	}
 
