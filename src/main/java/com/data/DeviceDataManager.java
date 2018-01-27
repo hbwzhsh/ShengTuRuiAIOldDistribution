@@ -5,7 +5,11 @@ import com.bean.Device;
 import com.bean.SpeakerUsers;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,6 +18,10 @@ public class DeviceDataManager {
 
     private static int delayTime = 1000;
     private static int period = 20000;
+
+    private static RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");
+
+    private static StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
 
     public static void updateDataSchedule() {
         Timer timer = new Timer();
@@ -41,16 +49,15 @@ public class DeviceDataManager {
                             } else {
                                 tempClient.getDevicesFromService(users.getUserId());
                             }
-
                             //get data from database then put data to redis cache
                             List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(users.getUserId());
-                            RedisDAO.saveObject(users.getUserId(), deviceList);
+                            redisTemplate.opsForValue().set(users.getUserId(),deviceList);
                         }
 
-                        Object obj = RedisDAO.getObject(users.getUserId());
+                        Object obj =  redisTemplate.opsForValue().get(users.getUserId());
                         if (obj == null) {
                             List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(users.getUserId());
-                            RedisDAO.saveObject(users.getUserId(), deviceList);
+                            redisTemplate.opsForValue().set(users.getUserId(),deviceList);
                         }
                     }
                 } catch (Exception e) {
@@ -62,15 +69,13 @@ public class DeviceDataManager {
         }, delayTime, period);
     }
 
-    public static List<Device>  getDeviceData(String userId){
-        List<Device> deviceList = RedisDAO.getObject(userId);
-        if(deviceList == null){
-            List<Device> dataList =   SpringUtil.getUserMapper().getDeviceList(userId);
-            RedisDAO.saveObject(userId,dataList);
+
+    public static List<Device> getDeviceList(String userId){
+        List<Device> deviceList = (ArrayList<Device>)redisTemplate.opsForValue().get("userId");
+        for(Device device : deviceList){
+            String proccessBar =stringRedisTemplate.opsForValue().get( device.getEquipmentMac()+":"+device.getEquipmentEp());
+            device.setProgressBar(proccessBar);
         }
-        return  deviceList;
+        return deviceList;
     }
-
-
-
 }

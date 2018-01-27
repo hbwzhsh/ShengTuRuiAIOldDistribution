@@ -7,9 +7,12 @@ import com.bean.google.newpojo.command.request.Devices;
 import com.bean.google.newpojo.command.request.Execution;
 import com.bean.site.UserOauth2;
 import com.bean.taobao.*;
+import com.data.DeviceDataManager;
 import com.data.RedisDAO;
 import com.service.DeviceService;
 import com.utility.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,8 @@ import java.util.Random;
 @RestController
 public class TaobaoDeviceProvidor {
 
+    @Autowired
+    private static RedisTemplate redisTemplate;
 
     private DeviceService deviceService = new DeviceService();
 
@@ -42,7 +47,7 @@ public class TaobaoDeviceProvidor {
         if (AliGenieNamespace.discovery.equalsIgnoreCase(request.getHeader().getNamespace())) {
             AliDevicesResponse aliDevicesResponse = new AliDevicesResponse();
 
-            List<Device> deviceList = RedisDAO.getObject( userResult.getUserId() );
+            List<Device> deviceList = DeviceDataManager.getDeviceList(userResult.getUserId());
 
             TaobaoHeader header = new TaobaoHeader();
             header = request.getHeader();

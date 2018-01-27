@@ -8,17 +8,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
-
+import org.springframework.data.redis.core.StringRedisTemplate;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ServiceClientHandler extends IoHandlerAdapter {
-	private String serviceEndRremain = "";// ���ݰ�β������
+	private String serviceEndRremain = "";
 	private String hostEndRremain = "";
 
-
+	private StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
 	private static final Logger logger = LogManager.getLogger(ServiceClientHandler.class);
 
 	@Override
@@ -62,7 +62,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			String loopcmd = cmdList.get(i);
 			String loopmac = macList.get(i);
 			String singleItem = parse(loopcmd, mAesUtil, true);
-			System.out.println("response:" + singleItem);
 
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 //				System.out.println("singleItem:"+singleItem);
@@ -81,20 +80,13 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
 			}else if(StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT") == 0)){
 				String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
-				
-				logger.debug( "device.deviceCmd():" + deviceCmd );
-				
 				String devMac = deviceCmd[0];
 				String eq =  deviceCmd[1];
 				String attrId =  deviceCmd[2];
-				logger.debug(  "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
-				//System.out.println( "device.deviceCmd():" + devMac+"-->"+eq+"--->"+attrId+"-->"+Integer.parseInt(deviceCmd[3],16)+"");
-			    for(Device device : Constants.deviceList){
-			    	if(device.getEquipmentMac().equals(devMac) && device.getEquipmentEp().equals(eq) &&  "04".equals(attrId)){
-			    		logger.debug("device.getName():"+ device.getName());
-			    		device.setProgressBar(Integer.parseInt(deviceCmd[3],16)+"");
-			    	}
-			    }
+				System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
+				if(StringUtils.isNotBlank(devMac) && StringUtils.isNotBlank(eq)){
+					stringRedisTemplate.opsForValue().set( devMac+":"+eq,Integer.parseInt(deviceCmd[3],16) + "" );
+				}
 			}
 		}
 	}
@@ -109,41 +101,23 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				logger.debug("update the redis...");
 				break;
 			}
-			ConstantsMethod.updateDeviceLists(Constants.deviceList);
+			//ConstantsMethod.updateDeviceLists(Constants.deviceList);
 		}
 	}
 
-	private void updateDeviceDetailsByDeviceMac(String onlineDevice) {
-		if (StringUtils.isBlank(onlineDevice) | onlineDevice.indexOf("ONLINE:") == -1 | onlineDevice.indexOf("-") == -1) {
-			return;
-		}
 
-		String deviceMac = onlineDevice.split(":")[1].split("-")[0];
-		String online = onlineDevice.split(":")[1].split("-")[1];
-		for (Device currentdevice : Constants.deviceList) {
-			/*if (currentdevice.getId().indexOf(deviceMac) != -1) {
-				currentdevice.setOnline(Boolean.parseBoolean(online.trim()));
-				break;
-			}*/
-		}
-
-	}
-
-	private String serviceRremain = "";// ���ݰ�����
+	private String serviceRremain = "";
 
 	synchronized void segmentService(String data, List<String> cmdList, List<String> macList) {
 		while (data.length() > 0) {
-
 			if (data.length() >= 16 && !"7676".equals(data.substring(12, 16)) && serviceRremain != null && serviceRremain.length() > 0) {
 				data = serviceRremain + data;
 				serviceRremain = "";
 			}
-
 			if (data.length() < (12 + 16)) {
 				serviceRremain = "";
 				return;
 			}
-
 			String mac = data.substring(0, 12);
 			data = data.substring(12);
 
@@ -151,7 +125,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				serviceRremain = "";
 				return;
 			}
-
 			macList.add(mac);
 			String a = data.substring(4, 8);
 			int n = ToHexUtil.HexToInt(a) * 2 + 8 + 4;
@@ -167,7 +140,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				data = data.substring(n);
 			}
 		}
-
 	}
 
 	synchronized protected String parse(String data, AesUtil mAesUtil, boolean isZw) {
@@ -176,23 +148,14 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 		if (!"7676".equals(baotou) || !"0D0A".equals(data.substring(data.length() - 4)) || ToHexUtil.strHexInt(data.substring(4, 8)) % 16 != 0) {
 			return null;
 		}
-
-		// ȥͷȥβ �õ�һ�����ݰ�
 		String bao = data.substring(8, data.length() - 4);
-		// MLog.S("����ǰ��" + bao);// ����ǰ:78C84841630AAA7E8E72CB1CC6DD9F07
-
 		if (bao.length() % 16 != 0) {
 			return null;
 		}
-
-		// ����
 		byte[] encode = mAesUtil.decrypt(ToHexUtil.hexStringToByte(bao));
-
 		if (encode == null || encode != null && encode.length == 0) {
 			return null;
 		} else {
-			// MLog.S("���ܳɹ���="+ToHexUtil.byte2HexStr(encode, encode.length));
-			// У��
 			byte[] crc = new byte[encode.length - 1];
 			for (int i = 0; i < encode.length - 1; i++)
 				crc[i] = encode[i];
@@ -217,16 +180,14 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			} else {
 				return ToHexUtil.byte2HexStr(crc, crc.length);
 			}
-
 		}
-
 	}
 
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			super.messageSent(session, message);
+			/*super.messageSent(session, message);
 			char[] mChars = "0123456789ABCDEF".toCharArray();
 			byte[] bytes = (byte[]) message;
 			StringBuilder sb = new StringBuilder();
@@ -235,7 +196,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				sb.append(mChars[bytes[n] & 0x0F]);// 0x0f����ʮ���Ƶ�15
 			}
 			sb.toString().trim().toUpperCase(Locale.US);
-			logger.debug("sb:" + sb.toString());
+			logger.debug("sb:" + sb.toString());*/
 		}catch (Exception e){
 			e.printStackTrace();
 		}

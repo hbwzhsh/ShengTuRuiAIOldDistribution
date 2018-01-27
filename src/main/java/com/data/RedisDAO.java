@@ -23,7 +23,6 @@ public class RedisDAO {
             RedisDAO.jedis = new Jedis(Constants.redisIpConnectSocket, Integer.parseInt(Constants.redisPort));
             jedis.auth("123456");
         }
-
         return jedis;
     }
 

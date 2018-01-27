@@ -1,8 +1,10 @@
 package com.service;
 
+import com.SpringUtil;
 import com.bean.Device;
 import com.bean.IntendParams;
 import com.bean.IntendType;
+import com.data.DeviceDataManager;
 import com.data.RedisDAO;
 import com.utility.Constants;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
@@ -11,6 +13,7 @@ import com.socket.SoketClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class DeviceService {
+
+    private StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
 
     private static final Logger logger = LogManager.getLogger(DeviceService.class);
 
@@ -61,12 +66,13 @@ public class DeviceService {
 
     private int getMoveToProcessBar(boolean flag, Device tempDevice) {
         int moveToProcessBar = 0;
-        if (StringUtils.isBlank(tempDevice.getProgressBar())) {
-            tempDevice.setProgressBar("0");
+        String currentProccessBar =stringRedisTemplate.opsForValue().get(tempDevice.getEquipmentMac()+":"+tempDevice.getEquipmentEp());
+
+        if (StringUtils.isBlank(currentProccessBar)) {
+            return moveToProcessBar;
         }
-        if (StringUtils.isNumeric(tempDevice.getProgressBar())) {
-            logger.debug("currentProcessBar:" + tempDevice.getProgressBar());
-            int currentProcessBar = Integer.parseInt(tempDevice.getProgressBar());
+        if (StringUtils.isNumeric(currentProccessBar)) {
+            int currentProcessBar = Integer.parseInt(currentProccessBar);
             if (flag) {
                 moveToProcessBar = currentProcessBar + Constants.MOVECURTAINSPERCENTS;
                 moveToProcessBar = (moveToProcessBar >= 100) ? 100 : moveToProcessBar;
@@ -120,7 +126,7 @@ public class DeviceService {
 
     public List<Device> filterDataByIntentName(IntendParams item) {
         // TODO Auto-generated method stub
-        List<Device> dataList = RedisDAO.getObject(item.getUserId());
+        List<Device> dataList = DeviceDataManager.getDeviceList(item.getUserId());
 
         List<Device> filterDevice = new ArrayList<Device>();
         if (Constants.wholeHouse.equalsIgnoreCase(item.getWhere())) {
