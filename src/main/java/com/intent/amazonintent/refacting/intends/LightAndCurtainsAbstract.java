@@ -20,6 +20,8 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 
 	public String voiceMessge;
 
+	private static final String preCacheRequestData = "preCacheRequestData";
+
 	private IntendParams item;
 	
 	private static final Logger logger = LogManager.getLogger(LightAndCurtainsAbstract.class);
@@ -29,57 +31,55 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 	public boolean createIntendParasObject(Intent intent, Session session, UserOauth2 user) {
 		
 		// TODO Auto-generated method stub
-		this.item = IntendParams.createIntendParamsObj(intent, AmazonService.getProfileData(session.getUser().getAccessToken()));
+		this.item = IntendParams.createIntendParamsObj(intent,session.getUser().getAccessToken());
 		Object obj = session.getAttribute("where");
 		if (null != obj) {
-
 			@SuppressWarnings("rawtypes")
-			LinkedHashMap objitem = (LinkedHashMap) session.getAttribute("currentList");
+			LinkedHashMap objitem = (LinkedHashMap) session.getAttribute(preCacheRequestData);
 			logger.debug(objitem.keySet().toArray() + "");
 			IntendParams tempItem = new IntendParams();
-
 			if (objitem.containsKey("devicename")) {
 				tempItem.setDevicename((String) objitem.get("devicename"));
 			}
-
 			if (objitem.containsKey("persentage")) {
 				tempItem.setPersentage((String) objitem.get("persentage"));
 			}
-
 			if (objitem.containsKey("accessToken")) {
 				tempItem.setAccessToken((String) objitem.get("accessToken"));
 			}
-
 			if (objitem.containsKey("intentName")) {
 				tempItem.setIntentName((String) objitem.get("intentName"));
 			}
-
 			if (objitem.containsKey("deviceState")) {
 				tempItem.setDeviceState((String) objitem.get("deviceState"));
 			}
-
 			if (objitem.containsKey("deviceCMD")) {
 				tempItem.setDeviceCMD((String) objitem.get("deviceCMD"));
 			}
 
+			if (objitem.containsKey("userId")) {
+				tempItem.setDeviceCMD((String) objitem.get("deviceCMD"));
+			}
 			tempItem.setWhere(this.item.getWhere());
-			this.item.setUserId(user.getUserId());
 			setIntentSession(intent);
-			
 			this.item = tempItem;
 		}
 
 		if (StringUtils.isBlank(item.getWhere())) {
-
-			session.setAttribute("currentList", item);
-			IntendParams paras = (IntendParams) session.getAttribute("currentList");
-			
-			logger.debug(paras.getIntentName() + "..........");
+			session.setAttribute(preCacheRequestData, item);
 			session.setAttribute("where", "");
-
 			voiceMessge = ("tell me which room that you want to control");
 			return false;
 		}
+
+		this.item.setUserId(user.getUserId());
+		System.out.println("where:"+this.item.getWhere());
+		System.out.println("devicename:"+this.item.getDevicename());
+		System.out.println("cmd:"+this.item.getDeviceCMD());
+		System.out.println("userId:"+this.item.getUserId());
+		System.out.println("intentname:"+this.item.getIntentName());
+		System.out.println("persentage:"+this.item.getPersentage());
+
 		session.removeAttribute("where");
 		session.removeAttribute("currentList");
 		return true;

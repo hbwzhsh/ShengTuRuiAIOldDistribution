@@ -17,9 +17,7 @@ public class AmazonService {
 			org.apache.http.client.fluent.Response response =  Request.Get("https://api.amazon.com/user/profile").addHeader("Authorization", "bearer " + access_token.trim()).execute();
 			Content c = response.returnContent();
 			System.out.println("c.toString():"+c.toString());
-			
 			return JSONObject.parseObject(c.toString()).get("email").toString();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -1,5 +1,4 @@
 package com.intent.googleintent;
-
 import com.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

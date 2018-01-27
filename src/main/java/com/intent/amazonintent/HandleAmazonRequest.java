@@ -22,6 +22,7 @@ import com.service.AmazonService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,7 @@ class DeviceSpeechlet implements Speechlet {
 	@Override
 	public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) throws SpeechletException {
 		
-		String accessToken = AmazonService.getProfileData(session.getUser().getAccessToken());
+		String accessToken =session.getUser().getAccessToken();
 		
 		logger.debug("accessToken:"+accessToken);
 		
@@ -84,7 +85,7 @@ class DeviceSpeechlet implements Speechlet {
 		String accessToken = session.getUser().getAccessToken();
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
 		
-		logger.debug("accessToken:"+accessToken);
+		System.out.println("accessToken:"+accessToken);
 		
 		String speechText = StringUtils.EMPTY;
 		
@@ -95,23 +96,25 @@ class DeviceSpeechlet implements Speechlet {
 		UserOauth2 userOauth2 = new UserOauth2();
 		userOauth2.setAccessToken(accessToken);
 		UserOauth2 result = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
+		System.out.println(result.getUserId());
 
 		if(result == null){
 			speechText = "I can not find your email "+accessToken+" within Smart plus database ,please make a contact with us.";
 			logger.debug("speechText:"+speechText);
 			return AmazonResponse.getNewAskResponse( speechText );
 		}
-		Object obj = session.getAttribute("where");
-		if(obj != null){
+		Object where = session.getAttribute("where");
+		if(where != null){
 			LinkedHashMap objitem = (LinkedHashMap) session.getAttribute("currentList");
 			if(objitem.containsKey("intentName")){
 				intentName = objitem.get("intentName").toString();
 				logger.debug("objitem.get().toString()-------<>");
 			}
 		}
-		
+
 		IntendRequestInterface intentObj = IntentTypeFactory.getIntentTypeByName(intentName);
-		return intentObj.doSomething(intent,session,result);
+
+		return intentObj.doSomething( intent,session,result );
 
 	}
 

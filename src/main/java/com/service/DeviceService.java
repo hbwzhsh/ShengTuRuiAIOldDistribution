@@ -93,28 +93,25 @@ public class DeviceService {
             }
             return false;
         }).collect(Collectors.toList());
-
     }
 
     public List<Device> getDeviceByCondition(IntendParams item, List<Device> dataList) {
 
-        dataList = getSameTypeDevices(item.getIntentName(), dataList);
+        List<Device> findingDevices = dataList;
+        findingDevices = getSameTypeDevices(item.getIntentName(), dataList);
         System.out.println("find getSameTypeDevices data size():"+dataList.size());
 
-        List<Device> lights = new ArrayList<Device>();
-        for (Device device : dataList) {
-            if (StringUtils.isBlank(item.getDevicename())) {
-                lights.add(device);
-            }else if (device.getRoomName() != null && deleteExtraBlanks(item.getWhere()).indexOf(deleteExtraBlanks(device.getRoomName())) != -1) {
-                lights.add(device);
-            }
-            else if (StringUtils.isNotBlank(device.getName()) & deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName()))) {
-                lights.add(device);
-            }
+
+        if(StringUtils.isNotBlank(item.getWhere())){
+            findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getWhere()).indexOf(deleteExtraBlanks(device.getRoomName())) != -1)).collect(Collectors.toList());
         }
 
-        System.out.println("find getDeviceByCondition data size():"+lights.size());
-        return lights;
+        if(StringUtils.isNotBlank(item.getDevicename())){
+            findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName())))).collect(Collectors.toList());
+        }
+
+        System.out.println("find getDeviceByCondition data size():"+findingDevices.size());
+        return findingDevices;
     }
 
     private String deleteExtraBlanks(String str) {
@@ -126,6 +123,8 @@ public class DeviceService {
     public List<Device> filterDataByIntentName(IntendParams item) {
         // TODO Auto-generated method stub
         List<Device> dataList = DeviceDataManager.getDeviceList(item.getUserId());
+
+        System.out.println("filterDataByIntentName():"+ dataList.size());
 
         List<Device> filterDevice = new ArrayList<Device>();
         if (Constants.wholeHouse.equalsIgnoreCase(item.getWhere())) {

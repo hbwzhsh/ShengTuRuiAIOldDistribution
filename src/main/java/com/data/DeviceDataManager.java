@@ -73,6 +73,8 @@ public class DeviceDataManager {
     public static List<Device> getDeviceList(String userId){
         List<Device> deviceList = (ArrayList<Device>)redisTemplate.opsForValue().get("userId");
 
+        System.out.println("getDeviceList():"+ deviceList.size());
+
         if(deviceList == null){
             return SpringUtil.getUserMapper().getDeviceList(userId);
         }

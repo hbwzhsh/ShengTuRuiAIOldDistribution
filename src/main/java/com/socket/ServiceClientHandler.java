@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ServiceClientHandler extends IoHandlerAdapter {
+
 	private String serviceEndRremain = "";
 	private String hostEndRremain = "";
 
@@ -83,7 +84,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				String devMac = deviceCmd[0];
 				String eq =  deviceCmd[1];
 				String attrId =  deviceCmd[2];
-				System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
+				//System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
 				if(StringUtils.isNotBlank(devMac) && StringUtils.isNotBlank(eq)){
 					stringRedisTemplate.opsForValue().set( devMac+":"+eq,Integer.parseInt(deviceCmd[3],16) + "" );
 				}
