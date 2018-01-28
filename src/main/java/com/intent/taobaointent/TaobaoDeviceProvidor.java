@@ -91,13 +91,6 @@ public class TaobaoDeviceProvidor {
 
             deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId() + "");
         }
-
-        /*try {
-            String result = IOUtils.toString(request.getInputStream(), "UTF-8");
-            System.out.println("result:"+result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         return token;
     }
 }
