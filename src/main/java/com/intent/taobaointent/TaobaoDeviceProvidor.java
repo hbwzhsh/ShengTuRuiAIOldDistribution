@@ -43,22 +43,29 @@ public class TaobaoDeviceProvidor {
 
         if (AliGenieNamespace.discovery.equalsIgnoreCase(request.getHeader().getNamespace())) {
             AliDevicesResponse aliDevicesResponse = new AliDevicesResponse();
-            List<Device> deviceList = DeviceDataManager.getDeviceList(userResult.getUserId());
+
+
+            List<Device> deviceList = DeviceDataManager.getDeviceList( userResult.getUserId() );
+            System.out.println("deviceList---->:" + deviceList.size());
 
             AliHeader header = new AliHeader();
             header = request.getHeader();
             header.setName("DiscoveryDevicesResponse");
             aliDevicesResponse.setHeader(header);
+
             AliDevicesList aliDevicesList = new AliDevicesList();
             List<AliDevices> payloadList = new ArrayList<>();
+
             for (Device item : deviceList) {
 
                 AliDevices payload = new AliDevices();
+
                 payload.setDeviceId(item.getUserRelationId());
                 payload.setBrand("smartplus");
                 payload.setDeviceType("curtains");
                 payload.setDeviceName(item.getName());
                 payload.setIcon("www.baidu.com");
+
                 List<Attributs> list = new ArrayList<>();
                 Attributs attributs = new Attributs();
                 attributs.setName("test");
@@ -66,8 +73,8 @@ public class TaobaoDeviceProvidor {
                 list.add(attributs);
                 payload.setProperties(list);
                 payloadList.add(payload);
-            }
 
+            }
 
             aliDevicesList.setDevices(payloadList);
             aliDevicesResponse.setPayload(aliDevicesList);
