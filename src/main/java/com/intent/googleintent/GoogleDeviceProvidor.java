@@ -36,11 +36,12 @@ public class GoogleDeviceProvidor {
     private static String devicesQUERY = "action.devices.QUERY";
     private static String devicesEXECUTE = "action.devices.EXECUTE";
 
-    private DeviceService deviceService = new DeviceService();
+    private DeviceService deviceService;
 
     @RequestMapping(value = "/googledevices")
     public GoogleRequestParent token(HttpServletRequest request, HttpServletResponse response) {
         try {
+            deviceService = new DeviceService();
             System.out.println("Authorization:" + request.getHeader("Authorization"));
             String header[] = request.getHeader("Authorization").split("\\s+");
             System.out.println("header[0]------------------------》》》》》》》》》》》》》》》》》》》》:" + header[0]);

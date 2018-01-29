@@ -9,6 +9,7 @@ import com.utility.Constants;
 import com.intent.amazonintent.refacting.DeviceTypeFactory;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
+import com.utility.ConstantsMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 /**
  * provide service for DeviceSpeechlet
  */
-@Component
 public class DeviceService {
 
     private StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
@@ -65,7 +65,7 @@ public class DeviceService {
 
     private int getMoveToProcessBar(boolean flag, Device tempDevice) {
         int moveToProcessBar = 0;
-        String currentProccessBar =stringRedisTemplate.opsForValue().get(tempDevice.getEquipmentMac()+":"+tempDevice.getEquipmentEp());
+        String currentProccessBar =stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(tempDevice.getEquipmentMac(),tempDevice.getEquipmentEp()));
 
         if (StringUtils.isBlank(currentProccessBar)) {
             return moveToProcessBar;

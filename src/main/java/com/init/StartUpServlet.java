@@ -42,7 +42,7 @@ public class StartUpServlet extends HttpServlet {
         logger.trace("Exiting application.");
         logger.debug("12312312231231223");
         
-        ConstantsMethod.initData();
+        //ConstantsMethod.initData();
 
 		DeviceDataManager.updateDataSchedule();
 

@@ -4,6 +4,7 @@ import com.SpringUtil;
 import com.bean.SpeakerUsers;
 import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
+import com.data.DeviceDataManager;
 import com.oauth2.model.ResponseMsg;
 import com.utility.MD5Util;
 import com.utility.TokenFactory;
@@ -83,6 +84,8 @@ public class AuthClient {
                 SpeakerUsers temp = new SpeakerUsers();
                 temp.setUserId(user.getUserId());
                 SpringUtil.getUserMapper().addUserTemp(temp);
+
+                //DeviceDataManager.cleanSocketClient(user.getUserId());
 
             }
         }

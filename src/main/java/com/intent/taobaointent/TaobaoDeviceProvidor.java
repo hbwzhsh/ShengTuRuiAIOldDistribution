@@ -25,10 +25,11 @@ public class TaobaoDeviceProvidor {
     @Autowired
     private static RedisTemplate redisTemplate;
 
-    private DeviceService deviceService = new DeviceService();
+    private DeviceService deviceService;
 
     @RequestMapping(value = "/devices", method = RequestMethod.POST)
     public AliResponse token(@RequestBody AliGenieRequest request) {
+        deviceService = new DeviceService();
         System.out.println("request:" + request.getPayload().getAccessToken());
         System.out.println("namespace:" + request.getHeader().getNamespace());
         AliResponse token = new AliResponse();

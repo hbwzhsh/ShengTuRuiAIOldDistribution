@@ -18,8 +18,13 @@ public class ConstantsMethod {
         return ToHexUtil.pad(ToHexUtil.toHex(Integer.parseInt(persentage)), 4, true);
     }
 
-    public static void initData() {
 
+    public static String devicePKey(String mac,String ep){
+        return "p"+mac+":"+ep;
+    }
+
+    public static String deviceNameKey(String mac,String ep){
+        return "name"+mac+":"+ep;
     }
 
 
