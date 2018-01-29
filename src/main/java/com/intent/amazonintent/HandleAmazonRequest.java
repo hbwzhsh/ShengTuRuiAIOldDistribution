@@ -53,10 +53,11 @@ class DeviceSpeechlet implements Speechlet {
 
 	@Override
 	public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) throws SpeechletException {
-		
 		String accessToken =session.getUser().getAccessToken();
 		
 		logger.debug("accessToken:"+accessToken);
+
+		System.out.println( "accessToken:" + accessToken );
 		
 		String speechText = StringUtils.EMPTY;
 		

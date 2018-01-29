@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class DeviceDataManager {
 
     private static int delayTime = 1000;
-    private static int period = 10000;
+    private static int period = 100000;
 
     private static RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");
 
