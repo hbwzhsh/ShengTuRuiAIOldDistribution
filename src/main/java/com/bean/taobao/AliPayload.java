@@ -1,19 +1,19 @@
 package com.bean.taobao;
 
-public class TaobaoPayload {
+public class AliPayload {
 
     private String accessToken;
     private String deviceId;
     private String deviceType;
     private String attribute;
     private String value;
-    private TaobaoExtensions extensions;
+    private AliExtensions extensions;
 
-    public TaobaoExtensions getExtensions() {
+    public AliExtensions getExtensions() {
         return extensions;
     }
 
-    public void setExtensions(TaobaoExtensions extensions) {
+    public void setExtensions(AliExtensions extensions) {
         this.extensions = extensions;
     }
 

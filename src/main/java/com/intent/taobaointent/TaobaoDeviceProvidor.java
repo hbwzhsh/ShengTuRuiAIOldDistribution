@@ -8,6 +8,7 @@ import com.bean.taobao.*;
 import com.data.DeviceDataManager;
 import com.service.DeviceService;
 import com.utility.Constants;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,10 +43,9 @@ public class TaobaoDeviceProvidor {
 
         if (AliGenieNamespace.discovery.equalsIgnoreCase(request.getHeader().getNamespace())) {
             AliDevicesResponse aliDevicesResponse = new AliDevicesResponse();
-
             List<Device> deviceList = DeviceDataManager.getDeviceList(userResult.getUserId());
 
-            TaobaoHeader header = new TaobaoHeader();
+            AliHeader header = new AliHeader();
             header = request.getHeader();
             header.setName("DiscoveryDevicesResponse");
             aliDevicesResponse.setHeader(header);
@@ -59,7 +59,6 @@ public class TaobaoDeviceProvidor {
                 payload.setDeviceType("curtains");
                 payload.setDeviceName(item.getName());
                 payload.setIcon("www.baidu.com");
-
                 List<Attributs> list = new ArrayList<>();
                 Attributs attributs = new Attributs();
                 attributs.setName("test");
@@ -76,20 +75,34 @@ public class TaobaoDeviceProvidor {
             return aliDevicesResponse;
         } else if (AliGenieNamespace.control.equalsIgnoreCase(request.getHeader().getNamespace())) {
             List<Device> deviceListData = new ArrayList<>();
-            Device device1 = new Device();
-            device1.setEquipmentMac( request.getPayload().getExtensions().getDeviceMac() );
-            device1.setEquipmentEp(request.getPayload().getExtensions().getDeviceEq());
-            //device1.setId(request.getPayload());
-            deviceListData.add(device1);
-            boolean operateCmd = false;
+            String operateCmd =  request.getPayload().getValue();
             String cmdStr = "";
-            if (operateCmd) {
+            if ("on".equalsIgnoreCase(operateCmd)) {
                 cmdStr = Constants.openCmd;
             } else {
                 cmdStr = Constants.closeCmd;
             }
 
-            deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId() + "");
+            Device device1 = new Device();
+
+            device1.setEquipmentMac( request.getPayload().getExtensions().getDeviceMac() );
+            device1.setEquipmentEp(request.getPayload().getExtensions().getDeviceEq());
+            device1.setHostMac(request.getPayload().getExtensions().getHostMac());
+            deviceListData.add(device1);
+
+            deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
+
+            AliCmdResponse aliCmdResponse = new AliCmdResponse();
+            AliHeader header = new AliHeader();
+            BeanUtils.copyProperties(request.getHeader(),header);
+            header.setName("TurnOnResponse");
+            aliCmdResponse.setHeader(header);
+
+            AliPayload payload = new AliPayload();
+            payload.setDeviceId(request.getPayload().getDeviceId());
+            aliCmdResponse.setPayload(payload);
+            return aliCmdResponse;
+
         }
         return token;
     }

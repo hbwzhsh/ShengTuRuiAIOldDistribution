@@ -1,9 +1,9 @@
 package com.bean.taobao;
 
-public class AliDevicesResponse extends AliResponse {
+public class AliCmdResponse extends AliResponse {
 
     private AliHeader header;
-    private Object payload;
+    private AliPayload payload;
 
     public AliHeader getHeader() {
         return header;
@@ -13,11 +13,11 @@ public class AliDevicesResponse extends AliResponse {
         this.header = header;
     }
 
-    public Object getPayload() {
+    public AliPayload getPayload() {
         return payload;
     }
 
-    public void setPayload(Object payload) {
+    public void setPayload(AliPayload payload) {
         this.payload = payload;
     }
 }

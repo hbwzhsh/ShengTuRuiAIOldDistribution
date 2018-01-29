@@ -1,8 +1,17 @@
 package com.bean.taobao;
 
-public class TaobaoExtensions {
+public class AliExtensions {
     private String deviceMac;
     private String deviceEq;
+    private String hostMac;
+
+    public String getHostMac() {
+        return hostMac;
+    }
+
+    public void setHostMac(String hostMac) {
+        this.hostMac = hostMac;
+    }
 
     public String getDeviceMac() {
         return deviceMac;

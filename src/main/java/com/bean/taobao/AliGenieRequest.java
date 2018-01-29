@@ -1,22 +1,22 @@
 package com.bean.taobao;
 
 public class AliGenieRequest {
-    private TaobaoHeader header;
-    private TaobaoPayload payload;
+    private AliHeader header;
+    private AliPayload payload;
 
-    public TaobaoHeader getHeader() {
+    public AliHeader getHeader() {
         return header;
     }
 
-    public void setHeader(TaobaoHeader header) {
+    public void setHeader(AliHeader header) {
         this.header = header;
     }
 
-    public TaobaoPayload getPayload() {
+    public AliPayload getPayload() {
         return payload;
     }
 
-    public void setPayload(TaobaoPayload payload) {
+    public void setPayload(AliPayload payload) {
         this.payload = payload;
     }
 }
