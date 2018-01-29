@@ -20,7 +20,7 @@
         update user_house_equipment_relation
              set name = #{name} , devid = #{devid}
         where
-            equipmentMac = #{deviceMac} and equipmentEp = #{equipmentEp}
+            equipmentMac = #{equipmentMac} and equipmentEp = #{equipmentEp}
     </update>
 
 

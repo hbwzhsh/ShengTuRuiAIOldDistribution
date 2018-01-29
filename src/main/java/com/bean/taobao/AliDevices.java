@@ -13,8 +13,15 @@ public class AliDevices {
     private String icon;
     private Object properties;
     private List<String> actions = Arrays.asList("TurnOn","TurnOff","SetBrightness","AdjustBrightness");
+    private AliExtensions extensions;
 
+    public AliExtensions getExtensions() {
+        return extensions;
+    }
 
+    public void setExtensions(AliExtensions extensions) {
+        this.extensions = extensions;
+    }
 
     public String getDeviceId() {
         return deviceId;

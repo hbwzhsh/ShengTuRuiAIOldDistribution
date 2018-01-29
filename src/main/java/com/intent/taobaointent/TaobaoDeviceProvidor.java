@@ -45,7 +45,6 @@ public class TaobaoDeviceProvidor {
         if (AliGenieNamespace.discovery.equalsIgnoreCase(request.getHeader().getNamespace())) {
             AliDevicesResponse aliDevicesResponse = new AliDevicesResponse();
 
-
             List<Device> deviceList = DeviceDataManager.getDeviceList( userResult.getUserId() );
             System.out.println("deviceList---->:" + deviceList.size());
 
@@ -63,16 +62,23 @@ public class TaobaoDeviceProvidor {
 
                 payload.setDeviceId(item.getUserRelationId());
                 payload.setBrand("smartplus");
-                payload.setDeviceType("curtains");
+                payload.setDeviceType("curtain");
                 payload.setDeviceName(item.getName());
-                payload.setIcon("www.baidu.com");
+                payload.setIcon("https://usa-service.ctrcn.com/ShengTuRui/smartthings/close.png");
 
                 List<Attributs> list = new ArrayList<>();
+
                 Attributs attributs = new Attributs();
                 attributs.setName("test");
                 attributs.setValue("value");
                 list.add(attributs);
                 payload.setProperties(list);
+
+                AliExtensions extensions  = new AliExtensions();
+                extensions.setDeviceEq(item.getEquipmentEp());
+                extensions.setDeviceMac(item.getEquipmentMac());
+                extensions.setHostMac(item.getHostMac());
+                payload.setExtensions(extensions);
                 payloadList.add(payload);
 
             }
@@ -98,7 +104,7 @@ public class TaobaoDeviceProvidor {
             device1.setHostMac(request.getPayload().getExtensions().getHostMac());
             deviceListData.add(device1);
 
-            deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
+            deviceService.sendCmdToServer(deviceListData, cmdStr, userResult.getUserId());
 
             AliCmdResponse aliCmdResponse = new AliCmdResponse();
             AliHeader header = new AliHeader();

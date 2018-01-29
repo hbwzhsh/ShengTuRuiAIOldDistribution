@@ -70,6 +70,7 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
+
                         redisTemplate.opsForValue().set(users.getUserId(), deviceList);
 
                     }
@@ -95,8 +96,8 @@ public class DeviceDataManager {
             String proccessBar = stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(device.getEquipmentMac(), device.getEquipmentEp()));
             device.setProgressBar(proccessBar);
 
-            String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey( device.getEquipmentMac(), device.getEquipmentEp()));
-            device.setName(name);
+          /*  String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey( device.getEquipmentMac(), device.getEquipmentEp()));
+            device.setName(name);*/
         }
         return deviceList;
     }
