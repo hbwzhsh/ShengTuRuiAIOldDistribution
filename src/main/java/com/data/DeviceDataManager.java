@@ -76,9 +76,7 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-
                         redisTemplate.opsForValue().set(users.getUserId(), deviceList);
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
