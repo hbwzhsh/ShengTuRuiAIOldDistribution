@@ -6,9 +6,9 @@
 <div class="container login">
     <div>
         <form action="/ShengTuRuiAIOld/loginSubmitGoogle" method="post">
-            <div class="form-group" id="errorDiv" style="aligin:center;">
+            <div class="form-group" id="errorDiv" style="aligin:center;display:none">
                 <div class="text-danger ">
-                    用户名或密码错误
+                    userName or password wrong!
                 </div>
             </div>
 
@@ -17,8 +17,8 @@
                 <input type="text" id="usernameInput" class="form-control" name="userName" placeholder="enter your username"/>
             </div>
 
-            <input type="text" id="redirect_uri" th:value="${redirect_uri}" name="redirect_uri"/>
-            <input type="text" id="state" th:value="${state}" name="state"/>
+            <input type="hidden" id="redirect_uri" th:value="${redirect_uri}" name="redirect_uri"/>
+            <input type="hidden" id="state" th:value="${state}" name="state"/>
 
             <div class="form-group">
                 <label for="passwordInput">Password</label>
@@ -36,6 +36,7 @@
 <script>
 
     $("#loginSubmit").click(function () {
+        $("#errorDiv").hide();
         var userNameValue = $("#usernameInput").val();
         var passwordValue = $("#passwordInput").val();
         var redirect_uri = $("#redirect_uri").val();
