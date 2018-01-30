@@ -44,7 +44,7 @@ public class DeviceService {
     public void sendCmdToServer(final Collection<Device> tempDevicelist, final String cmd, final IntendParams item) {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
-            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceState()).collect(Collectors.toList());
+            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getDeviceState())).collect(Collectors.toList());
             List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
@@ -55,7 +55,7 @@ public class DeviceService {
     public void sendCmdToServerForOpenAlittle(final Collection<Device> tempDevicelist, final String cmd, final boolean flag, final IntendParams item) {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
-            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + getMoveToProcessBar(flag, tempDevice)).collect(Collectors.toList());
+            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(getMoveToProcessBar(flag, tempDevice)+"")).collect(Collectors.toList());
             List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
@@ -66,6 +66,7 @@ public class DeviceService {
     private int getMoveToProcessBar(boolean flag, Device tempDevice) {
         int moveToProcessBar = 0;
         String currentProccessBar =stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(tempDevice.getEquipmentMac(),tempDevice.getEquipmentEp()));
+        System.out.println( "currentProccessBar:" + currentProccessBar );
 
         if (StringUtils.isBlank(currentProccessBar)) {
             return moveToProcessBar;
@@ -85,12 +86,17 @@ public class DeviceService {
 
     private List<Device> getSameTypeDevices(String intendName, List<Device> dataList) {
         IntendType deviceType = DeviceTypeFactory.getDeviceByIntendName(intendName);
+        System.out.println(deviceType.getDeviceIds().size());
+
         return dataList.stream().filter(device -> {
+
             if (deviceType != null) {
                 if (deviceType.getDeviceIds().contains(device.getDevid())) {
+                    System.out.println("device.getDevid():"+device.getDevid());
                     return true;
                 }
             }
+
             return false;
         }).collect(Collectors.toList());
     }

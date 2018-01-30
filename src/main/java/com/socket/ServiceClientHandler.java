@@ -64,6 +64,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
             String loopcmd = cmdList.get(i);
             String loopmac = macList.get(i);
             String singleItem = parse(loopcmd, mAesUtil, true);
+            //System.out.println("singleItem:"+singleItem);
 
             if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 //				System.out.println("singleItem:"+singleItem);
@@ -84,13 +85,15 @@ public class ServiceClientHandler extends IoHandlerAdapter {
                 System.out.println("finished......");
 
             } else if (StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT") == 0)) {
+                //System.out.println("singleItem:"+singleItem);
                 String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
                 String devMac = deviceCmd[0];
                 String eq = deviceCmd[1];
                 String attrId = deviceCmd[2];
-                //System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
 
-                if (StringUtils.isNotBlank(devMac) && StringUtils.isNotBlank(eq)) {
+                //System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
+                if (StringUtils.isNotBlank(devMac) && StringUtils.isNotBlank(eq) &&  "04".equals(attrId)) {
+                    System.out.println(ConstantsMethod.devicePKey(devMac, eq)+"--->"+ Integer.parseInt(deviceCmd[3], 16) + "");
                     stringRedisTemplate.opsForValue().set(ConstantsMethod.devicePKey(devMac, eq), Integer.parseInt(deviceCmd[3], 16) + "");
                 }
             }

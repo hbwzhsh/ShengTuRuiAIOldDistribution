@@ -25,7 +25,7 @@ public class PercentCurtainsIntend extends LightAndCurtainsAbstract {
 				deviceService.sendCmdToServerForOpenAlittle(filterlist, Constants.percentcurtain, false,getItem());
 			} else if (Constants.OPENTHECURTAINHALFWAY.equalsIgnoreCase(getItem().getIntentName())) {
 				getItem().setPersentage("50");
-				getItem().setDeviceState(ConstantsMethod.getProcessBarCmd("50"));
+				//getItem().setDeviceState(ConstantsMethod.getProcessBarCmd("50"));
 				deviceService.sendCmdToServer(filterlist, Constants.percentcurtain, getItem());
 			}
 		}

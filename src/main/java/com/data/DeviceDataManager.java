@@ -18,7 +18,8 @@ import java.util.TimerTask;
 public class DeviceDataManager {
 
     private static int delayTime = 1000;
-    private static int period = 100000;
+    private static int period = 10000;
+    private static int countTime = 0;
 
     private static RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");
 
@@ -38,6 +39,9 @@ public class DeviceDataManager {
             @Override
             public void run() {
                 try {
+
+                    countTime++;
+                    System.out.println("countTime:" + countTime);
                     List<SpeakerUsers> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
                     for (SpeakerUsers users : usersTempList) {
                      /*   int countNumber = SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId());
@@ -53,18 +57,20 @@ public class DeviceDataManager {
                         }
 
                         if (tempClient == null) {
+                            System.out.println("new connectiono:" + countTime);
                             SoketClient client = new SoketClient();
                             client.connectService(users.getUserId());
                         } else {
+                            System.out.println("old connection:"+countTime);
                             tempClient.getDevicesFromService(users.getUserId());
                         }
                         //get data from database then put data to redis cache
                         List<Device> deviceList = SpringUtil.getUserMapper().getDeviceList(users.getUserId());
-                        for(Device item:deviceList){
-                            String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(),item.getEquipmentEp()));
-                            String deviceName =  name.split(":")[0];
-                            String deviceVid =  name.split(":")[1];
-                            if(!item.getName().equalsIgnoreCase(name) || !deviceVid.equalsIgnoreCase(item.getDevid()) ){
+                        for (Device item : deviceList) {
+                            String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(), item.getEquipmentEp()));
+                            String deviceName = name.split(":")[0];
+                            String deviceVid = name.split(":")[1];
+                            if (!item.getName().equalsIgnoreCase(name) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
                                 item.setName(deviceName);
                                 item.setDevid(deviceVid);
                                 SpringUtil.getUserMapper().updateHouseRelation(item);

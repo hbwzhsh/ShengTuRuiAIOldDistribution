@@ -24,7 +24,7 @@ public class SoketClient {
     private IoSession sendsession;
 
     public static void main(String[] args) {
-        List<String> commandList = Arrays.asList("CMD:7bff6314004b1200-00-00-0000");
+        List<String> commandList = Arrays.asList("CMD:7bff6314004b1200-00-03-05");
         List<String> hostMacs = Arrays.asList("9C65F9209CE8");
         SoketClient client = new SoketClient();
         SocketFactory.socketConnections.put("10132", client);
@@ -32,10 +32,10 @@ public class SoketClient {
         client.connectServiceAndExeCommand(commandList, hostMacs);
 
 
-        List<String> commandList1 = Arrays.asList("CMD:7bff6314004b1200-00-01-0000");
+     /*   List<String> commandList1 = Arrays.asList("CMD:7bff6314004b1200-00-01-0000");
 
         SoketClient tempClient = SocketFactory.socketConnections.get("10132");
-        tempClient.connectServiceAndExeCommand(commandList1, hostMacs);
+        tempClient.connectServiceAndExeCommand(commandList1, hostMacs);*/
     }
 
     public void connectServiceAndExeCommand(List<String> commandList, List<String> hostMacs) {
@@ -57,7 +57,7 @@ public class SoketClient {
 
     public void getDevicesFromService(String userId) {
         try {
-            System.out.println("-----------> session.getId():" + sendsession.getId());
+
             UserHostRelation userHostRelation = new UserHostRelation();
             userHostRelation.setUserId(userId);
             List<UserHostRelation> listStr = SpringUtil.getUserMapper().getUserHostRelation(userHostRelation);
@@ -100,12 +100,7 @@ public class SoketClient {
 
             UserHostRelation userHostRelation = new UserHostRelation();
             userHostRelation.setUserId(userId);
-            //List<UserHostRelation> listStr = SpringUtil.getUserMapper().getUserHostRelation(userHostRelation);
-
-            List<UserHostRelation> listStr = new ArrayList<>();
-            UserHostRelation userHostRelation1 = new UserHostRelation();
-            userHostRelation1.setMac("9C65F9209CE8");
-
+            List<UserHostRelation> listStr = SpringUtil.getUserMapper().getUserHostRelation(userHostRelation);
             for (UserHostRelation host : listStr) {
 
                 byte[] msg = ToHexUtil.hexStringToByte(CmdUtil.connectService(mAesUtil, host.getMac()));

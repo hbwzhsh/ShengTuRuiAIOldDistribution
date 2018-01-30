@@ -65,9 +65,9 @@ class DeviceSpeechlet implements Speechlet {
 			return AmazonResponse.getNewAskResponseForReconnecting();
 		}
 
-		UserSite userTemp = new UserSite();
-		userTemp.setEmail(accessToken);
-		UserSite user = SpringUtil.getUserMapper().getObjectByCondition(userTemp);
+		UserOauth2 userTemp = new UserOauth2();
+		userTemp.setAccessToken(accessToken);
+		UserOauth2 user = SpringUtil.getUserMapper().getOauth2ByCondition(userTemp);
 
 		if(user == null){
 			speechText = "I can not find your email "+accessToken+" within Smart plus server , please make a contact with us.";

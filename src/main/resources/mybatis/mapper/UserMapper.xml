@@ -40,7 +40,7 @@
 
 
     <select id="getDeviceList" parameterType="String" resultType="Device">
-        select  user_house_equipment_relation.userRelationId,user_house_equipment_relation.userId,house.houseName,floor.floorName,user_house_equipment_relation.hostMac,user_house_equipment_relation.equipmentEp,user_house_equipment_relation.equipmentMac,user_house_equipment_relation.`name`,user_house_equipment_relation.devid from user_house_equipment_relation  JOIN house  on house.houseId = user_house_equipment_relation.houseId JOIN floor on house.floorId=floor.floorId  WHERE user_house_equipment_relation.userId=#{userId}
+        select  user_house_equipment_relation.userRelationId,user_house_equipment_relation.userId,house.houseName as roomName,floor.floorName,user_house_equipment_relation.hostMac,user_house_equipment_relation.equipmentEp,user_house_equipment_relation.equipmentMac,user_house_equipment_relation.`name`,user_house_equipment_relation.devid from user_house_equipment_relation  JOIN house  on house.houseId = user_house_equipment_relation.houseId JOIN floor on house.floorId=floor.floorId  WHERE user_house_equipment_relation.userId=#{userId}
     </select>
 
     <select id="getDeviceWithNoNameList" parameterType="String" resultType="int">
