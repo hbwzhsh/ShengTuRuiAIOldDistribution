@@ -4,9 +4,11 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- default header name is X-CSRF-TOKEN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.min.js"></script>
+
+
 </head>
 <body>
 <nav class="navbar navbar-inverse" th:fragment="header">
@@ -36,12 +38,14 @@
     {{message}}
 </div>
 <script>
-    new Vue({
-        el: '#app',
-        data: {
-            message: 'Test Vue.js!'
-        }
-    })
+    $('.btn').on('click', function() {
+        var $this = $(this);
+        $this.button('loading');
+        setTimeout(function() {
+            $this.button('reset');
+        }, 8000);
+    });
+
 </script>
 </body>
 </html>

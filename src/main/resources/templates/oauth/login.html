@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/oauth/index::head"></head>
+
+<style>
+    body
+    {
+        color:#337ab7;
+    }
+    </style>
+
 <body>
 <!--<nav th:replace="index::header"></nav>-->
 
-<div style="text-align:center;margin-top: 10px;">
+<div style="text-align:center;margin-top: 20px;">
     <img src="/ShengTuRuiAIOld/about_bg.png">
 </div>
 
@@ -16,6 +24,8 @@
                     userName or password wrong!
                 </div>
             </div>
+
+            <div style="font-size:25px;text-align: center;margin-top: 10px;">WelCome Back</div>
 
             <div class="form-group">
                 <label for="usernameInput">Username</label>
@@ -31,14 +41,16 @@
             </div>
 
             <div class="form-group text-center">
-                <button type="button" id="loginSubmit" class="btn btn-primary">Login</button>
-                <button type="reset" class="btn btn-warning">Reset</button>
+                <button type="button"  id="loginSubmit" class="btn btn-primary btn-lg btn-block" style="with:70px;"  >
+                    Sign  in
+                </button>
             </div>
         </form>
     </div>
 </div>
 <script src="/ShengTuRuiAIOld/jquery-3.2.1.min.js"></script>
 <script>
+
 
     $("#loginSubmit").click(function () {
         $("#errorDiv").hide();
@@ -52,12 +64,14 @@
             return;
         }
 
+        $(this).text("loading...");
         $.ajax({
             method: "POST",
             url: "/ShengTuRuiAIOld/loginSubmitGoogle",
             dataType:"json",
             data: { userName: userNameValue, password: passwordValue ,redirect_uri:redirect_uri,state:state }
         }).done(function( obj ) {
+            $(this).text("Sign in");
             if(obj.status == 'success'){
                 window.location.href = obj.data;
             }else{
