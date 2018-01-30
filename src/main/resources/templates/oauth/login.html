@@ -3,10 +3,15 @@
 <head th:replace="/oauth/index::head"></head>
 <body>
 <!--<nav th:replace="index::header"></nav>-->
+
+<div style="text-align:center;margin-top: 10px;">
+    <img src="/ShengTuRuiAIOld/about_bg.png">
+</div>
+
 <div class="container login">
     <div>
         <form action="/ShengTuRuiAIOld/loginSubmitGoogle" method="post">
-            <div class="form-group" id="errorDiv" style="aligin:center;display:none">
+            <div class="form-group" id="errorDiv" style="text-align:center;display:none">
                 <div class="text-danger ">
                     userName or password wrong!
                 </div>
