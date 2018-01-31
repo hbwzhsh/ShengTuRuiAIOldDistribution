@@ -54,7 +54,7 @@ public class GoogleDeviceProvidor {
 
             if (userOauth2Reust != null) {
 
-                String result = IOUtils.toString(request.getInputStream(), "UTF-8");
+                String result = IOUtils.toString( request.getInputStream(), "UTF-8" );
                 System.out.println("request from google :" + result);
 
                 GoogleRequest request1 = JSONObject.toJavaObject(JSONObject.parseObject(result), GoogleRequest.class);
