@@ -65,6 +65,13 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 			this.item = tempItem;
 		}
 
+		System.out.println("where:"+this.item.getWhere());
+		System.out.println("devicename:"+this.item.getDevicename());
+		System.out.println("cmd:"+this.item.getDeviceCMD());
+		System.out.println("userId:"+this.item.getUserId());
+		System.out.println("intentname:"+this.item.getIntentName());
+		System.out.println("persentage:"+this.item.getPersentage());
+
 		if (StringUtils.isBlank(item.getWhere())) {
 			session.setAttribute(preCacheRequestData, item);
 			session.setAttribute("where", "");
@@ -73,12 +80,7 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 		}
 
 		this.item.setUserId(user.getUserId());
-		System.out.println("where:"+this.item.getWhere());
-		System.out.println("devicename:"+this.item.getDevicename());
-		System.out.println("cmd:"+this.item.getDeviceCMD());
-		System.out.println("userId:"+this.item.getUserId());
-		System.out.println("intentname:"+this.item.getIntentName());
-		System.out.println("persentage:"+this.item.getPersentage());
+
 
 		session.removeAttribute("where");
 		session.removeAttribute("currentList");

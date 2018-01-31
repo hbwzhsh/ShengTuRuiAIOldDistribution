@@ -1,6 +1,7 @@
 package com.intent.amazonintent.refacting;
 
 import com.amazon.speech.speechlet.SpeechletResponse;
+import com.amazon.speech.speechlet.dialog.directives.ElicitSlotDirective;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
@@ -14,6 +15,12 @@ public class AmazonResponse {
 	 * @return SpeechletResponse spoken and visual response for the given intent
 	 */
 	public static SpeechletResponse getNewAskResponse(String responseText) {
+
+
+		ElicitSlotDirective slotDirective = new ElicitSlotDirective();
+		slotDirective.
+
+
 
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
@@ -31,6 +38,7 @@ public class AmazonResponse {
 		// Create reprompt
 		Reprompt reprompt = new Reprompt();
 		reprompt.setOutputSpeech(speech1);
+
 		return SpeechletResponse.newAskResponse(speech, reprompt, card);
 	}
 	
