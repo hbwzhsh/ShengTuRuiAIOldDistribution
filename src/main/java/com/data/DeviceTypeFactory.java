@@ -15,10 +15,9 @@ public class DeviceTypeFactory {
 	}
 
 	public static List<String> allowDeviceList = new ArrayList<>();
+	public static List<String> lightsList = Arrays.asList("0001", "0002","0003");
+	public static  List<String> curtainsList = Arrays.asList("0000");
 	static {
-
-		List<String> lightsList = Arrays.asList("0001", "0002","0003");
-		List<String> curtainsList = Arrays.asList("0000");
 		allowDeviceList.addAll(lightsList);
 		allowDeviceList.addAll(curtainsList);
 

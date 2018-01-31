@@ -14,6 +14,7 @@ import com.bean.google.newpojo.command.response.StatesResponse;
 import com.bean.google.newpojo.sync.*;
 import com.bean.site.UserOauth2;
 import com.data.DeviceDataManager;
+import com.data.DeviceTypeFactory;
 import com.utility.Constants;
 import com.service.DeviceService;
 import org.apache.commons.io.IOUtils;
@@ -164,10 +165,16 @@ public class GoogleDeviceProvidor {
             nameSync.setName(deviceObj.getName());
             nameSync.setNicknames(Arrays.asList(deviceObj.getName()));
 
-
             devicesSync.setId(deviceObj.getUserRelationId());
-            devicesSync.setType("action.devices.types.OUTLET");
-            devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff", "action.devices.traits.Brightness"));
+
+            if(DeviceTypeFactory.curtainsList.contains(deviceObj.getDevid())){
+                devicesSync.setType("action.devices.types.OUTLET");
+                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff"));
+            }else if(DeviceTypeFactory.lightsList.contains(deviceObj.getDevid())){
+                devicesSync.setType("action.devices.types.Light");
+                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff", "action.devices.traits.Brightness"));
+            }
+
             devicesSync.setName(nameSync);
             devicesSync.setWillReportState(false);
 
