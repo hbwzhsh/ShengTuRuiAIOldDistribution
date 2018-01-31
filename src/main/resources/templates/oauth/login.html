@@ -75,6 +75,7 @@
             if(obj.status == 'success'){
                 window.location.href = obj.data;
             }else{
+                $(this).text("Sign in");
                 alert( "response: " + obj.data );
             }
         });
