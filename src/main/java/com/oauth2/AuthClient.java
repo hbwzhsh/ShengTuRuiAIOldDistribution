@@ -61,32 +61,31 @@ public class AuthClient {
         }
 
 
-        UserOauth2 userOauth2 = new UserOauth2();
-        userOauth2.setUserId(user.getUserId());
-        UserOauth2 userOauthResult = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2);
+        UserOauth2 oauth2Param = new UserOauth2();
+        oauth2Param.setUserId(user.getUserId());
+        UserOauth2 userOauthResult = SpringUtil.getUserMapper().getOauth2ByCondition(oauth2Param);
 
         if (userOauthResult != null) {
             getRightLink(redirect_uri, state, responseMsg, userOauthResult);
-        }
+        } else {
 
-        if (userOauthResult == null) {
+            UserOauth2 userOauthParam = new UserOauth2();
+            userOauthParam.setAccessToken(TokenFactory.createAccessToken());
+            userOauthParam.setRefreshToken(TokenFactory.createRefreshToken());
+            userOauthParam.setCode(TokenFactory.createCode());
 
-            userOauth2.setAccessToken(TokenFactory.createAccessToken());
-            userOauth2.setRefreshToken(TokenFactory.createRefreshToken());
-            userOauth2.setCode(TokenFactory.createCode());
-            int count = SpringUtil.getUserMapper().addObjectToOauth2(userOauth2);
+            int count = SpringUtil.getUserMapper().addObjectToOauth2(userOauthParam);
 
             if (count == 0) {
                 responseMsg.setData("something wrong!");
                 return responseMsg;
             } else {
-                getRightLink(redirect_uri, state, responseMsg, userOauth2);
+                getRightLink(redirect_uri, state, responseMsg, userOauthParam);
+
                 SpeakerUsers temp = new SpeakerUsers();
                 temp.setUserId(user.getUserId());
                 SpringUtil.getUserMapper().addUserTemp(temp);
-
                 //DeviceDataManager.cleanSocketClient(user.getUserId());
-
             }
         }
         responseMsg.setSuccessStatus();

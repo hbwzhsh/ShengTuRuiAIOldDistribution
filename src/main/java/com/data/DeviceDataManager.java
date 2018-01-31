@@ -6,6 +6,7 @@ import com.bean.SpeakerUsers;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
 import com.utility.ConstantsMethod;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class DeviceDataManager {
 
     private static int delayTime = 1000;
-    private static int period = 10000;
+    private static int period = 100000;
     private static int countTime = 0;
 
     private static RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");
@@ -69,11 +70,13 @@ public class DeviceDataManager {
                             continue;
                         }
 
-                        List<Device> deviceResult = deviceList.stream().filter(item -> DeviceTypeFactory.allowDeviceList.contains(item.getDevid())).collect(Collectors.toList());
-                        System.out.println("DeviceResult----->"+deviceResult.size());
+                        List<Device> deviceResult = getDevicesByType(deviceList);
+
 
                         for (Device item : deviceResult) {
                             String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(), item.getEquipmentEp()));
+                            if(StringUtils.isBlank(name)) continue;
+
                             String deviceName = name.split(":")[0];
                             String deviceVid = name.split(":")[1];
                             if (!item.getName().equalsIgnoreCase(name) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
@@ -82,7 +85,8 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-                        redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
+                        System.out.println("DeviceResult----->"+deviceResult.size());
+                        //redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -92,23 +96,17 @@ public class DeviceDataManager {
         }, delayTime, period);
     }
 
+    private static List<Device> getDevicesByType(List<Device> deviceList) {
+        return deviceList.stream().filter(item -> DeviceTypeFactory.allowDeviceList.contains(item.getDevid())).collect(Collectors.toList());
+    }
+
 
     public static List<Device> getDeviceList(String userId) {
-        List<Device> deviceList = (ArrayList<Device>) redisTemplate.opsForValue().get(userId);
-
-        System.out.println("getDeviceList():" + deviceList.size());
-
-        if (deviceList == null) {
-            return SpringUtil.getUserMapper().getDeviceList(userId);
-        }
-
-        for (Device device : deviceList) {
+        List<Device> deviceData = SpringUtil.getUserMapper().getDeviceList(userId);
+        for (Device device : deviceData) {
             String proccessBar = stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(device.getEquipmentMac(), device.getEquipmentEp()));
             device.setProgressBar(proccessBar);
-
-          /*  String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey( device.getEquipmentMac(), device.getEquipmentEp()));
-            device.setName(name);*/
         }
-        return deviceList;
+        return getDevicesByType(deviceData);
     }
 }
