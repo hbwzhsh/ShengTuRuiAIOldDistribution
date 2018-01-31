@@ -11,6 +11,20 @@ package com.bean.google.newpojo.command.request; /**
 public class Params {
 
     private boolean on;
+    private int brightness;
+
+    public int getBrightness() {
+        return brightness;
+    }
+
+    public void setBrightness(int brightness) {
+        this.brightness = brightness;
+    }
+
+    public boolean isOn() {
+        return on;
+    }
+
     public void setOn(boolean on) {
          this.on = on;
      }

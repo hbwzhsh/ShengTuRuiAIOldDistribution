@@ -29,6 +29,21 @@ public class DeviceService {
 
     private static final Logger logger = LogManager.getLogger(DeviceService.class);
 
+
+
+
+    public void sendCmdToServerForOpenAlittle(final List<Device> tempDevicelist, final String cmd,String percent, final String userId) {
+        SoketClient client = SocketFactory.socketConnections.get(userId);
+        Runnable runnable = () -> {
+            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(percent)).collect(Collectors.toList());
+            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
+            client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+
     public void sendCmdToServer(final List<Device> tempDevicelist, final String cmd, final String userId) {
         SoketClient client = SocketFactory.socketConnections.get(userId);
         Runnable runnable = () -> {

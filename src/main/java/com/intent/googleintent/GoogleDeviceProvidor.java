@@ -1,4 +1,5 @@
 package com.intent.googleintent;
+
 import com.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -37,6 +38,10 @@ public class GoogleDeviceProvidor {
     private static String devicesQUERY = "action.devices.QUERY";
     private static String devicesEXECUTE = "action.devices.EXECUTE";
 
+    private static String brightnessAbsolute = "action.devices.commands.BrightnessAbsolute";
+    private static String onOff = "action.devices.commands.OnOff";
+
+
     private DeviceService deviceService;
 
     @RequestMapping(value = "/googledevices")
@@ -55,7 +60,7 @@ public class GoogleDeviceProvidor {
 
             if (userOauth2Reust != null) {
 
-                String result = IOUtils.toString( request.getInputStream(), "UTF-8" );
+                String result = IOUtils.toString(request.getInputStream(), "UTF-8");
                 System.out.println("request from google :" + result);
 
                 GoogleRequest request1 = JSONObject.toJavaObject(JSONObject.parseObject(result), GoogleRequest.class);
@@ -96,19 +101,24 @@ public class GoogleDeviceProvidor {
             deviceListData.add(device1);
         }
 
-        boolean operateCmd = false;
         for (Execution execution : executions) {
-            operateCmd = execution.getParams().getOn();
-        }
-        String cmdStr = "";
-        if (operateCmd) {
-            cmdStr = Constants.openCmd;
-        } else {
-            cmdStr = Constants.closeCmd;
-        }
+            if (onOff.equalsIgnoreCase(execution.getCommand())) {
+                boolean operateCmd = execution.getParams().getOn();
+                String cmdStr = "";
+                if (operateCmd) {
+                    cmdStr = Constants.openCmd;
+                } else {
+                    cmdStr = Constants.closeCmd;
+                }
+                System.out.println("------------------>sending command.....");
+                deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
+            } else if (brightnessAbsolute.equalsIgnoreCase(execution.getCommand())) {
+                int percent = execution.getParams().getBrightness();
+                System.out.println("------------------>sending brightnessAbsolute command.....");
+                deviceService.sendCmdToServerForOpenAlittle(deviceListData, Constants.dimlightCmd, percent + "", userOauth2.getUserId());
+            }
 
-        System.out.println("------------------>sending command.....");
-        deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
+        }
 
 
         DeviceExeResponse deviceExeResponse = new DeviceExeResponse();
@@ -145,6 +155,18 @@ public class GoogleDeviceProvidor {
 
         for (Device deviceObj : deviceObjList) {
             DevicesSync devicesSync = new DevicesSync();
+
+            if (DeviceTypeFactory.curtainsList.contains(deviceObj.getDevid())) {
+                devicesSync.setType("action.devices.types.OUTLET");
+                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff"));
+            } else if (DeviceTypeFactory.lightsList.contains(deviceObj.getDevid())) {
+                devicesSync.setType("action.devices.types.LIGHT");
+                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff", "action.devices.traits.Brightness"));
+            } else {
+                continue;
+            }
+
+
             CustomDataSync customDataSync = new CustomDataSync();
             customDataSync.setDeviceEq(deviceObj.getEquipmentEp());
             customDataSync.setEquipmentMac(deviceObj.getEquipmentMac());
@@ -167,13 +189,6 @@ public class GoogleDeviceProvidor {
 
             devicesSync.setId(deviceObj.getUserRelationId());
 
-            if(DeviceTypeFactory.curtainsList.contains(deviceObj.getDevid())){
-                devicesSync.setType("action.devices.types.OUTLET");
-                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff"));
-            }else if(DeviceTypeFactory.lightsList.contains(deviceObj.getDevid())){
-                devicesSync.setType("action.devices.types.Light");
-                devicesSync.setTraits(Arrays.asList("action.devices.traits.OnOff", "action.devices.traits.Brightness"));
-            }
 
             devicesSync.setName(nameSync);
             devicesSync.setWillReportState(false);
