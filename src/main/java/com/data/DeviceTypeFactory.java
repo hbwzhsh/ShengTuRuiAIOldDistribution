@@ -1,4 +1,4 @@
-package com.intent.amazonintent.refacting;
+package com.data;
 
 import com.bean.IntendType;
 import com.utility.Constants;
@@ -14,10 +14,14 @@ public class DeviceTypeFactory {
 		return deviceTypeList;
 	}
 
+	public static List<String> allowDeviceList = new ArrayList<>();
 	static {
 
 		List<String> lightsList = Arrays.asList("0001", "0002","0003");
 		List<String> curtainsList = Arrays.asList("0000");
+		allowDeviceList.addAll(lightsList);
+		allowDeviceList.addAll(curtainsList);
+
 
 		deviceTypeList.add(new IntendType(Constants.TURNONLIGHT, lightsList, Constants.openCmd));
 		deviceTypeList.add(new IntendType(Constants.TURNOFFLIGHT, lightsList, Constants.closeCmd));

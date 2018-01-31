@@ -3,7 +3,7 @@ package com.bean;
 import com.amazon.speech.slu.Intent;
 import com.utility.Constants;
 import com.utility.ConstantsMethod;
-import com.intent.amazonintent.refacting.DeviceTypeFactory;
+import com.data.DeviceTypeFactory;
 import org.apache.commons.lang3.StringUtils;
 
 public class IntendParams {

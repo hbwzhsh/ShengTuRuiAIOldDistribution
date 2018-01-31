@@ -6,7 +6,7 @@ import com.bean.IntendParams;
 import com.bean.IntendType;
 import com.data.DeviceDataManager;
 import com.utility.Constants;
-import com.intent.amazonintent.refacting.DeviceTypeFactory;
+import com.data.DeviceTypeFactory;
 import com.socket.SocketFactory;
 import com.socket.SoketClient;
 import com.utility.ConstantsMethod;
@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
