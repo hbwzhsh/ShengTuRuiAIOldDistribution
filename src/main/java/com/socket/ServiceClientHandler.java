@@ -25,7 +25,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        System.out.println("-----------> session.getId(2222222222):" + session.getId());
+        //System.out.println("-----------> session.getId(2222222222):" + session.getId());
         // TODO Auto-generated method stub
         super.messageReceived(session, message);
         char[] mChars = "0123456789ABCDEF".toCharArray();
@@ -93,7 +93,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
                 //System.out.println("processBar:" + Integer.parseInt(deviceCmd[3],16));
                 if (StringUtils.isNotBlank(devMac) && StringUtils.isNotBlank(eq) &&  "04".equals(attrId)) {
-                    System.out.println(ConstantsMethod.devicePKey(devMac, eq)+"--->"+ Integer.parseInt(deviceCmd[3], 16) + "");
+                    //System.out.println(ConstantsMethod.devicePKey(devMac, eq)+"--->"+ Integer.parseInt(deviceCmd[3], 16) + "");
                     stringRedisTemplate.opsForValue().set(ConstantsMethod.devicePKey(devMac, eq), Integer.parseInt(deviceCmd[3], 16) + "");
                 }
             }

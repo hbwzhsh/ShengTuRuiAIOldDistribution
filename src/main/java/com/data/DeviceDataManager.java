@@ -41,7 +41,7 @@ public class DeviceDataManager {
             public void run() {
                 try {
                     countTime++;
-                    System.out.println("countTime:" + countTime);
+                    //System.out.println("countTime:" + countTime);
                     List<SpeakerUsers> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
                     for (SpeakerUsers users : usersTempList) {
                      /*   int countNumber = SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId());
@@ -59,7 +59,7 @@ public class DeviceDataManager {
                             SoketClient client = new SoketClient();
                             client.connectService(users.getUserId());
                         } else {
-                            System.out.println("old connection:" + countTime);
+                            //System.out.println("old connection:" + countTime);
                             tempClient.getDevicesFromService(users.getUserId());
                         }
                         //get data from database then put data to redis cache
@@ -68,16 +68,11 @@ public class DeviceDataManager {
                         if (deviceList == null || deviceList.size() == 0) {
                             continue;
                         }
-                        List<Device> DeviceResult = deviceList.stream().filter(item -> {
-                            List<String> list = DeviceTypeFactory.allowDeviceList.stream().filter(item2 -> item2.equalsIgnoreCase(item.getDevid())).collect(Collectors.toList());
-                            if (list.size() != 0) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }).collect(Collectors.toList());
 
-                        for (Device item : DeviceResult) {
+                        List<Device> deviceResult = deviceList.stream().filter(item -> DeviceTypeFactory.allowDeviceList.contains(item.getDevid())).collect(Collectors.toList());
+                        System.out.println("DeviceResult----->"+deviceResult.size());
+
+                        for (Device item : deviceResult) {
                             String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(), item.getEquipmentEp()));
                             String deviceName = name.split(":")[0];
                             String deviceVid = name.split(":")[1];
@@ -87,7 +82,7 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-                        redisTemplate.opsForValue().set(users.getUserId(), DeviceResult);
+                        redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
