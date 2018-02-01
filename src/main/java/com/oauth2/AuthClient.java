@@ -6,9 +6,12 @@ import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
 import com.data.DeviceDataManager;
 import com.oauth2.model.ResponseMsg;
+import com.utility.Config;
 import com.utility.MD5Util;
 import com.utility.TokenFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +24,17 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AuthClient {
 
+    @Autowired
+    Config config;
 
     @RequestMapping(value = "/login")
     public String login(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         String redirect_uri = request.getParameter("redirect_uri");
         String state = request.getParameter("state");
+
         System.out.println(redirect_uri);
+        System.out.println("currentServerPath:"+config.getCurrentServerPath());
+
         map.put("redirect_uri", redirect_uri);
         map.put("state", state);
         return "/oauth/login";
@@ -99,6 +107,5 @@ public class AuthClient {
             responseMsg.setData(redirect_uri + "&state=" + state + "&code=" + userOauthResult.getCode());
         }
     }
-
 
 }

@@ -89,12 +89,9 @@ class DeviceSpeechlet implements Speechlet {
 		Intent intent = request.getIntent();
 		String accessToken = session.getUser().getAccessToken();
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
-		
 		System.out.println("accessToken:"+accessToken);
 		IntentRequest.DialogState dialogueState = request.getDialogState();
 		System.out.println("dialogueState:"+dialogueState);
-
-
 
 		//If the IntentRequest dialog state is STARTED
 		if (dialogueState.equals(IntentRequest.DialogState.STARTED)) {
@@ -163,7 +160,6 @@ class DeviceSpeechlet implements Speechlet {
 		}
 
 		IntendRequestInterface intentObj = IntentTypeFactory.getIntentTypeByName(intentName);
-
 		return intentObj.doSomething( intent,session,result );
 	}
 
