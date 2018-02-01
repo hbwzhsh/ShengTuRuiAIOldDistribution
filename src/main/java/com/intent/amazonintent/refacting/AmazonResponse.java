@@ -16,12 +16,6 @@ public class AmazonResponse {
 	 */
 	public static SpeechletResponse getNewAskResponse(String responseText) {
 
-
-		ElicitSlotDirective slotDirective = new ElicitSlotDirective();
-		slotDirective.
-
-
-
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
 		card.setTitle("managerDevice");
