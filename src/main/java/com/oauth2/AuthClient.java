@@ -10,6 +10,7 @@ import com.utility.Config;
 import com.utility.MD5Util;
 import com.utility.TokenFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,19 +27,16 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AuthClient {
 
-    @Autowired
-    Config config;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @RequestMapping(value = "/login")
     public String login(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         String redirect_uri = request.getParameter("redirect_uri");
         String state = request.getParameter("state");
-
-        System.out.println(redirect_uri);
-        System.out.println("currentServerPath:"+config.getCurrentServerPath());
-
         map.put("redirect_uri", redirect_uri);
         map.put("state", state);
+        logger.debug("login....");
         return "/oauth/login";
     }
 

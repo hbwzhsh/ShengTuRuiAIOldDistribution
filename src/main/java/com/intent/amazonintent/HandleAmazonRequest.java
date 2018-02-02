@@ -10,6 +10,7 @@
 package com.intent.amazonintent;
 
 import com.SpringUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.*;
@@ -62,7 +63,9 @@ class DeviceSpeechlet implements Speechlet {
 		logger.debug("accessToken:"+accessToken);
 
 		System.out.println( "accessToken:" + accessToken );
-		
+
+
+
 		String speechText = StringUtils.EMPTY;
 		
 		if(StringUtils.isBlank(session.getUser().getAccessToken())){
@@ -93,6 +96,8 @@ class DeviceSpeechlet implements Speechlet {
 		IntentRequest.DialogState dialogueState = request.getDialogState();
 		System.out.println("dialogueState:"+dialogueState);
 
+		System.out.println("dialogueState:where"+intent.getSlot("where").getValue());
+
 		//If the IntentRequest dialog state is STARTED
 		if (dialogueState.equals(IntentRequest.DialogState.STARTED)) {
 
@@ -106,6 +111,7 @@ class DeviceSpeechlet implements Speechlet {
 				DialogSlot dialogSlot = new DialogSlot();
 				Slot slot = (Slot) pair.getValue();
 				dialogSlot.setName(slot.getName());
+				dialogSlot.setValue(slot.getValue());
 				dialogSlots.put((String) pair.getKey(), dialogSlot);
 			}
 
@@ -114,11 +120,13 @@ class DeviceSpeechlet implements Speechlet {
 			DelegateDirective dd = new DelegateDirective();
 			dd.setUpdatedIntent(dialogIntent);
 
+
 			List<Directive> directiveList = new ArrayList<Directive>();
 			directiveList.add(dd);
 			SpeechletResponse speechletResp = new SpeechletResponse();
 			speechletResp.setDirectives(directiveList);
 			speechletResp.setShouldEndSession(false);
+			System.out.println("speechletResp:+++"+ JSONObject.toJSONString(speechletResp));
 			return speechletResp;
 		} else if (dialogueState.equals(IntentRequest.DialogState.COMPLETED)) {
 			return getSpeechletRealResponse(session, intent, accessToken, intentName);
