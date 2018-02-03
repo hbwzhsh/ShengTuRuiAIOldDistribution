@@ -7,6 +7,8 @@ import com.socket.SocketFactory;
 import com.socket.SoketClient;
 import com.utility.ConstantsMethod;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class DeviceDataManager {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static int delayTime = 1000;
     private static int period = 100000;
     private static int countTime = 0;
@@ -35,7 +38,7 @@ public class DeviceDataManager {
         }
     }*/
 
-    public static void updateDataSchedule() {
+    public void updateDataSchedule() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -43,6 +46,7 @@ public class DeviceDataManager {
                 try {
                     countTime++;
                     //System.out.println("countTime:" + countTime);
+                    logger.debug("countTime:" + countTime);
                     List<SpeakerUsers> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
                     for (SpeakerUsers users : usersTempList) {
                      /*   int countNumber = SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId());
@@ -57,6 +61,7 @@ public class DeviceDataManager {
                         }
                         if (tempClient == null) {
                             System.out.println("new connection:" + countTime);
+                            logger.debug("new connection:" + countTime);
                             SoketClient client = new SoketClient();
                             client.connectService(users.getUserId());
                         } else {
@@ -75,7 +80,7 @@ public class DeviceDataManager {
 
                         for (Device item : deviceResult) {
                             String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(), item.getEquipmentEp()));
-                            if(StringUtils.isBlank(name)) continue;
+                            if (StringUtils.isBlank(name)) continue;
 
                             String deviceName = name.split(":")[0];
                             String deviceVid = name.split(":")[1];
@@ -85,7 +90,7 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-                        System.out.println("DeviceResult----->"+deviceResult.size());
+                        logger.debug("devices from database:" + deviceResult.size());
                         //redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
                     }
                 } catch (Exception e) {

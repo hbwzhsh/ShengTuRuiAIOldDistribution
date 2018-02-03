@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.codehaus.groovy.runtime.powerassert.SourceText;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,8 +50,8 @@ public class HandleAmazonRequest extends SpeechletServlet {
 }
 @Component
 class DeviceSpeechlet implements Speechlet {
-	private static final Logger logger = LogManager.getLogger(DeviceSpeechlet.class);
 
+	private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public void onSessionStarted(final SessionStartedRequest request, final Session session) throws SpeechletException {
 		logger.debug("HelloWorldSpeechlet--->");
@@ -63,7 +64,6 @@ class DeviceSpeechlet implements Speechlet {
 		logger.debug("accessToken:"+accessToken);
 
 		System.out.println( "accessToken:" + accessToken );
-
 
 
 		String speechText = StringUtils.EMPTY;
@@ -92,11 +92,7 @@ class DeviceSpeechlet implements Speechlet {
 		Intent intent = request.getIntent();
 		String accessToken = session.getUser().getAccessToken();
 		String intentName = (intent != null) ? intent.getName().toLowerCase() : null;
-		System.out.println("accessToken:"+accessToken);
 		IntentRequest.DialogState dialogueState = request.getDialogState();
-		System.out.println("dialogueState:"+dialogueState);
-
-		System.out.println("dialogueState:where"+intent.getSlot("where").getValue());
 
 		//If the IntentRequest dialog state is STARTED
 		if (dialogueState.equals(IntentRequest.DialogState.STARTED)) {

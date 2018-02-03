@@ -1,20 +1,51 @@
 package com.utility;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
 public class Config {
 
-    @Value("${currentServerPath}")
-    public  String currentServerPath;
+    @Value("${socketPort}")
+    public  String socketPort;
 
-    public String getCurrentServerPath() {
-        return currentServerPath;
+    @Value("${serverIpConnectSocket}")
+    public  String serverIpConnectSocket;
+
+    @Value("${clientId}")
+    public  String clientId;
+
+    @Value("${secret}")
+    public  String secret;
+
+    public String getSocketPort() {
+        return socketPort;
     }
 
-    public void setCurrentServerPath(String currentServerPath) {
-        this.currentServerPath = currentServerPath;
+    public void setSocketPort(String socketPort) {
+        this.socketPort = socketPort;
+    }
+
+    public String getServerIpConnectSocket() {
+        return serverIpConnectSocket;
+    }
+
+    public void setServerIpConnectSocket(String serverIpConnectSocket) {
+        this.serverIpConnectSocket = serverIpConnectSocket;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }

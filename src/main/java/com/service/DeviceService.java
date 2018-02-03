@@ -13,6 +13,7 @@ import com.utility.ConstantsMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.ArrayList;
@@ -24,12 +25,8 @@ import java.util.stream.Collectors;
  * provide service for DeviceSpeechlet
  */
 public class DeviceService {
-
     private StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
-
-    private static final Logger logger = LogManager.getLogger(DeviceService.class);
-
-
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     public void sendCmdToServerForOpenAlittle(final List<Device> tempDevicelist, final String cmd,String percent, final String userId) {
@@ -80,7 +77,6 @@ public class DeviceService {
     private int getMoveToProcessBar(boolean flag, Device tempDevice) {
         int moveToProcessBar = 0;
         String currentProccessBar =stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(tempDevice.getEquipmentMac(),tempDevice.getEquipmentEp()));
-        System.out.println( "currentProccessBar:" + currentProccessBar );
 
         if (StringUtils.isBlank(currentProccessBar)) {
             return moveToProcessBar;
@@ -119,9 +115,7 @@ public class DeviceService {
 
         List<Device> findingDevices = dataList;
         findingDevices = getSameTypeDevices(item.getIntentName(), dataList);
-        System.out.println("find getSameTypeDevices data size():"+dataList.size());
-
-
+        logger.debug("find getSameTypeDevices data size():"+dataList.size());
         if(StringUtils.isNotBlank(item.getWhere())){
             findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getWhere()).indexOf(deleteExtraBlanks(device.getRoomName())) != -1)).collect(Collectors.toList());
         }
@@ -129,8 +123,7 @@ public class DeviceService {
         if(StringUtils.isNotBlank(item.getDevicename())){
             findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName())))).collect(Collectors.toList());
         }
-
-        System.out.println("find getDeviceByCondition data size():"+findingDevices.size());
+        logger.debug("find getSameTypeDevices data size():"+dataList.size());
         return findingDevices;
     }
 
@@ -144,8 +137,7 @@ public class DeviceService {
         // TODO Auto-generated method stub
         List<Device> dataList = DeviceDataManager.getDeviceList(item.getUserId());
 
-        System.out.println("filterDataByIntentName():"+ dataList.size());
-
+        logger.debug("filterDataByIntentName():"+ dataList.size());
         List<Device> filterDevice = new ArrayList<Device>();
         if (Constants.wholeHouse.equalsIgnoreCase(item.getWhere())) {
             filterDevice = getSameTypeDevices(item.getIntentName(), dataList);

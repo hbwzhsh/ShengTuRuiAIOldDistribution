@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AuthClient {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
 
     @RequestMapping(value = "/login")
@@ -36,7 +36,6 @@ public class AuthClient {
         String state = request.getParameter("state");
         map.put("redirect_uri", redirect_uri);
         map.put("state", state);
-        logger.debug("login....");
         return "/oauth/login";
     }
 

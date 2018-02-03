@@ -8,7 +8,10 @@ import com.oauth2.model.AccessData;
 import com.oauth2.model.AccessToken;
 import com.oauth2.model.ErrorToken;
 import com.oauth2.model.TokenInfo;
+import com.utility.Config;
 import com.utility.TokenFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -23,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenProvidor {
 
 
+    @Autowired
+    Config config;
 
     /**
      * https://XXXXX/token?grant_type=authorization_code&client_id=XXXXX&client_secret=XXXXXX&code=XXXXXXXX&redirect_uri=https%3A%2F%2Fopen.bot.tmall.com%2Foauth%2Fcallback
@@ -44,7 +49,7 @@ public class TokenProvidor {
         System.out.println("client_secret:" + client_secret);
         System.out.println("redirect_uri:" + redirect_uri);
 
-        boolean params = StringUtils.isEmpty(grant_type) || !(TokenFactory.client.equalsIgnoreCase(client_id));
+        boolean params = StringUtils.isEmpty(grant_type) || !(config.getClientId().equalsIgnoreCase(client_id));
 
         System.out.println("params:" + params);
         if (params) {

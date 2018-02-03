@@ -44,7 +44,7 @@ public class StartUpServlet extends HttpServlet {
         
         //ConstantsMethod.initData();
 
-		DeviceDataManager.updateDataSchedule();
+		new DeviceDataManager().updateDataSchedule();
 
     }
 
