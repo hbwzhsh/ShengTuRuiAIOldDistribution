@@ -74,7 +74,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
                 if (deviceCmd != null && deviceCmd.length >= 5) {
                     String name = deviceCmd[0];
                     currentdevice = new Device(loopmac, StringUtils.trimToEmpty(name), deviceCmd[1], deviceCmd[2], deviceCmd[3]);
-                    logger.debug("currentdevice from socket:" + currentdevice);
                     if(StringUtils.isNotBlank(currentdevice.getName()))
                     stringRedisTemplate.opsForValue().set( ConstantsMethod.deviceNameKey(currentdevice.getEquipmentMac(),currentdevice.getEquipmentEp()),currentdevice.getName()+":"+currentdevice.getDevid() );
                     //updateDeviceDetails(currentdevice);
@@ -82,8 +81,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
             } else if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.DEV_ONLINE) == 0) {
                 //updateDeviceDetailsByDeviceMac(singleItem);
             } else if (StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT\\FINISHED") == 0)) {
-                System.out.println("finished......");
-
+                logger.debug("finished......");
             } else if (StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT") == 0)) {
                 //System.out.println("singleItem:"+singleItem);
                 String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
