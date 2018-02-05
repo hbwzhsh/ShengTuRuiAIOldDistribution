@@ -84,7 +84,7 @@ public class DeviceDataManager {
 
                             String deviceName = name.split(":")[0];
                             String deviceVid = name.split(":")[1];
-                            if (!name.equalsIgnoreCase(item.getName()) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
+                            if (!deviceName.equalsIgnoreCase(item.getName()) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
                                 item.setName(deviceName);
                                 item.setDevid(deviceVid);
                                 logger.debug("update database:" + deviceName);

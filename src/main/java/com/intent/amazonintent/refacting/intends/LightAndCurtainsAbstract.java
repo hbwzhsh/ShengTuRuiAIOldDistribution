@@ -48,12 +48,12 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 			}
 		}
 
-		logger.debug("where:"+this.item.getWhere());
-		logger.debug("devicename:"+this.item.getDevicename());
+		logger.debug("where------------>:"+this.item.getWhere());
+		logger.debug("devicename------->:"+this.item.getDevicename());
 		logger.debug("cmd:"+this.item.getDeviceCMD());
-		logger.debug("userId:"+this.item.getUserId());
-		logger.debug("intentname:"+this.item.getIntentName());
-		logger.debug("persentage:"+this.item.getPersentage());
+		logger.debug("userId------------>:"+this.item.getUserId());
+		logger.debug("intentname-------------->:"+this.item.getIntentName());
+		logger.debug("persentage-------------->:"+this.item.getPersentage());
 		return true;
 	}
 

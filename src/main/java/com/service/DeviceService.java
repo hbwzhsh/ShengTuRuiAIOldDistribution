@@ -66,7 +66,14 @@ public class DeviceService {
     public void sendCmdToServerForOpenAlittle(final Collection<Device> tempDevicelist, final String cmd, final boolean flag, final IntendParams item) {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
-            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(getMoveToProcessBar(flag, tempDevice)+"")).collect(Collectors.toList());
+            List<String> tempDeviceMacList = new ArrayList<>();
+
+            if(StringUtils.isBlank(item.getPersentage())){
+                tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(getMoveToProcessBar(flag, tempDevice)+"")).collect(Collectors.toList());
+            }else{
+                tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getPersentage())).collect(Collectors.toList());
+            }
+
             List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
@@ -123,7 +130,7 @@ public class DeviceService {
         if(StringUtils.isNotBlank(item.getDevicename())){
             findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName())))).collect(Collectors.toList());
         }
-        logger.debug("find getSameTypeDevices data size():"+dataList.size());
+        logger.debug("find getSameTypeDevices data size():"+findingDevices.size());
         return findingDevices;
     }
 
