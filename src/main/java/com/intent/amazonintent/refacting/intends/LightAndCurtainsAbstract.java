@@ -1,5 +1,6 @@
 package com.intent.amazonintent.refacting.intends;
 
+import com.SpringUtil;
 import com.amazon.speech.slu.Intent;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
@@ -9,10 +10,12 @@ import com.bean.site.UserOauth2;
 import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
 import com.service.AmazonService;
+import com.utility.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +28,8 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 
 	private IntendParams item;
 
+	private StringRedisTemplate stringRedisTemplate = (StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
+
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Intent intentSession;
@@ -34,6 +39,14 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 		// TODO Auto-generated method stub
 		this.item = IntendParams.createIntendParamsObj(intent,session.getUser().getAccessToken());
 		this.item.setUserId(user.getUserId());
+
+		if (StringUtils.isBlank(this.item.getWhere())) {
+			String cacheldefaultRoom = stringRedisTemplate.opsForValue().get(Constants.dafualtRoomKey + this.item.getUserId());
+			logger.debug("cacheldefaultRoom:"+cacheldefaultRoom);
+			if (StringUtils.isNotBlank(cacheldefaultRoom)) {
+				this.item.setWhere(cacheldefaultRoom);
+			}
+		}
 
 		logger.debug("where:"+this.item.getWhere());
 		logger.debug("devicename:"+this.item.getDevicename());

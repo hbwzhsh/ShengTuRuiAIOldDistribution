@@ -59,6 +59,7 @@ public class Constants {
 	public static final String commonDefualtRoom = "living room";
 	public static final String wholeHouse = "house";
 
+	public static final String whereStr = "where";
 	// for redis and socket
 
 	@Value("${serverIpConnectSocket}")

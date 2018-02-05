@@ -57,6 +57,7 @@ class DeviceSpeechlet implements Speechlet {
 
     private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
     @Override
     public void onSessionStarted(final SessionStartedRequest request, final Session session) throws SpeechletException {
         logger.debug("HelloWorldSpeechlet--->");
@@ -110,6 +111,9 @@ class DeviceSpeechlet implements Speechlet {
             return AmazonResponse.getNewAskResponse(speechText);
         }
 
+        if(dialogueState == null){
+            return getSpeechletRealResponse(session, intent, accessToken, intentName, userOauth2);
+        }
         //If the IntentRequest dialog state is STARTED
         if (dialogueState.equals(IntentRequest.DialogState.STARTED)) {
 
@@ -123,26 +127,23 @@ class DeviceSpeechlet implements Speechlet {
                 DialogSlot dialogSlot = new DialogSlot();
                 Slot slot = (Slot) pair.getValue();
                 String name = slot.getName();
+                String value = slot.getValue();
+                dialogSlot.setName(name);
+                dialogSlot.setValue(value);
 
-                if ("where".equalsIgnoreCase(name)) {
+                if (Constants.whereStr.equalsIgnoreCase(name) && StringUtils.isBlank(value)) {
                     String cacheldefaultRoom = stringRedisTemplate.opsForValue().get(Constants.dafualtRoomKey + result.getUserId());
+                    logger.debug("cacheldefaultRoom:"+cacheldefaultRoom);
                     if (StringUtils.isNotBlank(cacheldefaultRoom)) {
-                        dialogSlot.setName("where");
+                        dialogSlot.setName(Constants.whereStr);
                         dialogSlot.setValue(cacheldefaultRoom);
-                    } else {
-                        dialogSlot.setName(slot.getName());
-                        dialogSlot.setValue(slot.getValue());
                     }
-                } else {
-                    dialogSlot.setName(slot.getName());
-                    dialogSlot.setValue(slot.getValue());
                 }
 
                 dialogSlots.put((String) pair.getKey(), dialogSlot);
             }
 
             dialogIntent.setSlots(dialogSlots);
-
             DelegateDirective dd = new DelegateDirective();
             dd.setUpdatedIntent(dialogIntent);
 
