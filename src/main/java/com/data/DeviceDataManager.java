@@ -47,7 +47,7 @@ public class DeviceDataManager {
                     countTime++;
                     //System.out.println("countTime:" + countTime);
                     logger.debug("countTime:" + countTime);
-                    List<SpeakerUsers> usersTempList = SpringUtil.getUserMapper().getUsersTemp();
+                    List<SpeakerUsers> usersTempList = SpringUtil.getUserMapper().getUsersTemp().stream().filter(item-> StringUtils.isNotBlank(item.getUserId())).collect(Collectors.toList());
                     for (SpeakerUsers users : usersTempList) {
                      /*   int countNumber = SpringUtil.getUserMapper().getDeviceWithNoNameList(users.getUserId());
                         if (countNumber > 0) {*/

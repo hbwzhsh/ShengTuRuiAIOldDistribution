@@ -65,7 +65,7 @@
 
 
     <select id="getUsersTemp" parameterType="String" resultType="com.bean.SpeakerUsers">
-        select * from users_temp;
+        select * from users_oauth2
     </select>
 
 

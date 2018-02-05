@@ -80,6 +80,7 @@ public class AuthClient {
             userOauthParam.setAccessToken(TokenFactory.createAccessToken());
             userOauthParam.setRefreshToken(TokenFactory.createRefreshToken());
             userOauthParam.setCode(TokenFactory.createCode());
+            userOauthParam.setUserId(user.getUserId());
 
             int count = SpringUtil.getUserMapper().addObjectToOauth2(userOauthParam);
 
@@ -89,9 +90,9 @@ public class AuthClient {
             } else {
                 getRightLink(redirect_uri, state, responseMsg, userOauthParam);
 
-                SpeakerUsers temp = new SpeakerUsers();
+               /* SpeakerUsers temp = new SpeakerUsers();
                 temp.setUserId(user.getUserId());
-                SpringUtil.getUserMapper().addUserTemp(temp);
+                SpringUtil.getUserMapper().addUserTemp(temp);*/
                 //DeviceDataManager.cleanSocketClient(user.getUserId());
             }
         }

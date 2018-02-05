@@ -56,7 +56,6 @@ public class SoketClient {
 
     public void getDevicesFromService(String userId) {
         try {
-
             UserHostRelation userHostRelation = new UserHostRelation();
             userHostRelation.setUserId(userId);
             List<UserHostRelation> listStr = SpringUtil.getUserMapper().getUserHostRelation(userHostRelation);
