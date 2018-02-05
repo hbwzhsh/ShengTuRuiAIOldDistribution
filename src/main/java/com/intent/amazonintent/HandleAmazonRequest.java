@@ -51,7 +51,6 @@ public class HandleAmazonRequest extends SpeechletServlet {
     }
 }
 
-@Component
 class DeviceSpeechlet implements Speechlet {
     private StringRedisTemplate stringRedisTemplate = (StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
 
@@ -112,7 +111,7 @@ class DeviceSpeechlet implements Speechlet {
         }
 
         if(dialogueState == null){
-            return getSpeechletRealResponse(session, intent, accessToken, intentName, userOauth2);
+            return getSpeechletRealResponse(session, intent, accessToken, intentName, result);
         }
         //If the IntentRequest dialog state is STARTED
         if (dialogueState.equals(IntentRequest.DialogState.STARTED)) {
@@ -156,7 +155,7 @@ class DeviceSpeechlet implements Speechlet {
             System.out.println("speechletResp:+++" + JSONObject.toJSONString(speechletResp));
             return speechletResp;
         } else if (dialogueState.equals(IntentRequest.DialogState.COMPLETED)) {
-            return getSpeechletRealResponse(session, intent, accessToken, intentName, userOauth2);
+            return getSpeechletRealResponse(session, intent, accessToken, intentName, result);
         } else {
             DelegateDirective dd = new DelegateDirective();
             List<Directive> directiveList = new ArrayList<Directive>();

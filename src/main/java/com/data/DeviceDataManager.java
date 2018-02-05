@@ -75,22 +75,23 @@ public class DeviceDataManager {
                             continue;
                         }
 
-                        List<Device> deviceResult = getDevicesByType(deviceList);
+                       // List<Device> deviceResult = getDevicesByType(deviceList);
 
 
-                        for (Device item : deviceResult) {
+                        for (Device item : deviceList) {
                             String name = stringRedisTemplate.opsForValue().get(ConstantsMethod.deviceNameKey(item.getEquipmentMac(), item.getEquipmentEp()));
                             if (StringUtils.isBlank(name)) continue;
 
                             String deviceName = name.split(":")[0];
                             String deviceVid = name.split(":")[1];
-                            if (!item.getName().equalsIgnoreCase(name) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
+                            if (!name.equalsIgnoreCase(item.getName()) || !deviceVid.equalsIgnoreCase(item.getDevid())) {
                                 item.setName(deviceName);
                                 item.setDevid(deviceVid);
+                                logger.debug("update database:" + deviceName);
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-                        logger.debug("devices from database:" + deviceResult.size());
+                        logger.debug("devices from database:" + deviceList.size());
                         //redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
                     }
                 } catch (Exception e) {
