@@ -23,15 +23,15 @@ import java.util.stream.Collectors;
  * provide service for DeviceSpeechlet
  */
 public class DeviceService {
-    private StringRedisTemplate stringRedisTemplate =(StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
+    private StringRedisTemplate stringRedisTemplate = (StringRedisTemplate) SpringUtil.getBean("stringRedisTemplate");
     private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    public void sendCmdToServerForOpenAlittle(final List<Device> tempDevicelist, final String cmd,String percent, final String userId) {
+    public void sendCmdToServerForOpenAlittle(final List<Device> tempDevicelist, final String cmd, String percent, final String userId) {
         SoketClient client = SocketFactory.socketConnections.get(userId);
         Runnable runnable = () -> {
             List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(percent)).collect(Collectors.toList());
-            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
+            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice -> tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
@@ -43,7 +43,7 @@ public class DeviceService {
         SoketClient client = SocketFactory.socketConnections.get(userId);
         Runnable runnable = () -> {
             List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + Constants.defaultDeviceState).collect(Collectors.toList());
-            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
+            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice -> tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
@@ -53,8 +53,8 @@ public class DeviceService {
     public void sendCmdToServer(final Collection<Device> tempDevicelist, final String cmd, final IntendParams item) {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
-            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getDeviceFuturePosition())).collect(Collectors.toList());
-            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
+            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + item.getDeviceFuturePosition()).collect(Collectors.toList());
+            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice -> tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
@@ -65,14 +65,8 @@ public class DeviceService {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
             List<String> tempDeviceMacList = new ArrayList<>();
-
-            if(StringUtils.isBlank(item.getPersentage())){
-                tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(getMoveToProcessBar(flag, tempDevice)+"")).collect(Collectors.toList());
-            }else{
-                tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getPersentage())).collect(Collectors.toList());
-            }
-
-            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
+            tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(getMoveToProcessBar(flag, tempDevice) + "")).collect(Collectors.toList());
+            List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice -> tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
         Thread thread = new Thread(runnable);
@@ -81,7 +75,7 @@ public class DeviceService {
 
     private int getMoveToProcessBar(boolean flag, Device tempDevice) {
         int moveToProcessBar = 0;
-        String currentProccessBar =stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(tempDevice.getEquipmentMac(),tempDevice.getEquipmentEp()));
+        String currentProccessBar = stringRedisTemplate.opsForValue().get(ConstantsMethod.devicePKey(tempDevice.getEquipmentMac(), tempDevice.getEquipmentEp()));
 
         if (StringUtils.isBlank(currentProccessBar)) {
             return moveToProcessBar;
@@ -107,7 +101,7 @@ public class DeviceService {
 
             if (deviceType != null) {
                 if (deviceType.getDeviceIds().contains(device.getDevid())) {
-                    System.out.println("device.getDevid():"+device.getDevid());
+                    System.out.println("device.getDevid():" + device.getDevid());
                     return true;
                 }
             }
@@ -120,15 +114,15 @@ public class DeviceService {
 
         List<Device> findingDevices = dataList;
         findingDevices = getSameTypeDevices(item.getIntentName(), dataList);
-        logger.debug("find getSameTypeDevices data size():"+dataList.size());
-        if(StringUtils.isNotBlank(item.getWhere())){
-            findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getWhere()).indexOf(deleteExtraBlanks(device.getRoomName())) != -1)).collect(Collectors.toList());
+        logger.debug("find getSameTypeDevices data size():" + dataList.size());
+        if (StringUtils.isNotBlank(item.getWhere())) {
+            findingDevices = findingDevices.stream().filter(device -> (deleteExtraBlanks(item.getWhere()).indexOf(deleteExtraBlanks(device.getRoomName())) != -1)).collect(Collectors.toList());
         }
 
-        if(StringUtils.isNotBlank(item.getDevicename())){
-            findingDevices = findingDevices.stream().filter(device->(deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName())))).collect(Collectors.toList());
+        if (StringUtils.isNotBlank(item.getDevicename())) {
+            findingDevices = findingDevices.stream().filter(device -> (deleteExtraBlanks(item.getDevicename()).equalsIgnoreCase(deleteExtraBlanks(device.getName())))).collect(Collectors.toList());
         }
-        logger.debug("find getSameTypeDevices data size():"+findingDevices.size());
+        logger.debug("find getSameTypeDevices data size():" + findingDevices.size());
         return findingDevices;
     }
 
@@ -142,7 +136,7 @@ public class DeviceService {
         // TODO Auto-generated method stub
         List<Device> dataList = DeviceDataManager.getDeviceList(item.getUserId());
 
-        logger.debug("filterDataByIntentName():"+ dataList.size());
+        logger.debug("filterDataByIntentName():" + dataList.size());
         List<Device> filterDevice = new ArrayList<Device>();
         if (Constants.wholeHouse.equalsIgnoreCase(item.getWhere())) {
             filterDevice = getSameTypeDevices(item.getIntentName(), dataList);

@@ -24,8 +24,7 @@ public class PercentCurtainsIntend extends LightAndCurtainsAbstract {
 			} else if (Constants.CLOSECURTAINALITTLE.equalsIgnoreCase(getItem().getIntentName())) {
 				deviceService.sendCmdToServerForOpenAlittle(filterlist, Constants.percentcurtain, false,getItem());
 			} else if (Constants.OPENTHECURTAINHALFWAY.equalsIgnoreCase(getItem().getIntentName())) {
-				getItem().setPersentage("50");
-				//getItem().setDeviceFuturePosition(ConstantsMethod.getProcessBarCmd("50"));
+				getItem().setDeviceFuturePosition(ConstantsMethod.getProcessBarCmd("50"));
 				deviceService.sendCmdToServer(filterlist, Constants.percentcurtain, getItem());
 			}
 		}
