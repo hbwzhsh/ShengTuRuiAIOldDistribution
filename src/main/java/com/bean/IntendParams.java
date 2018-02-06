@@ -13,7 +13,7 @@ public class IntendParams {
 	private String persentage;
 	private String accessToken;
 	private String intentName;
-	private String deviceState;
+	private String deviceFuturePosition;
 	private String deviceCMD;
 	private String userId;
 
@@ -33,7 +33,7 @@ public class IntendParams {
 		this.intentName = intentName;
 
 		this.deviceCMD = getCmdByIntentName(intentName, persentage);
-		this.deviceState = ConstantsMethod.getProcessBarCmd(persentage);
+		this.deviceFuturePosition = ConstantsMethod.getProcessBarCmd(persentage);
 	}
 
 	public static IntendParams createIntendParamsObj(Intent intent, String accessToken) {
@@ -119,12 +119,12 @@ public class IntendParams {
 		this.intentName = intentName;
 	}
 
-	public String getDeviceState() {
-		return deviceState;
+	public String getDeviceFuturePosition() {
+		return deviceFuturePosition;
 	}
 
-	public void setDeviceState(String deviceState) {
-		this.deviceState = deviceState;
+	public void setDeviceFuturePosition(String deviceFuturePosition) {
+		this.deviceFuturePosition = deviceFuturePosition;
 	}
 
 	public String getDeviceCMD() {

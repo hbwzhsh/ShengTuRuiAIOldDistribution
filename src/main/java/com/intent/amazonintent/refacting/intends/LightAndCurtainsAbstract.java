@@ -7,17 +7,12 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.bean.Device;
 import com.bean.IntendParams;
 import com.bean.site.UserOauth2;
-import com.bean.site.UserSite;
 import com.intent.amazonintent.refacting.AmazonResponse;
-import com.service.AmazonService;
 import com.utility.Constants;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public abstract class LightAndCurtainsAbstract implements IntendRequestInterface {
@@ -85,7 +80,7 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 			return AmazonResponse.getNewAskResponse(voiceMessge);
 		}
 
-		logger.debug("getDeviceCMD:" + getItem().getDeviceCMD() + "--->getPersentage:" + getItem().getPersentage() + "-->getIntentName:" + getItem().getIntentName() + "-->getDeviceState:" + getItem().getDeviceState());
+		logger.debug("getDeviceCMD:" + getItem().getDeviceCMD() + "--->getPersentage:" + getItem().getPersentage() + "-->getIntentName:" + getItem().getIntentName() + "-->getDeviceFuturePosition:" + getItem().getDeviceFuturePosition());
 		logger.debug("getDevicename:" + getItem().getDevicename());
 		logger.debug("where:" + getItem().getWhere());
 

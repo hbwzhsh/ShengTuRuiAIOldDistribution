@@ -11,8 +11,6 @@ import com.socket.SocketFactory;
 import com.socket.SoketClient;
 import com.utility.ConstantsMethod;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -55,7 +53,7 @@ public class DeviceService {
     public void sendCmdToServer(final Collection<Device> tempDevicelist, final String cmd, final IntendParams item) {
         SoketClient client = SocketFactory.socketConnections.get(item.getUserId());
         Runnable runnable = () -> {
-            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getDeviceState())).collect(Collectors.toList());
+            List<String> tempDeviceMacList = tempDevicelist.stream().map(tempDevice -> "CMD:" + tempDevice.getEquipmentMac() + "-" + tempDevice.getEquipmentEp() + "-" + cmd + "-" + ConstantsMethod.getProcessBarCmd(item.getDeviceFuturePosition())).collect(Collectors.toList());
             List<String> tempDeviceHostList = tempDevicelist.stream().map(tempDevice->tempDevice.getHostMac()).collect(Collectors.toList());
             client.connectServiceAndExeCommand(tempDeviceMacList, tempDeviceHostList);
         };
