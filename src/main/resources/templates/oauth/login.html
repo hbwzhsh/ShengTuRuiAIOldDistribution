@@ -73,6 +73,7 @@
         }).done(function( obj ) {
             $(this).text("Sign in");
             if(obj.status == 'success'){
+                alert( "response: " + obj.data );
                 window.location.href = obj.data;
             }else{
                 $(this).text("Sign in");

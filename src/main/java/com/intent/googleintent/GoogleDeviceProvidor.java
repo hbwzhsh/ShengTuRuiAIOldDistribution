@@ -46,9 +46,11 @@ public class GoogleDeviceProvidor {
 
     @RequestMapping(value = "/googledevices")
     public GoogleRequestParent token(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("googledevices-------------->come on in....");
         try {
-            deviceService = new DeviceService();
             System.out.println("Authorization:" + request.getHeader("Authorization"));
+            deviceService = new DeviceService();
+
             String header[] = request.getHeader("Authorization").split("\\s+");
             System.out.println("header[0]------------------------》》》》》》》》》》》》》》》》》》》》:" + header[0]);
 
