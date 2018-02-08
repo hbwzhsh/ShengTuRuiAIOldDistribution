@@ -33,7 +33,6 @@ public class SoketClient {
             future.awaitUninterruptibly();
             sendsession = future.getSession();
             for (int i = 0; i < commandList.size(); i++) {
-
                 byte[] msg4 = ToHexUtil.hexStringToByte(CmdUtil.getToService(mAesUtil, commandList.get(i), hostMacs.get(i)));
 
                 System.out.println("commandList.size():" + commandList.size());

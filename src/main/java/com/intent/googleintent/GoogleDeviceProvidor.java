@@ -20,6 +20,8 @@ import com.utility.Constants;
 import com.service.DeviceService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,21 +43,19 @@ public class GoogleDeviceProvidor {
     private static String brightnessAbsolute = "action.devices.commands.BrightnessAbsolute";
     private static String onOff = "action.devices.commands.OnOff";
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     private DeviceService deviceService;
 
     @RequestMapping(value = "/googledevices")
     public GoogleRequestParent token(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("googledevices-------------->come on in....");
         try {
-            System.out.println("Authorization:" + request.getHeader("Authorization"));
+            logger.debug("Authorization:" + request.getHeader("Authorization"));
             deviceService = new DeviceService();
 
             String header[] = request.getHeader("Authorization").split("\\s+");
-            System.out.println("header[0]------------------------》》》》》》》》》》》》》》》》》》》》:" + header[0]);
-
             String accessToken = header[1];
-
             UserOauth2 userOauth2param = new UserOauth2();
             userOauth2param.setAccessToken(accessToken);
             UserOauth2 userOauth2Reust = SpringUtil.getUserMapper().getOauth2ByCondition(userOauth2param);
@@ -63,7 +63,7 @@ public class GoogleDeviceProvidor {
             if (userOauth2Reust != null) {
 
                 String result = IOUtils.toString(request.getInputStream(), "UTF-8");
-                System.out.println("request from google :" + result);
+                logger.debug("request from google :" + result);
 
                 GoogleRequest request1 = JSONObject.toJavaObject(JSONObject.parseObject(result), GoogleRequest.class);
 
@@ -71,7 +71,7 @@ public class GoogleDeviceProvidor {
                     for (GoogleInputs inputs : request1.getInputs()) {
                         if (devicesSYNC.equalsIgnoreCase(inputs.getIntent())) {
                             List<Device> deviceList = DeviceDataManager.getDeviceList(userOauth2Reust.getUserId());
-                            System.out.println("deviceList:-------------------->" + deviceList.size());
+                            logger.debug("deviceList:-------------------->" + deviceList.size());
                             return googleDevicesDiscovery(request1.getRequestId(), deviceList);
                         } else if (devicesQUERY.equalsIgnoreCase(inputs.getIntent())) {
                         } else if (devicesEXECUTE.equalsIgnoreCase(inputs.getIntent())) {
@@ -112,11 +112,11 @@ public class GoogleDeviceProvidor {
                 } else {
                     cmdStr = Constants.closeCmd;
                 }
-                System.out.println("------------------>sending command.....");
+                logger.debug("------------------>sending command.....");
                 deviceService.sendCmdToServer(deviceListData, cmdStr, userOauth2.getUserId());
             } else if (brightnessAbsolute.equalsIgnoreCase(execution.getCommand())) {
                 int percent = execution.getParams().getBrightness();
-                System.out.println("------------------>sending brightnessAbsolute command.....");
+                logger.debug("------------------>sending brightnessAbsolute command.....");
                 deviceService.sendCmdToServerForOpenAlittle(deviceListData, Constants.dimlightCmd, percent + "", userOauth2.getUserId());
             }
 

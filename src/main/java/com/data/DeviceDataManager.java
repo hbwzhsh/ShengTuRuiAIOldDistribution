@@ -91,7 +91,7 @@ public class DeviceDataManager {
                                 SpringUtil.getUserMapper().updateHouseRelation(item);
                             }
                         }
-                        logger.debug("devices from database:" + deviceList.size());
+                        //logger.debug("devices from database:" + deviceList.size());
                         //redisTemplate.opsForValue().set(users.getUserId(), deviceResult);
                     }
                 } catch (Exception e) {

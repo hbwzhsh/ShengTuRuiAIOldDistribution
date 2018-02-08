@@ -7,12 +7,12 @@ public class TokenFactory {
 
     public static final String client="0Iafg3rasL9gnivV";
     public static final String secret="SBB7VWn83hbHI5kt";
-    public static final int expires_in = 36000;
+    public static final int expires_in = 360000000;
 
     public static String createRefreshToken(){
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
-        for(int i=0;i<3;i++){
+        for(int i=0;i<5;i++){
             builder.append(random.nextInt(10));
         }
         return client+builder.toString();

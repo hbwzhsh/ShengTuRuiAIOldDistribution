@@ -95,13 +95,11 @@ public class DeviceService {
 
     private List<Device> getSameTypeDevices(String intendName, List<Device> dataList) {
         IntendType deviceType = DeviceTypeFactory.getDeviceByIntendName(intendName);
-        System.out.println(deviceType.getDeviceIds().size());
 
         return dataList.stream().filter(device -> {
 
             if (deviceType != null) {
                 if (deviceType.getDeviceIds().contains(device.getDevid())) {
-                    System.out.println("device.getDevid():" + device.getDevid());
                     return true;
                 }
             }

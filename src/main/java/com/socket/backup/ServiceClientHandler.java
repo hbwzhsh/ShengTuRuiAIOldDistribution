@@ -25,7 +25,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 
-		System.out.println("-----------> session.getId(2222222222):"+session.getId());
+		logger.debug("-----------> session.getId(2222222222):"+session.getId());
 		// TODO Auto-generated method stub
 		super.messageReceived(session, message);
 		char[] mChars = "0123456789ABCDEF".toCharArray();
@@ -64,7 +64,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			String loopcmd = cmdList.get(i);
 			String loopmac = macList.get(i);
 			String singleItem = parse(loopcmd, mAesUtil, true);
-			System.out.println("singleItem:"+singleItem);
 			if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.GET_ENDPOINT_ACK) == 0) {
 				String[] deviceCmd = singleItem.substring(CmdUtil.GET_ENDPOINT_ACK.length()).trim().split("\\\\");// '\'�ָ�
 				Device currentdevice = null;
@@ -72,8 +71,6 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 				if (deviceCmd != null && deviceCmd.length >= 5) {
 						String name = deviceCmd[0];
 						currentdevice = new Device(loopmac, StringUtils.trimToEmpty(name), deviceCmd[1], deviceCmd[2], deviceCmd[3]);
-						logger.debug("currentdevice from socket:"+ currentdevice);
-						System.out.println("currentdevice from socket:"+ currentdevice);
 						updateDeviceDetails( currentdevice );
 				}
 			} else if (StringUtils.isNotBlank(singleItem) && singleItem.indexOf(CmdUtil.DEV_ONLINE) == 0) {
@@ -84,8 +81,7 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 			}else if(StringUtils.isNotBlank(singleItem) && (singleItem.indexOf("DAT") == 0)){
 				String[] deviceCmd = singleItem.substring(CmdUtil.DEV_DAT.length()).trim().split("-");// '-'�ָ�
 				
-				logger.debug( "device.deviceCmd():" + deviceCmd );
-				
+
 				String devMac = deviceCmd[0];
 				String eq =  deviceCmd[1];
 				String attrId =  deviceCmd[2];
@@ -111,29 +107,12 @@ public class ServiceClientHandler extends IoHandlerAdapter {
 
 				SpringUtil.getUserMapper().updateHouseRelation(currentdevice);
 
-				logger.debug("update the redis...");
 				break;
 			}
 		}
 	}
 
-	private void updateDeviceDetailsByDeviceMac(String onlineDevice) {
-		if (StringUtils.isBlank(onlineDevice) | onlineDevice.indexOf("ONLINE:") == -1 | onlineDevice.indexOf("-") == -1) {
-			return;
-		}
-
-		String deviceMac = onlineDevice.split(":")[1].split("-")[0];
-		String online = onlineDevice.split(":")[1].split("-")[1];
-		for (Device currentdevice : Constants.deviceList) {
-			/*if (currentdevice.getId().indexOf(deviceMac) != -1) {
-				currentdevice.setOnline(Boolean.parseBoolean(online.trim()));
-				break;
-			}*/
-		}
-
-	}
-
-	private String serviceRremain = "";// ���ݰ�����
+	private String serviceRremain = "";
 
 	synchronized void segmentService(String data, List<String> cmdList, List<String> macList) {
 		while (data.length() > 0) {
