@@ -88,7 +88,7 @@ public abstract class LightAndCurtainsAbstract implements IntendRequestInterface
 		logger.debug("tempDevicelist-->" + filterlist.size());
 
 		if (filterlist.size() == 0) {
-			String speechText = "I can not find any devices in your" + getItem().getWhere() + ", please try to say download the data from server !";
+			String speechText = "I can not find any devices in your " + getItem().getWhere() + ", please try it again !";
 			return AmazonResponse.getNewAskResponse(speechText);
 		}
 		sendCmdToServer(filterlist);
