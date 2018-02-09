@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class DeviceDataManager {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static int delayTime = 1000;
-    private static int period = 10000000;
+    private static int delayTime = 10000;
+    private static int period = 100000;
     private static int countTime = 0;
 
     private static RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");

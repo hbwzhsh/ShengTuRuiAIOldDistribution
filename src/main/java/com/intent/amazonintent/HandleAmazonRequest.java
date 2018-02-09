@@ -82,12 +82,12 @@ class DeviceSpeechlet implements Speechlet {
         UserOauth2 user = SpringUtil.getUserMapper().getOauth2ByCondition(userTemp);
 
         if (user == null) {
-            speechText = "I can not find your email " + accessToken + " within Smart plus server , please make a contact with us.";
+            speechText = "I can not find your email " + accessToken + " within Smart home server , please make a contact with us.";
             logger.debug("speechText:" + speechText);
             return AmazonResponse.getNewAskResponse(speechText);
         }
 
-        speechText = "welcome back to Smart plus ,what can I do for you ?";
+        speechText = "welcome back to Smart home ,what can I do for you ?";
         return AmazonResponse.getNewAskResponse(speechText);
     }
 
@@ -105,7 +105,7 @@ class DeviceSpeechlet implements Speechlet {
 
         String speechText = StringUtils.EMPTY;
         if (result == null) {
-            speechText = "I can not find your email " + accessToken + " within Smart plus database ,please make a contact with us.";
+            speechText = "I can not find your email " + accessToken + " within Smart home database ,please make a contact with us.";
             logger.debug("speechText:" + speechText);
             return AmazonResponse.getNewAskResponse(speechText);
         }
